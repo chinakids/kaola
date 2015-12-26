@@ -1,0 +1,9 @@
+App/Runtime/Data/app.pid
+App/Runtime/Cache
+node_modules/
+output/
+output.tar.gz
+sftp-config.json
+.cache
+.DS_Store
+.git
