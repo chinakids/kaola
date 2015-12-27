@@ -1,0 +1,9 @@
+{
+  "apps": [{
+    "name": "koala",
+    "script": "./bin/www",
+    "watch": true,
+    "exec_interpreter": "babel-node",
+    "exec_mode": "fork",
+  }]
+}

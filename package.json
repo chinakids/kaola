@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "babel-node ./bin/www"
+    "start": "babel-node ./bin/www",
+    "fork": "pm2 start ./bin/pm2_config.json"
   },
   "dependencies": {
     "co": "^4.6.0",
