@@ -4,9 +4,9 @@ import mongoose from 'mongoose';
 *   thistype {mongoose}
 */
 let UserGroupSchema = new mongoose.Schema({
-  name: String,
-  power: String,
-  comments: String,
+  name: String,//名称
+  power: String,//权限
+  comments: String,//备注
   meta       : {
     createAt : {
       type      : Date,
