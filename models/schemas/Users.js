@@ -5,7 +5,7 @@ import UserGroup from '../UserGroup'
 *   创建用户的shcema
 *   thistype {mongoose}
 */
-UserSchema = new mongoose.Schema({
+let UserSchema = new mongoose.Schema({
   name       : String,//昵称
   userName   : String,//用户名
   password   : String,//密码
@@ -21,12 +21,15 @@ UserSchema = new mongoose.Schema({
     ref      : 'UserGroup'
   },
   meta       :
-    createAt :
+    createAt : {
       type      : Date,
       default   : Date.now()
-    updateAt :
+    },
+    updateAt : {
       type      : Date,
       default   : Date.now()
+    }
+  }
 });
 /*
 *   给save方法添加预处理
