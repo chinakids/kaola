@@ -6,20 +6,20 @@ import UserGroup from '../UserGroup'
 *   thistype {mongoose}
 */
 UserSchema = new mongoose.Schema({
-  name       : String,
-  userName   : String,
-  password   : String,
-  email      : String,
-  phoneNum   : Number,
-  admin      : Boolean,
-  logo: {
-    type: String,
-    default: "/upload/images/defaultlogo.png"
+  name       : String,//昵称
+  userName   : String,//用户名
+  password   : String,//密码
+  email      : String,//邮箱
+  phoneNum   : Number,//电话
+  admin      : Boolean,//是否为管理员
+  avatar     : {
+    type     : String,//头像
+    default  : "/upload/images/defaultAvatar.png"
   },
-  group: {
-    type: String,
-    ref: 'UserGroup'
-  }
+  group      : {
+    type     : String,//用户组
+    ref      : 'UserGroup'
+  },
   meta       :
     createAt :
       type      : Date,
