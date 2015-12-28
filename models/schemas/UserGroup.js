@@ -32,4 +32,4 @@ UserGroupSchema.pre('save', (next) ->
   next();
 )
 
-exports default UserGroupSchema;
+export default UserGroupSchema;

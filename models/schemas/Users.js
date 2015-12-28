@@ -69,4 +69,4 @@ UserSchema.statics = {
   }
 }
 
-exports default UserSchema;
+export default UserSchema;
