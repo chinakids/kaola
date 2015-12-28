@@ -6,6 +6,8 @@ import views from 'koa-views';
 import onerror from 'koa-onerror';
 import koaStatic from 'koa-static';
 import koaBodyparser from 'koa-bodyparser';
+import session from 'koa-generic-session';
+import redisStore from 'koa-redis';
 
 import index from './routes/index';
 import users from './routes/users';
@@ -23,6 +25,11 @@ app.use(json());
 app.use(logger());
 
 app.use(koaStatic(__dirname + '/public'));
+
+//seeion
+app.use(session({
+  store: redisStore()
+}));
 
 // routes definition
 R.use('/', index.routes(), index.allowedMethods());
