@@ -1,8 +1,7 @@
 /*
 *   全局设置
 */
-
-export {
+const GlobalSettng =  {
   //debug 为 true 时，用于本地调试
   DEBUG: false,
 
@@ -14,7 +13,7 @@ export {
   //数据库配置
   DB_TYPE: 'mongodb', //数据库类型
   DB_NAME: 'kaola', //数据库名称
-  DB_HOST: '', //数据库地址
+  DB_HOST: '127.0.0.1', //数据库地址
   DB_PORT: 27017, //数据库端口
   DB_USERNAME: '', //数据库用户名
   DB_PASSWORD: '', //数据库密码
@@ -32,9 +31,11 @@ export {
   //上传
   UPDATE_FOLDER: process.cwd() + '/public/upload', //默认上传文件夹本地路径
 
-  //本地缓存设置
+  //本地redis设置
   REDIS_HOST: '127.0.0.1',
   REDIS_PORT: 6379,
   REDIS_PSD: '',
   REDIS_DB: 0,
 }
+
+export default GlobalSettng;
