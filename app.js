@@ -29,6 +29,8 @@ app.use(koaStatic(__dirname + '/public'));
 
 //seeion
 app.use(session({
+  key: 'kaola.sid',
+  prefix: 'kaola:sess:',
   store: redisStore({
     host:S.REDIS_HOST,
     port:S.REDIS_PORT,
@@ -37,10 +39,13 @@ app.use(session({
     db:S.REDIS_DB
   })
 }));
-R.use(function *(){
-  console.log(this.seeion)
-  this.seeion.name = 'test'
-})
+
+app.name = S.NAME;
+app.keys = [S.COOKIE_NAME, S.ENCRYPT_KEY];
+app.use(function *(next) {
+  this.session.name = 'koa-redis';
+  yield next;
+});
 // routes definition
 R.use('/', index.routes(), index.allowedMethods());
 R.use('/users', users.routes(), users.allowedMethods());

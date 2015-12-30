@@ -4,11 +4,11 @@
 const GlobalSettng =  {
   //debug 为 true 时，用于本地调试
   DEBUG: false,
-
+  NAME: 'kaola'
   //seeion&cookie相关
-  SEEION_SRCRET: 'kaola_secret', //seeion加密字符换
   COOKIE_NAME: 'kaola', //cookie的名称
-  ENCRYPT_KEY: 'kaola', //加密用字符串
+  ENCRYPT_KEY: 'csN%vm*XycUbKSfN3cvj3CO!9tPna*LU', //加密用字符串
+  SEEION_SRCRET: 'pZU43Nc&j#%b2cKHfXR$sn0&aszWXCq$', //session加密字符换
 
   //数据库配置
   DB_TYPE: 'mongodb', //数据库类型
