@@ -8,6 +8,7 @@ import koaStatic from 'koa-static';
 import koaBodyparser from 'koa-bodyparser';
 import session from 'koa-generic-session';
 import redisStore from 'koa-redis';
+import S from './conf/setting'
 
 import index from './routes/index';
 import users from './routes/users';
@@ -28,9 +29,18 @@ app.use(koaStatic(__dirname + '/public'));
 
 //seeion
 app.use(session({
-  store: redisStore()
+  store: redisStore({
+    host:S.REDIS_HOST,
+    port:S.REDIS_PORT,
+    //socket:S.REDIS_SOCKET, //socket
+    //pass:S.REDIS_PSD,   //redis连接密码
+    db:S.REDIS_DB
+  })
 }));
-
+R.use(function *(){
+  console.log(this.seeion)
+  this.seeion.name = 'test'
+})
 // routes definition
 R.use('/', index.routes(), index.allowedMethods());
 R.use('/users', users.routes(), users.allowedMethods());
@@ -38,7 +48,7 @@ R.use('/users', users.routes(), users.allowedMethods());
 // mount root routes
 app.use(R.routes());
 
-app.on('error', function(err, ctx){
+app.on('error', (err, ctx) => {
   log.error('server error', err, ctx);
 });
 

@@ -34,6 +34,7 @@ const GlobalSettng =  {
   //本地redis设置
   REDIS_HOST: '127.0.0.1',
   REDIS_PORT: 6379,
+  REDIS_SOCKET: null,
   REDIS_PSD: '',
   REDIS_DB: 0,
 }
