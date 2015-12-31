@@ -1,5 +1,3 @@
-xx
-
 2015-12-31 11:04:43.377 nodejs.ErrorException: Error: demo error
     at Object.callee$0$0$ (/Users/xuanyong/Desktop/kaola/app.js:51:9)
     at tryCatch (/usr/local/lib/node_modules/babel/node_modules/babel-core/node_modules/regenerator/runtime.js:61:40)
@@ -19,7 +17,7 @@ xx
     at process._tickDomainCallback (node.js:389:13)
 pid: 33816
 Host: xuanyongdeMacBook-Air.local
-URL: 
+URL:
 Data: ''
 2015-12-31 11:04:43.377
 
@@ -42,7 +40,7 @@ Data: ''
     at process._tickDomainCallback (node.js:389:13)
 pid: 33816
 Host: xuanyongdeMacBook-Air.local
-URL: 
+URL:
 Data: ''
 2015-12-31 11:04:44.592
 
@@ -65,7 +63,6 @@ Data: ''
     at process._tickDomainCallback (node.js:389:13)
 pid: 33885
 Host: xuanyongdeMacBook-Air.local
-URL: 
+URL:
 Data: ''
 2015-12-31 11:08:53.981
-

@@ -22,7 +22,7 @@ let UserGroupSchema = new mongoose.Schema({
 /*
 *   给save方法添加预处理
 */
-UserGroupSchema.pre('save', (next) => {
+UserGroupSchema.pre('save', function(next){
   //记录更新时间
   if(this.isNew){
     this.meta.createAt = this.meta.updateAt = Date.now();

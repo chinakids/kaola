@@ -25,7 +25,7 @@ let TemplateSchema = new mongoose.Schema({
 /*
 *   给save方法添加预处理
 */
-TemplateSchema.pre('save', (next) => {
+TemplateSchema.pre('save', function(next){
   //记录更新时间
   if(this.isNew){
     this.meta.createAt = this.meta.updateAt = Date.now();

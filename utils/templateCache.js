@@ -32,7 +32,7 @@ function forPage(){
 }
 // 通过map实现每个页面渲染func的生成
 function compileRenderService(pages){
-  for(name in pages){
+  for(let name in pages){
     preCompile(path.join(__dirname,'./../views/'+pages[name]), name)
     all++;
   }
@@ -46,16 +46,15 @@ function preCompile(filePath, pageName){
       //compiledJade[pageName] = jade.compile(jadeStr, compileOption);
       TemplateModel.findByName(pageName, (err,templates) => {
         if(err){
-          console.log(err);
           logger('model',err);
         }else{
           //判断用户是否存在
           if(templates.length<=0){
-            _template = new TemplateModel({
+            let _template = new TemplateModel({
               name      : pageName,
               content   : jade.compile(jadeStr, compileOption)
             })
-            _templates.save((err, user) => {
+            _template.save((err, template) => {
               if(err){
                 console.log(err);
                 logger('model',err);
@@ -64,14 +63,13 @@ function preCompile(filePath, pageName){
               }
             })
           }else{
-            _template = {
+            let _template = {
               content : jade.compile(jadeStr, compileOption)
             }
-            newTemplate = _.extend(templates[0],_template);
+            let newTemplate = _.extend(templates[0],_template);
             newTemplate.compiled = newTemplate.compiled + 1;
             newTemplate.save((err,template) => {
               if(err){
-                console.log(err);
                 logger('model',err);
               }else{
                 logger('template',`${template.name}-[更新]编译成功`);
