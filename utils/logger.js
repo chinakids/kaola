@@ -19,7 +19,7 @@ let print = function(categories,info){
     logger.error(info);
   }else{
     if('function' === typeof logger[categories]){
-      logger[categories](info);
+      logger[categories]((new Date()).toLocaleString()+'\t'+info);
     }
   }
 }
