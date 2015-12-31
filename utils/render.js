@@ -1,4 +1,4 @@
-import jadeRuntime from 'jade-runtime';
+import jadeRuntime from 'jade/runtime';
 import templateModel from './../models/Template';
 /**
  * [render 返回页面的方法]
