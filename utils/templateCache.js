@@ -3,7 +3,7 @@ import _ from 'underscore';
 import path from 'path';
 import jade from 'jade';
 import logger from './logger';
-import TemplateModel from './../models/Template'
+import templateModel from './../models/Template';
 /**
  * [render 返回页面的方法]
  */
@@ -39,20 +39,20 @@ function compileRenderService(pages){
 }
 //预编译
 function preCompile(filePath, pageName){
-  fs.readFile(filePath, (err, jadeStr) => {
-    if(err){
-      logger('template',`读取文件出错: ${filePath}.jade`)
-    }else{
+  // fs.readFile(filePath, (err, jadeStr) => {
+  //   if(err){
+  //     logger('template',`读取文件出错: ${filePath}.jade`)
+  //   }else{
       //compiledJade[pageName] = jade.compile(jadeStr, compileOption);
-      TemplateModel.findByName(pageName, (err,templates) => {
+      templateModel.findByName(pageName, (err,templates) => {
         if(err){
           logger('model',err);
         }else{
           //判断用户是否存在
           if(templates.length<=0){
-            let _template = new TemplateModel({
+            let _template = new templateModel({
               name      : pageName,
-              content   : jade.compile(jadeStr, compileOption)
+              content   : jade.compileFileClient(filePath)
             })
             _template.save((err, template) => {
               if(err){
@@ -64,7 +64,7 @@ function preCompile(filePath, pageName){
             })
           }else{
             let _template = {
-              content : jade.compile(jadeStr, compileOption)
+              content : jade.compileFileClient(filePath)
             }
             let newTemplate = _.extend(templates[0],_template);
             newTemplate.compiled = newTemplate.compiled + 1;
@@ -80,8 +80,8 @@ function preCompile(filePath, pageName){
       })
       done++;
       if(done >= all) logger('template','全部更新完成')
-    }
-  })
+  //   }
+  // })
 }
 
 export default forPage;
