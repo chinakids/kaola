@@ -1,4 +1,4 @@
-import jade from './runtime';
+import jadeRuntime from 'jade-runtime';
 import templateModel from './../models/Template';
 /**
  * [render 返回页面的方法]
@@ -11,7 +11,7 @@ function render(name, data){
       }else{
         let templateJS= new Function('jade','data',templates[0].content+';return template(data)');
         //console.log(html)
-        resolve(templateJS(jade,data));
+        resolve(templateJS(jadeRuntime,data));
       }
     })
   })
