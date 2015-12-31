@@ -4,6 +4,7 @@
 const GlobalSettng =  {
   //debug 为 true 时，用于本地调试
   DEBUG: false,
+  LOG_DIR:process.cwd() + '/log',
   NAME: 'kaola',
   //seeion&cookie相关
   COOKIE_NAME: 'kaola', //cookie的名称
@@ -28,7 +29,7 @@ const GlobalSettng =  {
   SITE_BASICKEYWORDS: '', //基础关键词（忽视文章seo必带的）
 
   //上传
-  UPDATE_FOLDER: process.cwd() + '/public/upload', //默认上传文件夹本地路径
+  UPDATE_DIR: process.cwd() + '/public/upload', //默认上传文件夹本地路径
 
   //本地redis设置
   REDIS_HOST: '127.0.0.1',

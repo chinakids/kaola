@@ -1,0 +1,71 @@
+xx
+
+2015-12-31 11:04:43.377 nodejs.ErrorException: Error: demo error
+    at Object.callee$0$0$ (/Users/xuanyong/Desktop/kaola/app.js:51:9)
+    at tryCatch (/usr/local/lib/node_modules/babel/node_modules/babel-core/node_modules/regenerator/runtime.js:61:40)
+    at GeneratorFunctionPrototype.invoke [as _invoke] (/usr/local/lib/node_modules/babel/node_modules/babel-core/node_modules/regenerator/runtime.js:323:22)
+    at GeneratorFunctionPrototype.prototype.(anonymous function) [as next] (/usr/local/lib/node_modules/babel/node_modules/babel-core/node_modules/regenerator/runtime.js:94:21)
+    at onFulfilled (/Users/xuanyong/Desktop/kaola/node_modules/co/index.js:65:19)
+    at /Users/xuanyong/Desktop/kaola/node_modules/co/index.js:54:5
+    at new Promise (/usr/local/lib/node_modules/babel/node_modules/babel-core/node_modules/core-js/modules/es6.promise.js:182:7)
+    at Object.co (/Users/xuanyong/Desktop/kaola/node_modules/co/index.js:50:10)
+    at Object.toPromise (/Users/xuanyong/Desktop/kaola/node_modules/co/index.js:118:63)
+    at next (/Users/xuanyong/Desktop/kaola/node_modules/co/index.js:99:29)
+    at onFulfilled (/Users/xuanyong/Desktop/kaola/node_modules/co/index.js:69:7)
+    at run (/usr/local/lib/node_modules/babel/node_modules/babel-core/node_modules/core-js/modules/es6.promise.js:89:39)
+    at /usr/local/lib/node_modules/babel/node_modules/babel-core/node_modules/core-js/modules/es6.promise.js:100:28
+    at flush (/usr/local/lib/node_modules/babel/node_modules/babel-core/node_modules/core-js/modules/$.microtask.js:17:13)
+    at doNTCallback0 (node.js:419:9)
+    at process._tickDomainCallback (node.js:389:13)
+pid: 33816
+Host: xuanyongdeMacBook-Air.local
+URL: 
+Data: ''
+2015-12-31 11:04:43.377
+
+2015-12-31 11:04:44.592 nodejs.ErrorException: Error: demo error
+    at Object.callee$0$0$ (/Users/xuanyong/Desktop/kaola/app.js:51:9)
+    at tryCatch (/usr/local/lib/node_modules/babel/node_modules/babel-core/node_modules/regenerator/runtime.js:61:40)
+    at GeneratorFunctionPrototype.invoke [as _invoke] (/usr/local/lib/node_modules/babel/node_modules/babel-core/node_modules/regenerator/runtime.js:323:22)
+    at GeneratorFunctionPrototype.prototype.(anonymous function) [as next] (/usr/local/lib/node_modules/babel/node_modules/babel-core/node_modules/regenerator/runtime.js:94:21)
+    at onFulfilled (/Users/xuanyong/Desktop/kaola/node_modules/co/index.js:65:19)
+    at /Users/xuanyong/Desktop/kaola/node_modules/co/index.js:54:5
+    at new Promise (/usr/local/lib/node_modules/babel/node_modules/babel-core/node_modules/core-js/modules/es6.promise.js:182:7)
+    at Object.co (/Users/xuanyong/Desktop/kaola/node_modules/co/index.js:50:10)
+    at Object.toPromise (/Users/xuanyong/Desktop/kaola/node_modules/co/index.js:118:63)
+    at next (/Users/xuanyong/Desktop/kaola/node_modules/co/index.js:99:29)
+    at onFulfilled (/Users/xuanyong/Desktop/kaola/node_modules/co/index.js:69:7)
+    at run (/usr/local/lib/node_modules/babel/node_modules/babel-core/node_modules/core-js/modules/es6.promise.js:89:39)
+    at /usr/local/lib/node_modules/babel/node_modules/babel-core/node_modules/core-js/modules/es6.promise.js:100:28
+    at flush (/usr/local/lib/node_modules/babel/node_modules/babel-core/node_modules/core-js/modules/$.microtask.js:17:13)
+    at doNTCallback0 (node.js:419:9)
+    at process._tickDomainCallback (node.js:389:13)
+pid: 33816
+Host: xuanyongdeMacBook-Air.local
+URL: 
+Data: ''
+2015-12-31 11:04:44.592
+
+2015-12-31 11:08:53.981 nodejs.ReferenceErrorException: ReferenceError: log is not defined
+    at Object.callee$0$0$ (/Users/xuanyong/Desktop/kaola/app.js:51:15)
+    at tryCatch (/usr/local/lib/node_modules/babel/node_modules/babel-core/node_modules/regenerator/runtime.js:61:40)
+    at GeneratorFunctionPrototype.invoke [as _invoke] (/usr/local/lib/node_modules/babel/node_modules/babel-core/node_modules/regenerator/runtime.js:323:22)
+    at GeneratorFunctionPrototype.prototype.(anonymous function) [as next] (/usr/local/lib/node_modules/babel/node_modules/babel-core/node_modules/regenerator/runtime.js:94:21)
+    at onFulfilled (/Users/xuanyong/Desktop/kaola/node_modules/co/index.js:65:19)
+    at /Users/xuanyong/Desktop/kaola/node_modules/co/index.js:54:5
+    at new Promise (/usr/local/lib/node_modules/babel/node_modules/babel-core/node_modules/core-js/modules/es6.promise.js:182:7)
+    at Object.co (/Users/xuanyong/Desktop/kaola/node_modules/co/index.js:50:10)
+    at Object.toPromise (/Users/xuanyong/Desktop/kaola/node_modules/co/index.js:118:63)
+    at next (/Users/xuanyong/Desktop/kaola/node_modules/co/index.js:99:29)
+    at onFulfilled (/Users/xuanyong/Desktop/kaola/node_modules/co/index.js:69:7)
+    at run (/usr/local/lib/node_modules/babel/node_modules/babel-core/node_modules/core-js/modules/es6.promise.js:89:39)
+    at /usr/local/lib/node_modules/babel/node_modules/babel-core/node_modules/core-js/modules/es6.promise.js:100:28
+    at flush (/usr/local/lib/node_modules/babel/node_modules/babel-core/node_modules/core-js/modules/$.microtask.js:17:13)
+    at doNTCallback0 (node.js:419:9)
+    at process._tickDomainCallback (node.js:389:13)
+pid: 33885
+Host: xuanyongdeMacBook-Air.local
+URL: 
+Data: ''
+2015-12-31 11:08:53.981
+

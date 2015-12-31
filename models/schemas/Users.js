@@ -34,7 +34,7 @@ let UserSchema = new mongoose.Schema({
 /*
 *   给save方法添加预处理
 */
-UserSchema.pre('save', (next) ->
+UserSchema.pre('save', (next) => {
   //记录更新时间
   if(this.isNew){
     this.meta.createAt = this.meta.updateAt = Date.now();
@@ -42,7 +42,7 @@ UserSchema.pre('save', (next) ->
     this.meta.updateAt = Date.now();
   }
   next();
-)
+})
 /*
 *   绑定静态方法
 *   thistype {Object}

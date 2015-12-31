@@ -1,6 +1,7 @@
 import koa from 'koa';
 import route from 'koa-router';
-import logger from 'koa-logger';
+import koaLogger from 'koa-logger';
+import logger from './utils/logger';
 import json from 'koa-json';
 import views from 'koa-views';
 import onerror from 'koa-onerror';
@@ -8,6 +9,7 @@ import koaStatic from 'koa-static';
 import koaBodyparser from 'koa-bodyparser';
 import session from 'koa-generic-session';
 import redisStore from 'koa-redis';
+import connect from './utils/mongodb';
 //导入全局设置
 import S from './conf/setting'
 //导入路由配置
@@ -16,6 +18,7 @@ import users from './routes/users';
 //实例化
 let app = koa();
 let R = route();
+let C = connect();
 //设置模板相关参数
 app.use(views('views', {
   root: __dirname + '/views',
@@ -27,7 +30,7 @@ app.use(koaBodyparser({
   jsonLimit:'200kb'
 }));
 app.use(json());
-app.use(logger());
+app.use(koaLogger());
 //设置静态资源相关参数
 app.use(koaStatic(__dirname + '/public'));
 //设置seeion相关册数
@@ -58,7 +61,7 @@ R.use('/users', users.routes(), users.allowedMethods());
 app.use(R.routes());
 
 app.on('error', (err, ctx) => {
-  log.error('server error', err, ctx);
+  logger('error',err, ctx);
 });
 
 export default app;
