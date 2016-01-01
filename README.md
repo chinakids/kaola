@@ -7,6 +7,6 @@
 a full-stack generator
 
 
-##LICENSE
+## LICENSE
 
 [MIT](https://github.com/chinakids/kaola/blob/master/LICENSE)
