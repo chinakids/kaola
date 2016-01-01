@@ -19,7 +19,6 @@ let logger = miniLogger({
 });
 
 let print = function(categories,info){
-  console.log(fs.existsSync(S.LOG_DIR))
   if(categories === 'error'){
     console.log(info)
     logger.error(info);

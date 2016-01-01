@@ -13,7 +13,7 @@ function connect(){
       if(err){
         logger('model',err)
       }else{
-        logger('model','数据库已连接')
+        logger('model','数据库已连接');
         temlateCache();
       }
     });
@@ -23,7 +23,7 @@ function connect(){
       if(err){
         logger('model',err)
       }else{
-        logger('model','数据库已连接')
+        logger('model','数据库已连接');
         temlateCache();
       }
     });
