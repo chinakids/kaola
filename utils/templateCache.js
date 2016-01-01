@@ -80,8 +80,6 @@ function preCompile(filePath, pageName){
       })
       done++;
       if(done >= all) logger('template','全部更新完成')
-  //   }
-  // })
 }
 
 export default forPage;
