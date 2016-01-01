@@ -7,17 +7,19 @@ import S from './../conf/setting';
  * @param {[type]} categories  [自定义类型]
  * @param {[type]} format  [和石化日志名]
  */
+ //如果目录不存在自动创建
+if(!fs.existsSync(S.LOG_DIR)){
+ fs.mkdirSync(S.LOG_DIR);
+}
+
 let logger = miniLogger({
     dir: S.LOG_DIR,
     categories: ['router','model','template'],
-    format: 'YYYY-MM-DD-[{category}][.log]'
+    format: 'YYYY-MM-DD[[{category}]][.log]'
 });
 
 let print = function(categories,info){
-  //如果目录不存在自动创建
-  if(!fs.existsSync(S.LOG_DIR)){
-    fs.mkdirSync(S.LOG_DIR);
-  }
+  console.log(fs.existsSync(S.LOG_DIR))
   if(categories === 'error'){
     console.log(info)
     logger.error(info);
