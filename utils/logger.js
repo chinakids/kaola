@@ -1,3 +1,4 @@
+import fs from 'fs';
 import miniLogger from 'mini-logger';
 import S from './../conf/setting';
 /**
@@ -13,9 +14,12 @@ let logger = miniLogger({
 });
 
 let print = function(categories,info){
+  //如果目录不存在自动创建
+  if(!fs.existsSync(S.LOG_DIR)){
+    fs.mkdirSync(S.LOG_DIR);
+  }
   if(categories === 'error'){
-    // console.log(log)
-    // log.error('server error', info, ctx);
+    console.log(info)
     logger.error(info);
   }else{
     if('function' === typeof logger[categories]){
