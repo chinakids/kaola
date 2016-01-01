@@ -10,7 +10,6 @@ function render(name, data){
         logger('model',err);
       }else{
         let templateJS= new Function('jade','data',templates[0].content+';return template(data)');
-        //console.log(html)
         resolve(templateJS(jadeRuntime,data));
       }
     })
