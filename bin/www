@@ -4,9 +4,9 @@
  * Module dependencies.
  */
 
-import app from '../app'
-import debug from 'debug'
-import http from 'http'
+import app from '../app';
+import debug from 'debug';
+import http from 'http';
 
 let D = debug('demo:server');
 
@@ -41,12 +41,12 @@ function normalizePort(val) {
   if (isNaN(port)) {
     // named pipe
     return val;
-  }
+  };
 
   if (port >= 0) {
     // port number
     return port;
-  }
+  };
 
   return false;
 }
@@ -58,7 +58,7 @@ function normalizePort(val) {
 function onError(error) {
   if (error.syscall !== 'listen') {
     throw error;
-  }
+  };
 
   let bind = typeof port === 'string'
     ? 'Pipe ' + port

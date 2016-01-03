@@ -10,7 +10,7 @@ import S from './../conf/setting';
  //如果目录不存在自动创建
 if(!fs.existsSync(S.LOG_DIR)){
  fs.mkdirSync(S.LOG_DIR);
-}
+};
 
 let logger = miniLogger({
     dir: S.LOG_DIR,
@@ -20,13 +20,13 @@ let logger = miniLogger({
 
 let print = function(categories,info){
   if(categories === 'error'){
-    console.log(info)
+    console.log(info);
     logger.error(info);
   }else{
     if('function' === typeof logger[categories]){
       logger[categories]((new Date()).toLocaleString()+'\t'+info);
     }
   }
-}
+};
 
 export default print;

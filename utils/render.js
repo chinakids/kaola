@@ -11,9 +11,9 @@ function render(name, data){
       }else{
         let templateJS= new Function('jade','data',templates[0].content+';return template(data)');
         resolve(templateJS(jadeRuntime,data));
-      }
-    })
-  })
+      };
+    });
+  });
   return promise;
 }
 

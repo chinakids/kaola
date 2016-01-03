@@ -1,6 +1,6 @@
-import router from 'koa-router'
+import router from 'koa-router';
 
-let R = router()
+let R = router();
 
 R.get('/', function *(next) {
   this.body = 'this a users response!';
