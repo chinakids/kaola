@@ -10,6 +10,7 @@ import templateModel from './../models/Template';
 
 
 let pages = {};
+
 function forPage(){
   let views = path.join(__dirname, './../views');
   let dirList = fs.readdirSync(views);

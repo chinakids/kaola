@@ -14,11 +14,15 @@ if(!fs.existsSync(S.LOG_DIR)){
 
 let logger = miniLogger({
     dir: S.LOG_DIR,
-    categories: ['router','model','template'],
-    format: 'YYYY-MM-DD[[{category}]][.log]'
+    categories: S.LOG_CATEGORIES,
+    format: 'YYYY-MM-DD-[{category}][.log]'
 });
-
-let print = function(categories,info){
+/**
+ * [print 日志输出]
+ * @param  {[type]} categories [日志类型]
+ * @param  {[type]} ...info    [日志内容]
+ */
+function print(categories,...info){
   if(categories === 'error'){
     console.log(info);
     logger.error(info);
