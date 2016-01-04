@@ -21,7 +21,7 @@ const globalSetting =  {
 
   //seeion&cookie相关
   COOKIE_NAME: 'kaola', //cookie的名称
-  ENCRYPT_KEY: 'csN%vm*XycUbKSfN3cvj3CO!9tPna*LU', //加密用字符串
+  ENCRYPT_KEY: 'csN%vm*XycUbKSfN3cvj3CO!9tPna*LU', //加密用字符串,正式上线请务必修改
 
   //数据库配置
   DB_TYPE: 'mongodb', //数据库类型
