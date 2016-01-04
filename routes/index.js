@@ -6,9 +6,7 @@ let R = router();
 R.get('/', function *(next) {
   yield render('index', {
     title: 'Hello World Kaola!'+this.session.name
-  }).then((html) => {
-    this.body = html;
-  })
+  },this);
 });
 
 export default R;
