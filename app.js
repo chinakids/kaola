@@ -41,7 +41,7 @@ app.use(session({
     host:S.REDIS_HOST,
     port:S.REDIS_PORT,
     //socket:S.REDIS_SOCKET, //socket
-    //pass:S.REDIS_PSD,   //redis连接密码
+    //pass:S.REDIS_PASSWORD,   //redis连接密码
     db:S.REDIS_DB
   })
 }));

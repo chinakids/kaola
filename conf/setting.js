@@ -36,7 +36,7 @@ const globalSetting =  {
   SITE_DOMAIN: '', //站点域名
   SITE_MAIL:'', //站点邮箱
   SITE_ICP: '', //站点备案号
-  SITE_V: 'v'+baseInfo.version, //静态资源版本戳
+  SITE_VERSION: 'v'+baseInfo.version, //静态资源版本戳
   SITE_DISCRIPTION: '', //站点描述
   SITE_KEYWORDS: '', //站点关键字
   SITE_BASICKEYWORDS: '', //基础关键词（忽视文章seo必带的）
@@ -48,7 +48,7 @@ const globalSetting =  {
   REDIS_HOST: '127.0.0.1',  //redis地址
   REDIS_PORT: 6379,  //redis端口
   REDIS_SOCKET: null, //redis socket
-  REDIS_PSD: '', //redis密码
+  REDIS_PASSWORD: '', //redis密码
   REDIS_DB: 0, //redis数据库
 }
 
