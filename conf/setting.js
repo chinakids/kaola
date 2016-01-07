@@ -14,6 +14,7 @@ const globalSetting =  {
 
   //debug 为 true 时，用于本地调试
   DEBUG: false,
+  SERVICE: 'pm2',  //进程维护工具
 
   //日志记录
   LOG_DIR:process.cwd() + '/log', //日志目录
