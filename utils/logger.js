@@ -5,7 +5,7 @@ import S from './../conf/setting';
  * [Logger 日志输出到文本]
  * @param {[type]} dir  [日志输出目录]
  * @param {[type]} categories  [自定义类型]
- * @param {[type]} format  [和石化日志名]
+ * @param {[type]} format  [格式化日志名]
  */
  //如果目录不存在自动创建
 if(!fs.existsSync(S.LOG_DIR)){
