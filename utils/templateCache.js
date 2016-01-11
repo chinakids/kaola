@@ -14,7 +14,7 @@ let pages = {
   fontend:{}
 };
 
-function forPage(){
+function templateCache(){
   //递归后台模板
   let backendViews = path.join(__dirname, './../views/backend');
   fs.readdirSync(backendViews).forEach((item) => {
@@ -82,4 +82,4 @@ function preCompile(filePath, pageName,group){
   });
 };
 
-export default forPage;
+export default templateCache;
