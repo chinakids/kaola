@@ -9,15 +9,27 @@ import templateModel from './../models/Template';
  */
 
 
-let pages = {};
+let pages = {
+  backend:{},
+  fontend:{}
+};
 
 function forPage(){
-  let views = path.join(__dirname, './../views');
-  let dirList = fs.readdirSync(views);
-  dirList.forEach((item) => {
-    if(!fs.statSync(views + '/' + item).isDirectory()){
+  //递归后台模板
+  let backendViews = path.join(__dirname, './../views/backend');
+  fs.readdirSync(backendViews).forEach((item) => {
+    if(!fs.statSync(backendViews + '/' + item).isDirectory()){
       if(item.indexOf('.jade') !== -1){
-        pages[item.split('.')[0]] = item;
+        pages['backend'][item.split('.')[0]] = item;
+      };
+    };
+  });
+  //递归前台模板
+  let fontendViews = path.join(__dirname, './../views/fontend');
+  fs.readdirSync(fontendViews).forEach((item) => {
+    if(!fs.statSync(fontendViews + '/' + item).isDirectory()){
+      if(item.indexOf('.jade') !== -1){
+        pages['fontend'][item.split('.')[0]] = item;
       };
     };
   });
@@ -25,27 +37,31 @@ function forPage(){
 };
 
 function compileRenderService(){
-  for(let name in pages){
-    preCompile(path.join(__dirname,'./../views/'+pages[name]), name);
+  for(let name in pages.backend){
+    preCompile(path.join(__dirname,'./../views/backend/'+pages[name]), name, 'backend');
+  };
+  for(let name in pages.fontend){
+    preCompile(path.join(__dirname,'./../views/fontend/'+pages[name]), name, 'fontend');
   };
 };
 
-function preCompile(filePath, pageName){
-  templateModel.findByName(pageName, (err,templates) => {
+function preCompile(filePath, pageName,group){
+  templateModel.findByName({'name':pageName,'group':group}, (err,templates) => {
     if(err){
       logger('model',err);
     }else{
-      //判断用户是否存在
+      //判断模板是否存在
       if(templates.length<=0){
         let _template = new templateModel({
           name      : pageName,
-          content   : jade.compileFileClient(filePath)
+          content   : jade.compileFileClient(filePath),
+          grounp    : group
         })
         _template.save((err, template) => {
           if(err){
             logger('model',err);
           }else{
-            logger('template',`${pageName}-[初次]编译成功`)
+            logger('template',`${grounp}-${pageName}-[初次]编译成功`)
           };
         });
       }else{
@@ -58,7 +74,7 @@ function preCompile(filePath, pageName){
           if(err){
             logger('model',err);
           }else{
-            logger('template',`${template.name}-[更新]编译成功`);
+            logger('template',`${grounp}-${template.name}-[更新]编译成功`);
           };
         });
       };

@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "pm2 start ./bin/pm2_config.json",
-    "test": "node-babel ./bin/www"
+    "test": "babel-node ./bin/www"
   },
   "dependencies": {
     "co": "^4.6.0",
