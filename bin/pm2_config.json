@@ -1,6 +1,6 @@
 {
   "apps": [{
-    "name": "koala",
+    "name": "kaola",
     "script": "./bin/www",
     "watch": true,
     "exec_interpreter": "babel-node",

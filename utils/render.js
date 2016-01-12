@@ -10,10 +10,10 @@ import logger from './logger';
  * 1.  rander('index',{...},this);
  * 2.  rander.call(this,'index',{...});
  */
-function * render(name, data ,ctx){
+function * render(name, group, data ,ctx){
   let self = ctx || this;
   let promise = new Promise(function(resolve, reject){
-    templateModel.findByName(name, (err,templates) => {
+    templateModel.findByName({'name':name,'group':group}, (err,templates) => {
       if(err){
         logger('model',err);
       }else{

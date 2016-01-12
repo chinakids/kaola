@@ -4,7 +4,7 @@ import render from './../utils/render';
 let R = router();
 
 R.get('/', function *(next) {
-  yield render('index', {
+  yield render('index','fontend', {
     title: 'Hello World Kaola!'+this.session.name
   },this);
 });
