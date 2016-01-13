@@ -15,6 +15,8 @@ import S from './conf/setting'
 //导入路由配置
 import index from './routes/index';
 import users from './routes/users';
+import admin from './routes/admin';
+
 //实例化
 let app = koa();
 let R = route();
@@ -56,6 +58,7 @@ app.use(function *(next) {
 //路由设置
 R.use('/', index.routes(), index.allowedMethods());
 R.use('/users', users.routes(), users.allowedMethods());
+R.use('/admin', admin.routes(), admin.allowedMethods());
 
 //全局路由
 app.use(R.routes());
