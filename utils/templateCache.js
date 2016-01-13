@@ -38,14 +38,14 @@ function templateCache(){
 
 function compileRenderService(){
   for(let name in pages.backend){
-    preCompile(path.join(__dirname,'./../views/backend/'+pages[name]), name, 'backend');
+    preCompile(path.join(__dirname,'./../views/backend/'+pages['backend'][name]), name, 'backend');
   };
   for(let name in pages.fontend){
-    preCompile(path.join(__dirname,'./../views/fontend/'+pages[name]), name, 'fontend');
+    preCompile(path.join(__dirname,'./../views/fontend/'+pages['fontend'][name]), name, 'fontend');
   };
 };
 
-function preCompile(filePath, pageName,group){
+function preCompile(filePath, pageName, group){
   templateModel.findByName({'name':pageName,'group':group}, (err,templates) => {
     if(err){
       logger('model',err);
@@ -55,13 +55,13 @@ function preCompile(filePath, pageName,group){
         let _template = new templateModel({
           name      : pageName,
           content   : jade.compileFileClient(filePath),
-          grounp    : group
+          group     : group
         })
         _template.save((err, template) => {
           if(err){
             logger('model',err);
           }else{
-            logger('template',`${grounp}-${pageName}-[初次]编译成功`)
+            logger('template',`${group}-${pageName}-[初次]编译成功`)
           };
         });
       }else{
@@ -74,7 +74,7 @@ function preCompile(filePath, pageName,group){
           if(err){
             logger('model',err);
           }else{
-            logger('template',`${grounp}-${template.name}-[更新]编译成功`);
+            logger('template',`${group}-${template.name}-[更新]编译成功`);
           };
         });
       };

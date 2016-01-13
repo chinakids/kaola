@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
 */
 let TemplateSchema = new mongoose.Schema({
   name       : String,//名称
-  group      : String,
+  group      : String,//所属组
   content    : String,//内容
   compiled   : {
     type     : Number,//二次编译次数
@@ -46,7 +46,7 @@ TemplateSchema.statics = {
       .sort('meta.updateAt')
       .exec(cb)
   },
-  findByName(name,cb){
+  findByName(query,cb){
     this.find({
         name:query.name,
         group:query.group
