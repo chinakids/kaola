@@ -7,6 +7,7 @@
     "test": "babel-node ./bin/www"
   },
   "dependencies": {
+    "ccap": "^0.6.4",
     "co": "^4.6.0",
     "debug": "^2.2.0",
     "jade": "^1.11.0",
