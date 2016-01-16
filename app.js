@@ -52,10 +52,6 @@ app.use(session({
 app.name = S.NAME;
 //设置cookies相关key
 app.keys = [S.COOKIE_NAME, S.ENCRYPT_KEY];
-app.use(function *(next) {
-  this.session.name = 'koa-redis';
-  yield next;
-});
 //路由设置
 R.use('/', index.routes(), index.allowedMethods());
 R.use('/api', api.routes(), api.allowedMethods());

@@ -5,7 +5,7 @@ let R = router();
 
 R.get('/', function *(next) {
   yield render('index','fontend', {
-    title: 'Hello World Kaola!'+this.session.name
+    title: 'Hello World Kaola!'
   },this);
 });
 
