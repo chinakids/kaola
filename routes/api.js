@@ -15,8 +15,7 @@ let R = router();
 R.get('/securityCode',function *(next) {
   let arry = securityCode.get();
   this.session.ccap = arry[0];
-  let buffer = arry[1];
-  this.body = buffer;
+  this.body = arry[1];
 });
 
 export default R;

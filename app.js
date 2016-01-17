@@ -58,7 +58,6 @@ R.use('/api', api.routes(), api.allowedMethods());
 R.use('/users', users.routes(), users.allowedMethods());
 R.use('/admin', admin.routes(), admin.allowedMethods());
 
-
 //全局路由
 app.use(R.routes());
 
