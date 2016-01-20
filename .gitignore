@@ -8,3 +8,5 @@ sftp-config.json
 .DS_Store
 .git
 log/
+public/lib
+public/upload
