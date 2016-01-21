@@ -15,7 +15,7 @@ const globalSetting =  {
   ADMIN_DOMAIN: 'admin', //进入管理后台的url，‘http://{{ALLOW_DOMAIN}}/{{ADMIN_DOMAIN}}’
 
   //debug 为 true 时，用于本地调试
-  DEBUG: false,
+  DEBUG: true,
   SERVICE: 'pm2',  //进程维护工具
 
   //日志记录
