@@ -10,6 +10,7 @@ import koaBodyparser from 'koa-bodyparser';
 import session from 'koa-generic-session';
 import redisStore from 'koa-redis';
 import connect from './utils/mongodb';
+import render from './utils/render';
 //导入全局设置
 import S from './conf/setting'
 //导入路由配置
@@ -17,7 +18,6 @@ import index from './routes/index';
 import users from './routes/users';
 import admin from './routes/admin';
 import api from './routes/api';
-
 //实例化
 let app = koa();
 let R = route();
@@ -52,17 +52,37 @@ app.use(session({
 app.name = S.NAME;
 //设置cookies相关key
 app.keys = [S.COOKIE_NAME, S.ENCRYPT_KEY];
+//过滤非法URL请求,顺带处理404
+app.use(function *(next){
+  let allow = false;
+  for(let item in S.ALLOW_DOMAIN){
+    if(this.hostname === S.ALLOW_DOMAIN[item]){
+      allow = true;
+    }
+  }
+  if(allow){
+    yield next;
+  }
+})
 //路由设置
 R.use('/', index.routes(), index.allowedMethods());
 R.use('/api', api.routes(), api.allowedMethods());
 R.use('/users', users.routes(), users.allowedMethods());
 R.use('/admin', admin.routes(), admin.allowedMethods());
 
-//全局路由
-app.use(R.routes());
+//绑定路由
+app.use(function *(){
+  yield R.routes();
+  if (this.status !== 404) return;
+  this.status = 404;
+  yield render('error','fontend', {
+    message: 'Not Found'
+  },this);
+});
 
-app.on('error', (err, ctx) => {
-  logger('error',err, ctx);
+//错误监听
+app.on('error', function(err, ctx){
+  logger('error',err);
 });
 
 export default app;

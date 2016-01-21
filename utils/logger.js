@@ -22,7 +22,7 @@ let logger = miniLogger({
  * @param  {[type]} categories [日志类型]
  * @param  {[type]} ...info    [日志内容]
  */
-function print(categories,...info){
+function print(categories,info){
   if(categories === 'error'){
     console.log(info);
     logger.error(info);

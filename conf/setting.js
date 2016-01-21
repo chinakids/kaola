@@ -11,6 +11,7 @@ const globalSetting =  {
   NAME: baseInfo.name, //应用名称
   VERSION: 'v'+baseInfo.version, //应用版本
   AUTHOR: '', //作者
+  ALLOW_DOMAIN: ['127.0.0.1'], //域名白名单,只允许名单内的域名访问,false为不开启
 
   //debug 为 true 时，用于本地调试
   DEBUG: false,
@@ -34,7 +35,7 @@ const globalSetting =  {
 
   //站点基础信息配置
   SITE_TITLE: '', //站点名称
-  SITE_DOMAIN: '', //站点域名
+  SITE_DOMAIN: '', //站点域名,这里是个主域名
   SITE_MAIL:'', //站点邮箱
   SITE_ICP: '', //站点备案号
   SITE_VERSION: 'v'+baseInfo.version, //静态资源版本戳
