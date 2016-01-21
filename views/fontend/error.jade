@@ -1,16 +1,8 @@
 extends ./layout/layout
 
 block content
-  section.content
-    div.row
-      div.col-xs-12
-        div.callout.callout-danger
-          if debug
-            h2 
-              i.icon.fa.fa-ban
-              |  #{error.status} - #{title}
-            pre #{error.stack}
-          else
-            h2 
-              i.icon.fa.fa-ban
-              |  #{title}
+  if debug
+    h2 #{error.status} - #{title}
+    pre #{error.stack}
+  else
+    h2 #{title}
