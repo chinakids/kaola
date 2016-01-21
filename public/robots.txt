@@ -1,0 +1,7 @@
+User-agent: *
+Disallow:
+Crawl-delay: 120
+Disallow: /backend/
+Disallow: /fontend/
+Disallow: /api/
+Disallow: /lib/

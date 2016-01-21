@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "pm2 start ./bin/pm2_config.json",
+    "start": "pm2 start ./conf/pm2.json",
     "test": "babel-node ./bin/www"
   },
   "dependencies": {
