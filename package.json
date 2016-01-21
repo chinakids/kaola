@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "pm2 start ./conf/pm2.json",
-    "test": "babel-node ./bin/www"
+    "test": "supervisor -x babel-node ./bin/www"
   },
   "dependencies": {
     "ccap": "^0.6.4",
