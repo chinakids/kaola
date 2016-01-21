@@ -52,7 +52,17 @@ app.use(session({
 app.name = S.NAME;
 //设置cookies相关key
 app.keys = [S.COOKIE_NAME, S.ENCRYPT_KEY];
-//过滤非法URL请求,顺带处理404
+//404
+app.use(function *(next){
+  yield next;
+  if (this.status !== 404) return;
+  this.status = 404;
+  yield render('error','fontend', {
+    debug: S.DEBUG,
+    title: 'Not Found'
+  },this);
+})
+//过滤非法URL请求
 app.use(function *(next){
   let allow = false;
   for(let item in S.ALLOW_DOMAIN){
@@ -68,17 +78,10 @@ app.use(function *(next){
 R.use('/', index.routes(), index.allowedMethods());
 R.use('/api', api.routes(), api.allowedMethods());
 R.use('/users', users.routes(), users.allowedMethods());
-R.use('/admin', admin.routes(), admin.allowedMethods());
+R.use('/'+S.ADMIN_DOMAIN, admin.routes(), admin.allowedMethods());
 
 //绑定路由
-app.use(function *(){
-  yield R.routes();
-  if (this.status !== 404) return;
-  this.status = 404;
-  yield render('error','fontend', {
-    message: 'Not Found'
-  },this);
-});
+app.use(R.routes());
 
 //错误监听
 app.on('error', function(err, ctx){

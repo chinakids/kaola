@@ -5,7 +5,12 @@ block content
     div.row
       div.col-xs-12
         div.callout.callout-danger
-          h2 
-            i.icon.fa.fa-ban
-            |  #{error.status} - #{title}
-          pre #{error.stack}
+          if debug
+            h2 
+              i.icon.fa.fa-ban
+              |  #{error.status} - #{title}
+            pre #{error.stack}
+          else
+            h2 
+              i.icon.fa.fa-ban
+              |  #{title}

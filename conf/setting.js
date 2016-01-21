@@ -12,6 +12,7 @@ const globalSetting =  {
   VERSION: 'v'+baseInfo.version, //应用版本
   AUTHOR: '', //作者
   ALLOW_DOMAIN: ['127.0.0.1'], //域名白名单,只允许名单内的域名访问,false为不开启
+  ADMIN_DOMAIN: 'kaola', //进入管理后台的url，‘http://{{ALLOW_DOMAIN}}/{{ADMIN_DOMAIN}}’
 
   //debug 为 true 时，用于本地调试
   DEBUG: false,
@@ -42,6 +43,7 @@ const globalSetting =  {
   SITE_DISCRIPTION: '', //站点描述
   SITE_KEYWORDS: '', //站点关键字
   SITE_BASICKEYWORDS: '', //基础关键词（忽视文章seo必带的）
+
 
   //上传
   UPDATE_DIR: process.cwd() + '/public/upload', //默认上传文件夹本地路径
