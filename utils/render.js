@@ -17,10 +17,11 @@ function * render(name, group, data ,ctx){
   if(S.DEBUG){
     yield self.render(group+'/'+name, data);
   }else {
-    let promise = new Promise(function(resolve, reject){
+    let promise = new Promise((resolve, reject) => {
       templateModel.findByName({'name':name,'group':group}, (err,templates) => {
         if(err){
           logger('model',err);
+          reject(err)
         }else{
           let templateJS= new Function('jade','data',templates[0].content+';return template(data)');
           resolve(templateJS(jadeRuntime,data));

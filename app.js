@@ -18,6 +18,8 @@ import index from './routes/index';
 import users from './routes/users';
 import admin from './routes/admin';
 import api from './routes/api';
+//导入控制部分
+import userInfo from './controller/getUserInfo';
 //实例化
 let app = koa();
 let R = route();
@@ -74,6 +76,7 @@ app.use(function *(next){
     yield next;
   }
 })
+app.use(userInfo);
 //路由设置
 R.use('/', index.routes(), index.allowedMethods());
 R.use('/api', api.routes(), api.allowedMethods());

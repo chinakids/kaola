@@ -2,7 +2,8 @@ extends ./layout/layout
 
 block content
   if debug
-    h2 #{error.status} - #{title}
-    pre #{error.stack}
+    h2 #{title}
+    //- h2 #{error.status} - #{title}
+    //- pre #{error.stack}
   else
     h2 #{title}

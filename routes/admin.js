@@ -12,7 +12,7 @@ let securityCode = ccap({
 let R = router();
 
 R.get('/', function *(next) {
-  this.body = 'this a admin response!';
+  this.body = this.session.userInfo;
 });
 
 R.get('/login', function *(next) {
@@ -22,7 +22,7 @@ R.get('/login', function *(next) {
 });
 
 R.post('/login', function *(next) {
-  this.body = 'this a admin response!';
+  this.body = 'this a admin response!'+this.session.login;
 });
 
 R.get('/logout', function *(next) {

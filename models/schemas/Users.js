@@ -1,15 +1,14 @@
 import mongoose from 'mongoose';
 
-import UserGroup from '../UserGroup'
+import UserGroup from '../UserGroup';
 /*
 *   创建用户的shcema
 *   thistype {mongoose}
 */
 let UserSchema = new mongoose.Schema({
-  name       : String,//昵称
-  userName   : String,//用户名
-  password   : String,//密码
+  nickName   : String,//昵称
   email      : String,//邮箱
+  password   : String,//密码
   phoneNum   : Number,//电话
   admin      : Boolean,//是否为管理员
   avatar     : {
@@ -20,7 +19,7 @@ let UserSchema = new mongoose.Schema({
     type     : String,//用户组
     ref      : 'UserGroup'
   },
-  meta       :
+  meta       : {
     createAt : {
       type      : Date,
       default   : Date.now()
