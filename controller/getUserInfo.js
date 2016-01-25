@@ -6,7 +6,7 @@ import usersModel from '../models/Users';
 function * userInfo(next){
   if(this.session.login){
     let promise = new Promise((resolve, reject) => {
-      usersModel.findByEmail(this.session.email,(err,data) => {
+      usersModel.getInfoByEmail(this.session.email,(err,data) => {
         if(err){
           logger('model',err);
           reject(err);

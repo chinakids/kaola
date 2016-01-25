@@ -53,7 +53,7 @@ UserSchema.statics = {
       .sort('meta.updateAt')
       .exec(cb)
   },
-  findBy(id,cb){
+  findById(id,cb){
     this.find({
         _id:id
       })
@@ -64,6 +64,16 @@ UserSchema.statics = {
   findByEmail(emal,cb){
     this.find({
         email:emal
+      })
+      .populate('group')
+      .sort('meta.updateAt')
+      .exec(cb)
+  },
+  getInfoByEmail(emal,cb){
+    this.find({
+        email:emal
+      },{
+        password:0 //获取info时过滤掉password
       })
       .populate('group')
       .sort('meta.updateAt')
