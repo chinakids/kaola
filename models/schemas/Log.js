@@ -1,16 +1,19 @@
 import mongoose from 'mongoose';
 /*
-*   模板缓存的shcema
+*   后台操作日志记录的shcema
 *   thistype {mongoose}
 */
-let TemplateSchema = new mongoose.Schema({
-  name       : String,//名称
-  group      : String,//所属组
-  content    : String,//内容
-  compiled   : {
-    type     : Number,//二次编译次数
-    default  : 0
-  },
+let LogSchema = new mongoose.Schema({
+  type       : String,//类型
+  message    : String,//内容
+  level      : {
+    type     : String,
+    default  : 'p4' //p4-p1等级危险程度依次递增，后期操作记录会进行记录
+  },//等级
+  user       : {
+    type     : String,
+    ref      : 'Users'
+  },//产生行为的用户
   meta       : {
     createAt : {
       type      : Date,
@@ -26,7 +29,7 @@ let TemplateSchema = new mongoose.Schema({
 /*
 *   给save方法添加预处理
 */
-TemplateSchema.pre('save', function(next){
+LogSchema.pre('save', function(next){
   //记录更新时间
   if(this.isNew){
     this.meta.createAt = this.meta.updateAt = Date.now();
@@ -40,20 +43,12 @@ TemplateSchema.pre('save', function(next){
 *   绑定静态方法
 *   thistype {Object}
 */
-TemplateSchema.statics = {
+LogSchema.statics = {
   fetch(cb){
     this.find({})
-      .sort('meta.updateAt')
-      .exec(cb)
-  },
-  findByName(query,cb){
-    this.find({
-        name:query.name,
-        group:query.group
-      })
       .sort('meta.updateAt')
       .exec(cb)
   }
 }
 
-export default TemplateSchema;
+export default LogSchema;
