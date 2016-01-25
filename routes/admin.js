@@ -12,7 +12,7 @@ let securityCode = ccap({
 });
 
 let R = router();
-
+//控制面板
 R.get('/', function *(next) {
   if(this.session.login){
     yield render('index','backend', {
@@ -23,13 +23,13 @@ R.get('/', function *(next) {
     this.redirect('./login')
   }
 });
-
+//登陆
 R.get('/login', function *(next) {
   yield render('login','backend', {
     title: '管理员登陆'
   },this);
 });
-
+//登陆接口
 R.post('/login', function *(next) {
   let parm = this.request.body;
   let md5 = crypto.createHash('md5');
@@ -64,9 +64,8 @@ R.post('/login', function *(next) {
       }
     }
   });
-
 });
-
+//登出
 R.all('/logout', function *(next) {
   if(this.request.method === 'GET'){
     this.session.login = false;
