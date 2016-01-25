@@ -21,7 +21,7 @@ function * userInfo(next){
         this.session.login = false;
         this.session.email = '';
       }else{
-        //将信息挂载字session上
+        //TODO 将信息挂载字session上 后期要对关键数据过滤
         this.session.userInfo = data[0];
       }
     });

@@ -14,7 +14,14 @@ let securityCode = ccap({
 let R = router();
 
 R.get('/', function *(next) {
-  this.body = this.session.userInfo;
+  if(this.session.login){
+    yield render('index','backend', {
+      title: '管理面板',
+      userInfo: this.session.userInfo
+    },this);
+  }else{
+    this.redirect('./login')
+  }
 });
 
 R.get('/login', function *(next) {
@@ -39,7 +46,7 @@ R.post('/login', function *(next) {
   yield promise.then((data) => {
     if(data.length <= 0){
       this.body = {
-        msg : 'FAIL::用户不存在'
+        status : 'FAIL::用户不存在'
       }
     }else {
       let result = data[0];
@@ -48,11 +55,11 @@ R.post('/login', function *(next) {
         this.session.email = parm.email;
         this.session.login = true;
         this.body = {
-          msg : 'SUCCESS::登陆成功'
+          status : 'SUCCESS::登陆成功'
         }
       }else{
         this.body = {
-          msg : 'FAIL::密码或验证码错误'
+          status : 'FAIL::密码或验证码错误'
         }
       }
     }
@@ -60,8 +67,17 @@ R.post('/login', function *(next) {
 
 });
 
-R.get('/logout', function *(next) {
-  this.body = 'this a admin response!';
+R.all('/logout', function *(next) {
+  if(this.request.method === 'GET'){
+    this.session.login = false;
+    this.session.userInfo = null;
+    this.redirect('./login');
+  }else if(this.request.method === 'POST'){
+    this.session.login = false;
+    this.session.userInfo = null;
+    this.body = {
+      status : 'SUCCESS::退出登陆'
+    }
 });
 
 export default R;

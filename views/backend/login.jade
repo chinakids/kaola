@@ -42,10 +42,10 @@ block layout
             ticket : $filter('md5')(($filter('md5')($scope.password)+$scope.securityCode).toUpperCase())
           }
           $.post('/admin/login',loginData,function(data){
-            var status = data.msg.split('::')[0],
-            msg = data.msg.split('::')[1];
+            var status = data.status.split('::')[0],
+            msg = data.status.split('::')[1];
             if(status === 'SUCCESS'){
-              $('#tip').append('<div class="callout callout-success"><p>登陆成功</p></div>');
+              $('#tip').append('<div class="callout callout-success"><p>'+msg+'</p></div>');
               setTimeout(function(){
                 window.location.href = './'
               },2000)
