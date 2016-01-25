@@ -24,7 +24,8 @@ block layout
                     ul.dropdown-menu
                       li.user-header
                         img.img-circle(src='#{userInfo.avatar}', alt='User Image')
-                        p #{userInfo.email} - 管理员
+                        p 管理员
+                        small #{userInfo.email}
                       li.user-footer
                         .pull-left
                           a.btn.btn-default.btn-flat(href='javascript:;')
@@ -42,7 +43,7 @@ block layout
                     i.fa.fa-search
             ul.sidebar-menu
               li.header xxxx
-        .content-wrapper.clearfix
+        .content-wrapper.clearfix(style='padding-top:15px;')
           block content
         footer.main-footer
           .pull-right.hidden-xs

@@ -1,5 +1,86 @@
 extends ./layout/layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  section.content-header
+    h1 #{title}
+      small #{desc}
+    ol.breadcrumb
+      li.active
+        a(href='/',target='_blank')
+          i.fa.fa-home
+          | 前台首页
+  section.content(ng-controller='MainPanelCtrl')
+    div.col-md-12
+      div.box.box-solid
+        div.box-header.with-border
+          h5.box-title #{title}
+        div.box-body
+          div.row
+            div.col-lg-3.col-xs-6
+              div.small-box.bg-aqua
+                div.inner
+                  h3 232
+                div.icon
+                  i.fa.fa-fw.fa-user
+                a.small-box-footer(href='javascrit:;') 管理员
+            div.col-lg-3.col-xs-6
+              div.small-box.bg-yellow
+                div.inner
+                  h3 2323
+                div.icon
+                  i.fa.fa-fw.fa-file-text-o
+                a.small-box-footer(href='javascrit:;') 文档
+            div.col-lg-3.col-xs-6
+              div.small-box.bg-green
+                div.inner
+                  h3 323
+                div.icon
+                  i.fa.fa-fw.fa-users
+                a.small-box-footer(href='javascrit:;') 用户
+            div.col-lg-3.col-xs-6
+              div.small-box.bg-red
+                div.inner
+                  h3 32
+                div.icon
+                  i.fa.fa-fw.fa-comments-o
+                a.small-box-footer(href='javascrit:;') 留言
+    div.col-md-12
+      div.row
+        div.col-md-4
+          div.box.box-solid
+            div.box-header.with-border
+              h5.box-title 快捷操作
+            div.box-body
+                a.btn.btn-app(href='adminmanageadminUsersList')
+                  i.fa.fa-user
+                  | 添加管理员
+                a.btn.btn-app(href='adminmanagecontentaddcontent')
+                  i.fa.fa-file-text-o
+                  | 创建新商品
+                a.btn.btn-app(href='adminmanagedataManagembackUpData')
+                  i.fa.fa-cloud
+                  | 数据备份
+        div.col-md-4
+          div.box.box-solid
+            div.box-header.with-border
+              h5.box-title 近期评论
+            div.box-body.chat#chat-box
+              div.direct-chat-messages(style='height: auto;max-height: 500px;')
+        div.col-md-4
+          div.box.box-solid
+            div.box-header.with-border
+              h5.box-title 新注册用户
+              div.box-tools.pull-right
+                span.label.label-danger 注册用户 23
+            div.box-body.no-padding
+              ul.users-list.clearfix
+                li
+                  img(src='/avatar/avatar.jpg',alt='User Image')
+                  a.users-list-name(href='#',title='anme') xxx
+            div.box-footer.text-center
+              a.uppercase(href='#') View All Users
+  script.
+    angular.module('Kaola',['Kaola.tools'])
+    .controller('MainPanelCtrl',['$scope',function($scope){
+      
+    }])

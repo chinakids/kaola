@@ -17,6 +17,7 @@ R.get('/', function *(next) {
   if(this.session.login){
     yield render('index','backend', {
       title: '管理面板',
+      desc: '日常管理面板',
       userInfo: this.session.userInfo
     },this);
   }else{
@@ -77,6 +78,7 @@ R.all('/logout', function *(next) {
     this.body = {
       status : 'SUCCESS::退出登陆'
     }
+  }
 });
 
 export default R;
