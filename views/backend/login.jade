@@ -11,7 +11,7 @@ block layout
         p.login-box-msg 系统管理员登陆
         form#login
           .form-group.has-feedback
-            input.form-control(type='email',placeholder='请输入邮箱',ng-model='username',reg='e',err-tip='请输入正确邮箱')
+            input.form-control(type='email',placeholder='请输入邮箱',ng-model='email',reg='e',err-tip='请输入正确邮箱')
             span.glyphicon.glyphicon-user.form-control-feedback
           .form-group.has-feedback
             input.form-control(type='password',placeholder='请输入密码',ng-model='password',reg='s6-18',err-tip='密码应当为6到18位非非特殊字符',autocomplete="off")
@@ -31,21 +31,35 @@ block layout
       $scope.reCode = function(){
         $scope.code = '/api/securityCode?'+Date.parse(new Date());
       }
-      $scope.username = '';
+      $scope.email = '';
       $scope.password = '';
       $scope.securityCode = '';
       $scope.submit = function(){
         if($('#login .reg-success').size() === 3){
           //这里的密码混合验证码加密传输,避免重放攻击
           var loginData = {
-            username : $scope.username,
-            ticket : $filter('md5')($filter('md5')($scope.password)+$scope.securityCode)
+            email : $scope.email,
+            ticket : $filter('md5')(($filter('md5')($scope.password)+$scope.securityCode).toUpperCase())
           }
           $.post('/admin/login',loginData,function(data){
-            
+            var status = data.msg.split('::')[0],
+            msg = data.msg.split('::')[1];
+            if(status === 'SUCCESS'){
+              $('#tip').append('<div class="callout callout-success"><p>登陆成功</p></div>');
+              setTimeout(function(){
+                window.location.href = './'
+              },2000)
+            }else{
+              $('#tip').append('<div class="callout callout-danger"><p>'+msg+'</p></div>');
+              $scope.reCode();
+              setTimeout(function(){
+                $('#tip').html('');
+              },2000)
+            }
           })
         }else{
           $('#tip').append('<div class="callout callout-danger"><p>用户名/密码/验证码信息不完整</p></div>');
+          $scope.reCode();
           setTimeout(function(){
             $('#tip').html('');
           },2000)

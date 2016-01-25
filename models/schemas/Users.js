@@ -9,7 +9,7 @@ let UserSchema = new mongoose.Schema({
   nickName   : String,//昵称
   email      : String,//邮箱
   password   : String,//密码
-  phoneNum   : Number,//电话
+  phoneNum   : String,//电话
   admin      : Boolean,//是否为管理员
   avatar     : {
     type     : String,//头像
@@ -61,9 +61,9 @@ UserSchema.statics = {
       .sort('meta.updateAt')
       .exec(cb)
   },
-  findByEmail(id,cb){
+  findByEmail(emal,cb){
     this.find({
-        email:id
+        email:emal
       })
       .populate('group')
       .sort('meta.updateAt')

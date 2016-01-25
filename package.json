@@ -9,6 +9,7 @@
   "dependencies": {
     "ccap": "^0.6.4",
     "co": "^4.6.0",
+    "crypto-js": "^3.1.6",
     "debug": "^2.2.0",
     "jade": "^1.11.0",
     "jade-runtime": "^2.0.0",
