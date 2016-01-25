@@ -49,6 +49,7 @@ UserSchema.pre('save', function(next){
 UserSchema.statics = {
   fetch(cb){
     this.find({})
+      .populate('group')
       .sort('meta.updateAt')
       .exec(cb)
   },
@@ -56,6 +57,7 @@ UserSchema.statics = {
     this.find({
         _id:id
       })
+      .populate('group')
       .sort('meta.updateAt')
       .exec(cb)
   },
@@ -63,6 +65,7 @@ UserSchema.statics = {
     this.find({
         email:id
       })
+      .populate('group')
       .sort('meta.updateAt')
       .exec(cb)
   }
