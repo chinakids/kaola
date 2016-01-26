@@ -42,7 +42,90 @@ block layout
                   button#search-btn.btn.btn-flat(type='submit')
                     i.fa.fa-search
             ul.sidebar-menu
-              li.header xxxx
+              li.header Main Menu
+              li.treeview.active
+                a(href='/admin/')
+                  span 控制台
+              li.treeview
+                a(href='#')
+                  span 商品管理 
+                  i.fa.fa-angle-left.pull-right
+                ul.treeview-menu
+                  li
+                    a(href='#')
+                      i.fa.fa-file-text-o 
+                      | 商品管理
+                  li
+                    a(href='#')
+                      i.fa.fa-comments 
+                      | 商品评价管理
+              li.treeview
+                a(href='#')
+                  span 文章管理 
+                  i.fa.fa-angle-left.pull-right
+                ul.treeview-menu
+                  li
+                    a(href='#')
+                      i.fa.fa-file-text-o 
+                      | 文章管理
+                  li
+                    a(href='#')
+                      i.fa.fa-comments 
+                      | 文章评价管理
+              li.treeview
+                a(href='#')
+                  span 分类管理 
+                  i.fa.fa-angle-left.pull-right
+                ul.treeview-menu
+                  li
+                    a(href='#')
+                      i.fa.fa-clipboard
+                      | 分类管理
+                  li
+                    a(href='#')
+                      i.fa.fa-tag 
+                      | 标签管理
+              li.treeview
+                a(href='#')
+                  span 会员管理
+                  i.fa.fa-angle-left.pull-right
+                ul.treeview-menu
+                  li
+                    a(href='#')
+                      i.fa.fa-users
+                      | 注册会员列表
+              li.treeview
+                a(href='#')
+                  span 系统管理
+                  i.fa.fa-angle-left.pull-right
+                ul.treeview-menu
+                  li
+                    a(href='#')
+                      i.fa.fa-user
+                      | 系统用户管理
+                  li
+                    a(href='#')
+                      i.fa.fa-group
+                      | 管理组设定
+                  li
+                    a(href='#')
+                      i.fa.fa-file-text
+                      | 文件管理器
+                  li
+                    a(href='#')
+                      i.fa.fa-cloud
+                      | 数据管理
+                      i.fa.fa-angle-left.pull-right
+                    ul.treeview-menu
+                      li
+                        a(href='#')
+                          i.fa.fa-copy
+                          | 数据备份
+                  li
+                    a(href='#')
+                      i.fa.fa-clipboard
+                      | 系统日志
+
         .content-wrapper.clearfix(style='padding-top:15px;')
           block content
         footer.main-footer
