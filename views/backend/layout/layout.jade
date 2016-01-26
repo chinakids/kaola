@@ -13,12 +13,15 @@ block layout
               b Kaola
               |  CMS
           nav.navbar.navbar-static-top(role='navigation')
-            a.sidebar-toggle(href='#', data-toggle='offcanvas', role='button')
-              span.sr-only Toggle navigation
+            a.sidebar-toggle(href='/#{pageInfo.adminDomain}/', data-toggle='offcanvas', role='button')
+              span.sr-only Toggle Navigation
             .navbar-custom-menu
               ul.nav.navbar-nav
+                li
+                  a(href='/',target='_blank',title='首页')
+                    i.fa.fa-home
                 li.dropdown.user.user-menu
-                    a.dropdown-toggle(href='#', data-toggle='dropdown')
+                    a.dropdown-toggle(href='/#{pageInfo.adminDomain}/', data-toggle='dropdown')
                       img.user-image(src='#{userInfo.avatar}', alt='User Image')
                       span.hidden-xs #{userInfo.nickName}
                     ul.dropdown-menu
@@ -47,82 +50,82 @@ block layout
                 a(href='/admin/')
                   span 控制台
               li.treeview
-                a(href='#')
+                a(href='/#{pageInfo.adminDomain}/')
                   span 商品管理 
                   i.fa.fa-angle-left.pull-right
                 ul.treeview-menu
                   li
-                    a(href='#')
+                    a(href='/#{pageInfo.adminDomain}/')
                       i.fa.fa-file-text-o 
                       | 商品管理
                   li
-                    a(href='#')
+                    a(href='/#{pageInfo.adminDomain}/')
                       i.fa.fa-comments 
                       | 商品评价管理
               li.treeview
-                a(href='#')
+                a(href='/#{pageInfo.adminDomain}/')
                   span 文章管理 
                   i.fa.fa-angle-left.pull-right
                 ul.treeview-menu
                   li
-                    a(href='#')
+                    a(href='/#{pageInfo.adminDomain}/')
                       i.fa.fa-file-text-o 
                       | 文章管理
                   li
-                    a(href='#')
+                    a(href='/#{pageInfo.adminDomain}/')
                       i.fa.fa-comments 
                       | 文章评价管理
               li.treeview
-                a(href='#')
+                a(href='/#{pageInfo.adminDomain}/')
                   span 分类管理 
                   i.fa.fa-angle-left.pull-right
                 ul.treeview-menu
                   li
-                    a(href='#')
+                    a(href='/#{pageInfo.adminDomain}/')
                       i.fa.fa-clipboard
                       | 分类管理
                   li
-                    a(href='#')
+                    a(href='/#{pageInfo.adminDomain}/')
                       i.fa.fa-tag 
                       | 标签管理
               li.treeview
-                a(href='#')
+                a(href='/#{pageInfo.adminDomain}/')
                   span 会员管理
                   i.fa.fa-angle-left.pull-right
                 ul.treeview-menu
                   li
-                    a(href='#')
+                    a(href='/#{pageInfo.adminDomain}/')
                       i.fa.fa-users
                       | 注册会员列表
               li.treeview
-                a(href='#')
+                a(href='/#{pageInfo.adminDomain}/')
                   span 系统管理
                   i.fa.fa-angle-left.pull-right
                 ul.treeview-menu
                   li
-                    a(href='#')
+                    a(href='/#{pageInfo.adminDomain}/')
                       i.fa.fa-user
                       | 系统用户管理
                   li
-                    a(href='#')
+                    a(href='/#{pageInfo.adminDomain}/')
                       i.fa.fa-group
                       | 管理组设定
                   li
-                    a(href='#')
+                    a(href='/#{pageInfo.adminDomain}/')
                       i.fa.fa-file-text
                       | 文件管理器
                   li
-                    a(href='#')
+                    a(href='/#{pageInfo.adminDomain}/')
                       i.fa.fa-cloud
                       | 数据管理
                       i.fa.fa-angle-left.pull-right
                     ul.treeview-menu
                       li
-                        a(href='#')
+                        a(href='/#{pageInfo.adminDomain}/')
                           i.fa.fa-copy
                           | 数据备份
                   li
-                    a(href='#')
+                    a(href='/#{pageInfo.adminDomain}/')
                       i.fa.fa-clipboard
                       | 系统日志
 

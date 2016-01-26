@@ -3,6 +3,6 @@ section.content-header
     small #{desc}
   ol.breadcrumb
     li.active
-      a(href='/',target='_blank')
-        i.fa.fa-home
-        | 前台首页
+      i.fa.fa-home &nbsp;&nbsp;
+      a(href='/#{pageInfo.adminDomain}/') 后台管理
+      | &nbsp;&nbsp;>&nbsp;&nbsp;#{title} 

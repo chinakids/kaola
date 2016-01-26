@@ -2,7 +2,7 @@
  * [setLog 用来记录用户操作]
  */
 import Log from '../models/Log';
-import logger from './logger';
+import logger from './../utils/logger';
 
 function setLog(type,msg,level = 'p4'){
   let _log = new templateModel({
