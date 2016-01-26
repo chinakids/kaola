@@ -4,11 +4,11 @@
 import usersModel from '../models/Users';
 
 function * userInfo(next){
-  if(this.session.login){
+  if(this.session.login && !this.session.userInfo){
     let promise = new Promise((resolve, reject) => {
       usersModel.getInfoByEmail(this.session.email,(err,data) => {
         if(err){
-          logger('model',err);
+          logger('error',err);
           reject(err);
         }else{
           resolve(data)

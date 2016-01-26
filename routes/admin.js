@@ -3,6 +3,7 @@ import render from './../utils/render';
 import ccap from 'ccap';
 import crypto from 'crypto';
 import usersModel from '../models/Users';
+import setLog from './../controller/setLog'
 
 let securityCode = ccap({
   'width':214,
