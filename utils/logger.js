@@ -29,6 +29,9 @@ function print(categories,info){
   }else{
     if('function' === typeof logger[categories]){
       logger[categories]((new Date()).toLocaleString()+'\t'+info);
+    }else{
+      logger.error(categories+'不存在,请在conf/setting.js中设置,下面为本次错误');
+      logger.error(info);
     }
   }
 };
