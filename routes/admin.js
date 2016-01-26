@@ -15,7 +15,7 @@ let R = router();
 //控制面板
 R.get('/', function *(next) {
   if(this.session.login){
-    yield render('index','backend', {
+    yield render('index',{
       title: '管理面板',
       desc: '日常管理面板',
       userInfo: this.session.userInfo
@@ -26,7 +26,7 @@ R.get('/', function *(next) {
 });
 //登陆
 R.get('/login', function *(next) {
-  yield render('login','backend', {
+  yield render('login',{
     title: '管理员登陆'
   },this);
 });

@@ -11,8 +11,13 @@ import S from './../conf/setting'
  * 1.  rander('index',{...},this);
  * 2.  rander.call(this,'index',{...});
  */
-function * render(name, group, data ,ctx){
+function * render(name, data ,ctx){
   let self = ctx || this;
+  let group = 'fontend';
+  //根据path设置group
+  if(self.request.path && self.request.path.split('/')[1] === S.ADMIN_DOMAIN){
+    group = 'backend';
+  }
   //DEBUG模式下不使用缓存
   if(S.DEBUG){
     yield self.render(group+'/'+name, data);
