@@ -15,19 +15,32 @@ function * render(name, source ,ctx){
   let self = ctx || this;
   let group = 'fontend';
   let data = source;
+  let path = self.request.path === undefined ? '' : self.request.path;
   //根据path设置group
-  if(self.request.path && self.request.path.split('/')[1] === S.ADMIN_DOMAIN){
+  if(path.split('/')[1] === S.ADMIN_DOMAIN){
     group = 'backend';
     //填充其他数据
     data.pageInfo = {
-      'path'        : self.request.path,
+      'path'        : path,
       'adminDomain' : S.ADMIN_DOMAIN
     }
+    data.userInfo = self.session.userInfo || {};
   }else{
     //填充其他数据
     data.pageInfo = {
-      'path'        : self.request.path
+      'path'        : path
     }
+    data.userInfo = self.session.userInfo || {};
+  }
+  data.siteInfo = {
+    title   : S.SITE_TITLE,
+    domain  : S.SITE_DOMAIN,
+    mail    : S.SITE_MAIL,
+    icp     : S.SITE_ICP,
+    version : S.SITE_VERSION,
+    desc    : S.SITE_DISCRIPTION,
+    keywords: S.SITE_KEYWORDS,
+    basicKW : S.SITE_BASICKEYWORDS
   }
   //DEBUG模式下不使用缓存
   if(S.DEBUG){

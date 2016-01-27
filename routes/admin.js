@@ -5,26 +5,12 @@ import crypto from 'crypto';
 import usersModel from '../models/Users';
 import setLog from './../controller/setLog'
 
-let securityCode = ccap({
-  'width':214,
-  'height':68,
-  'offset':30,
-  'fontsize':45
-});
-
 let R = router();
-//控制面板
-R.get('/', function *(next) {
-  if(this.session.login){
-    yield render('index',{
-      title: '管理面板',
-      desc: '日常管理面板',
-      userInfo: this.session.userInfo
-    },this);
-  }else{
-    this.redirect('./login')
-  }
-});
+
+/**
+ * 1、登陆相关
+ */
+
 //登陆
 R.get('/login', function *(next) {
   yield render('login',{
@@ -85,5 +71,37 @@ R.all('/logout', function *(next) {
     }
   }
 });
+
+/**
+ * 2、管理面板
+ */
+
+//控制面板
+R.get('/', function *(next) {
+  if(this.session.login){
+    yield render('index',{
+      title: '管理面板',
+      desc: '日常管理面板'
+    },this);
+  }else{
+    this.redirect('./login')
+  }
+});
+
+/**
+ * 3.商品管理相关
+ */
+
+R.get('/goodsManage', function *(next) {
+  if(this.session.login){
+    yield render('goodsManage',{
+      title: '商品管理',
+      desc: ''
+    },this);
+  }else{
+    this.redirect('./login')
+  }
+});
+
 
 export default R;

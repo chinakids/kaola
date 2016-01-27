@@ -1,0 +1,15 @@
+extends ./layout/layout
+
+block content
+  include ./layout/breadcrumbNav
+  section.content(ng-controller='GoodsManageCtrl')
+    div.col-md-12
+      div.box.box-solid
+        div.box-header.with-border
+          h5.box-title #{title}
+        div.box-body
+  script.
+    angular.module('Kaola',['Kaola.tools'])
+    .controller('GoodsManageCtrl',['$scope',function($scope){
+      
+    }])

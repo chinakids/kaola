@@ -62,7 +62,7 @@ app.use(function *(next){
   yield next;
   if (this.status !== 404) return;
   this.status = 404;
-  yield render('error','fontend', {
+  yield render('error',{
     debug: S.DEBUG,
     title: 'Not Found'
   },this);

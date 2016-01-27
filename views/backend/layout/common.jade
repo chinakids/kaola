@@ -1,9 +1,10 @@
 doctype html
 html(lang='zh',ng-app='Kaola')
   head
-    title #{title}
+    title #{siteInfo.title} | #{title}
     meta(charset='UTF-8')
-    meta(name='description',content='#{desc}')
+    meta(name='description',content='#{siteInfo.desc}')
+    meta(name='keywords',content='#{siteInfo.basicKW},#{siteInfo.keywords}')
     meta(name='renderer',content='webkit')
     meta(name='viewport',content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0')
     link(href='/lib/bootstrap/dist/css/bootstrap.min.css', rel='stylesheet', type='text/css')
@@ -35,3 +36,12 @@ html(lang='zh',ng-app='Kaola')
   script(src="/lib/ace-min-noconflict/ace.js",charset="utf-8")
   script(src="/lib/ace-min-noconflict/ext-modelist.js")
   script(src="/lib/ace-min-noconflict/ext-static_highlight.js")
+  script.
+    $(function() {
+      var path = window.location.pathname;
+      var sv = $('a[href="' + path + '"]');
+      $('.treeview-menu').removeClass('open-menu');
+      $(".sidebar-menu").find("li").removeClass('active');
+      sv.parents('li').addClass('active');
+      sv.parent('li').addClass('active').parents('.treeview-menu').addClass('open-menu');
+    })
