@@ -48,7 +48,10 @@ app.use(session({
     //socket:S.REDIS_SOCKET, //socket
     //pass:S.REDIS_PASSWORD,   //redis连接密码
     db:S.REDIS_DB
-  })
+  }),
+  cookie:{
+    maxAge: 24 * 60 * 60 * 7000 //7 day in ms
+  }
 }));
 //设置应用名称
 app.name = S.NAME;
