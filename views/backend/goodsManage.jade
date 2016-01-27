@@ -4,10 +4,101 @@ block content
   include ./layout/breadcrumbNav
   section.content(ng-controller='GoodsManageCtrl')
     div.col-md-12
+      div.panel
+        div.btn-group
+          a.btn.btn-primary.btn-sm(href='/admin/manage/content/add/content')
+            i.fa.fa-plus-square
+            |  添加文档
+          a.btn.btn-danger.btn-sm(href='javascript:;')
+            i.fa.fa-trash-o
+            |  批量删除
+        div.pull-right
+          div.input-group
+            input#searchInput.form-control.input-sm.pull-right(type='text',name='searchKey',style='width: 200px;', placeholder='请输入需要查询的关键字',value='')
+            div.input-group-btn(style='width: auto;')
+              button.btn.btn-sm.btn-default(type='button')
+                i.fa.fa-search
+    div.col-md-12
       div.box.box-solid
         div.box-header.with-border
           h5.box-title #{title}
-        div.box-body
+        div.box-body.table-responsive.no-padding
+          table.table.table-hover
+            tbody
+              tr
+                th
+                  input#selectAll.mini(type='checkbox')
+                th 文章标题
+                th 创建时间
+                th 类目
+                th 状态
+                th 联系方式
+                th 推荐
+                th 点击
+                th 状态
+                th 发布人
+                th 操作
+              tr.datalist
+                td
+                  input.mini(type='checkbox', name='listItem')
+                td
+                  span 二手运动鞋
+                td 2015-12-31 11:28:17
+                td 生活用品
+                td
+                  span
+                    a.label.label-success(href='') 待售
+                td.ellipsis(style='max-width:100px;')
+                  span
+                    i.fa.fa-qq.text-primary
+                    |  470341376
+                td
+                  i.fa.fa-fw.fa-flag
+                td 11
+                td
+                  span
+                    a.label.label-success(href='') 显示
+                td KU二手街
+                td
+                  div.btn-group
+                    a.btn.btn-primary.btn-xs(href='#', role='button', title='编辑')
+                      i.fa.fa-edit
+                    a.btn.btn-warning.btn-xs(href='#', role='button', title='推荐')
+                      i.fa.fa-thumbs-o-up
+                    a.btn.btn-default.btn-xs(href='javascript:;', role='button', title='取消推荐')
+                      i.fa.fa-thumbs-o-down
+                    a.btn.btn-default.btn-xs(href='javascript:;', role='button', title='上架')
+                      i.fa.fa-cloud-upload
+                    a.btn.btn-warning.btn-xs(href='javascript:;', role='button', title='下架')
+                      i.fa.fa-cloud-download
+                    a.btn.btn-default.btn-xs(href='javascript:;', role='button', title='关闭显示')
+                      i.fa.fa-eye-slash
+                    a.btn.btn-warning.btn-xs(href='javascript:;', role='button', title='显示')
+                      i.fa.fa-eye
+                    button.btn.btn-danger.btn-xs(type='button', title='删除')
+                      i.fa.fa-trash-o
+        div.box-footer
+          div.row
+            div.col-xs-6
+              div(style='padding-top:4px')
+                |  每页  
+                select
+                  option(value='string:10', label='10', selected='selected') 10    
+                  option(value='string:20', label='20') 20   
+                  option(value='string:30', label='30') 30
+                |  条，共 37 条记录 
+            div.col-xs-6
+              ul.pagination.pagination-sm.pull-right(style='margin:0')
+                li
+                  a(href='javascript:;',) ← 上一页
+                li
+                  a(href='javascript:;') 1
+                li.active
+                  a(href='javascript:;') 2
+                li.disabled
+                  a(href='javascript:;') 下一页 → 
+        #dataLoading.overlay.hide
+          i.fa.fa-refresh.fa-spin
   script.
     angular.module('Kaola',['Kaola.tools'])
     .controller('GoodsManageCtrl',['$scope',function($scope){

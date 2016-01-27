@@ -35,7 +35,7 @@ const globalSetting =  {
   DB_PASSWORD: '', //数据库密码
 
   //站点基础信息配置
-  SITE_TITLE: '', //站点名称
+  SITE_TITLE: 'kaola', //站点名称
   SITE_DOMAIN: '', //站点域名,这里是个主域名
   SITE_MAIL:'', //站点邮箱
   SITE_ICP: '', //站点备案号
