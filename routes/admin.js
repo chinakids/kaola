@@ -79,6 +79,10 @@ R.all('/logout', function *(next) {
     this.body = {
       status : 'SUCCESS::退出登陆'
     }
+  }else{
+    this.body = {
+      status : 'FAIL::此接口不接受其他请求模式'
+    }
   }
 });
 
