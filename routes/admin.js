@@ -4,6 +4,7 @@ import ccap from 'ccap';
 import crypto from 'crypto';
 import usersModel from '../models/Users';
 import setLog from './../controller/setLog'
+import getPageCount from './../controller/getPageCount'
 
 let R = router();
 
@@ -22,7 +23,7 @@ R.post('/login', function *(next) {
   let parm = this.request.body;
   let md5 = crypto.createHash('md5');
   let promise = new Promise((resolve, reject) => {
-    usersModel.findByEmail(parm.email,(err,data) => {
+    usersModel.findAdminByEmail(parm.email,(err,data) => {
       if(err){
         logger('model',err);
         reject(err);
@@ -103,5 +104,58 @@ R.get('/goodsManage', function *(next) {
   }
 });
 
+
+/**
+ * 4.系统管理相关
+ */
+
+R.get('/groupManage', function *(next) {
+  if(this.session.login){
+    yield render('groupManage',{
+      title: '权限组管理',
+      desc: ''
+    },this);
+  }else{
+    this.redirect('./login')
+  }
+});
+
+R.get('/adminManage', function *(next) {
+  if(this.session.login){
+    let count = new Promise((resolve, reject) => {
+      usersModel.count({},(err,count) => {
+        if(err){
+          logger('error',err)
+        }else{
+          resolve(count);
+        }
+      })
+    });
+    let fetch = new Promise((resolve, reject) => {
+      usersModel.findAdmin((err,data) => {
+        if(err){
+          logger('error',err)
+        }else{
+          resolve(data);
+        }
+      })
+    });
+    let page = yield count.then((data) => {
+      return getPageCount(data);
+    });
+    let data = yield fetch.then((data) => {
+      return data;
+    });
+    page.index = 1;
+    yield render('adminManage',{
+      title: '系统用户管理',
+      desc: '',
+      page:JSON.stringify(page),
+      adminList:JSON.stringify(data)
+    },this);
+  }else{
+    this.redirect('./login')
+  }
+});
 
 export default R;

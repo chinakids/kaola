@@ -1,0 +1,60 @@
+extends ./layout/layout
+
+block content
+  include ./layout/breadcrumbNav
+  section.content(ng-controller='GroupManageCtrl')
+    div.col-md-12
+      div.panel
+        div.btn-group
+          a.btn.btn-primary.btn-sm(href='#')
+            i.fa.fa-plus-square
+            |  添加用户组
+    div.col-md-12
+      div.box.box-solid
+        div.box-header.with-border
+          h5.box-title #{title}
+        div.box-body.table-responsive.no-padding
+          table.table.table-hover
+            tbody
+              tr
+                th 组名
+                th 权限范围
+                th 操作
+              tr.datalist
+                td 二手运动鞋
+                td 2015-12-31 11:28:17
+                td
+                  div.btn-group
+                    button.btn.btn-primary.btn-xs
+                      span.fa.fa-fw.fa-edit
+                      | 编辑
+                    button.btn.btn-default.btn-xs
+                      span.fa.fa-fw.fa-trash-o
+                      | 删除
+        div.box-footer
+          div.row
+            div.col-xs-6
+              div(style='padding-top:4px')
+                |  每页  
+                select
+                  option(value='string:10', label='10', selected='selected') 10    
+                  option(value='string:20', label='20') 20   
+                  option(value='string:30', label='30') 30
+                |  条，共 37 条记录 
+            div.col-xs-6
+              ul.pagination.pagination-sm.pull-right(style='margin:0')
+                li
+                  a(href='javascript:;',) ← 上一页
+                li
+                  a(href='javascript:;') 1
+                li.active
+                  a(href='javascript:;') 2
+                li.disabled
+                  a(href='javascript:;') 下一页 → 
+        #dataLoading.overlay.hide
+          i.fa.fa-refresh.fa-spin
+  script.
+    angular.module('Kaola',['Kaola.tools'])
+    .controller('GroupManageCtrl',['$scope',function($scope){
+      
+    }])

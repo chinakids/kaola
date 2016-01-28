@@ -1,0 +1,62 @@
+extends ./layout/layout
+
+block content
+  include ./layout/breadcrumbNav
+  section.content(ng-controller='AdminManageCtrl')
+    div.col-md-12
+      div.panel
+        div.btn-group
+          a.btn.btn-primary.btn-sm(href='#')
+            i.fa.fa-plus-square
+            |  添加系统用户
+    div.col-md-12
+      div.box.box-solid
+        div.box-header.with-border
+          h5.box-title #{title}
+        div.box-body.table-responsive.no-padding
+          table.table.table-hover
+            tbody
+              tr
+                th 昵称
+                th 权限组
+                th 邮箱
+                th 联系方式
+                th 操作
+              tr.datalist(ng-repeat='item in adminList')
+                td(ng-bind='item.nickName')
+                td(ng-bind='item.group.name')
+                td(ng-bind='item.email')
+                td(ng-bind='item.phoneNum')
+                td
+                  div.btn-group
+                    button.btn.btn-primary.btn-xs
+                      span.fa.fa-fw.fa-edit
+                      | 编辑
+                    button.btn.btn-default.btn-xs
+                      span.fa.fa-fw.fa-trash-o
+                      | 删除
+        div.box-footer
+          div.row
+            div.col-xs-6
+              div(style='padding-top:4px')
+                |  每页  
+                select(ng-options='item for item in limitList',ng-model='limit')
+                |  条，共 {{page.count}} 条记录 
+            div.col-xs-6
+              ul.pagination.pagination-sm.pull-right(style='margin:0')
+                li
+                  a(href='javascript:;',) ← 上一页
+                li.disabled
+                  a(href='javascript:;') 第{{page.index}}页
+                li
+                  a(href='javascript:;') 下一页 → 
+        #dataLoading.overlay.hide
+          i.fa.fa-refresh.fa-spin
+  script.
+    angular.module('Kaola',['Kaola.tools'])
+    .controller('AdminManageCtrl',['$scope',function($scope){
+      $scope.limitList = [10,20,30];
+      $scope.limit = $scope.limitList[0];
+      $scope.page = !{page};
+      $scope.adminList = !{adminList};
+    }])

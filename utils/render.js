@@ -17,7 +17,7 @@ function * render(name, source ,ctx){
   let data = source;
   let path = self.request.path === undefined ? '' : self.request.path;
   //根据path设置group
-  if(path.split('/')[1] === S.ADMIN_DOMAIN){
+  if(path.split('/')[1] === S.ADMIN_DOMAIN && name != 'error'){
     group = 'backend';
     //填充其他数据
     data.pageInfo = {
