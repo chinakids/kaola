@@ -78,8 +78,6 @@ UserSchema.statics = {
   findAdminById(id,cb){
     this.find({
         _id:id
-      },{
-        password:0 //获取info时过滤掉password
       })
       .populate('group')
       .sort('meta.updateAt')
@@ -96,8 +94,6 @@ UserSchema.statics = {
   findUserById(id,cb){
     this.find({
         _id:id
-      },{
-        password:0 //获取info时过滤掉password
       })
       .populate('group')
       .sort('meta.updateAt')
