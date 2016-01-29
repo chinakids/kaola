@@ -52,6 +52,16 @@ block content
                   a(href='javascript:;') 下一页 → 
         #dataLoading.overlay.hide
           i.fa.fa-refresh.fa-spin
+  div#myModal.modal.fade
+    div.modal-dialog(role='document')
+      div.modal-content
+        div.modal-header
+          button.close(type='button',ng-click='close()')
+            span &times;
+          h4#myModalLabel.modal-title {{title}}
+        div.modal-body.clearfix
+          div.col-xs-12.clearfix
+
   script.
     angular.module('Kaola',['Kaola.tools'])
     .controller('AdminManageCtrl',['$scope',function($scope){
