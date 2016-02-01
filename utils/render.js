@@ -1,7 +1,7 @@
 import jadeRuntime from 'jade/runtime';
 import templateModel from './../models/Template';
 import logger from './logger';
-import S from './../conf/setting'
+import S from './../conf/setting';
 /**
  * [render 返回页面的方法]
  * @param  {[type]} name [模板名称]

@@ -2,6 +2,7 @@
  * [getUserInfo 用来处理用户信息]
  */
 import usersModel from '../models/Users';
+import logger from './logger';
 
 function * userInfo(next){
   if(this.session.login && !this.session.userInfo){
