@@ -31,23 +31,6 @@ R.post('/init', function *(next) {
       };
     });
   });
-  let saving = new Promise((resolve, reject) => {
-    let _user = new usermodel({
-      nickName   : parm.nickName,
-      email      : parm.email,
-      password   : md5.update(parm.password).digest('hex'),
-      phoneNum   : parm.phoneNum,
-      admin      : true
-    })
-    _user.save((err, user) => {
-      if(err){
-        logger('error',err);
-        reject(err);
-      }else{
-        resolve(data)
-      }
-    })
-  });
   let checkingStatus = yield checking.then((data) => {
     if(data.length > 0){
       this.body = {
@@ -57,8 +40,28 @@ R.post('/init', function *(next) {
     }else {
       return true
     }
+  },(err) => {
+    return false;
   });
   if(checkingStatus){
+    let saving = new Promise((resolve, reject) => {
+      let _user = new usermodel({
+        nickName   : parm.nickName,
+        email      : parm.email,
+        password   : md5.update(parm.password).digest('hex'),
+        phoneNum   : parm.phoneNum,
+        admin      : true
+      })
+      console.log(_user)
+      _user.save((err, user) => {
+        if(err){
+          logger('error',err);
+          reject(err);
+        }else{
+          resolve(user)
+        }
+      })
+    });
     yield saving.then((data) => {
       this.body = {
         status : 'SUCCESS::初始化成功'
