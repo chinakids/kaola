@@ -12,6 +12,7 @@ let R = router();
  */
 
 R.get('/init', function *(next) {
+  //还要创建root限权
   yield render('init',{
     title: '初始化账户'
   },this);
@@ -34,7 +35,7 @@ R.post('/init', function *(next) {
     let _user = new usermodel({
       nickName   : parm.nickName,
       email      : parm.email,
-      password   : parm.password,
+      password   : md5.update(parm.password).digest('hex'),
       phoneNum   : parm.phoneNum,
       admin      : true
     })
