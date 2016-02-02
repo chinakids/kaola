@@ -48,7 +48,7 @@ function * render(name, source ,ctx){
   if(S.DEBUG){
     yield self.render(`${group}/${name}`, data);
   }else {
-    let cacheContent = fs.readFileSync(path.join(__dirname, `./../views/cache/${group}/${name}.cache`),'utf-8');
+    let cacheContent = fs.readFileSync(path.join(__dirname, `./../views/.cache/${group}/${name}.cache`),'utf-8');
     let templateJS = new Function('jade','data',`${cacheContent};return template(data)`);
     self.body = templateJS(jadeRuntime,data);
   }
