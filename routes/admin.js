@@ -3,10 +3,72 @@ import render from './../utils/render';
 import ccap from 'ccap';
 import crypto from 'crypto';
 import usersModel from '../models/Users';
-import setLog from './../controller/setLog'
-import getPageCount from './../controller/getPageCount'
+import getPageCount from './../controller/getPageCount';
 
 let R = router();
+
+/**
+ * 0、初始化
+ */
+
+R.get('/init', function *(next) {
+  yield render('init',{
+    title: '初始化账户'
+  },this);
+});
+
+R.post('/init', function *(next) {
+  let parm = this.request.body;
+  let md5 = crypto.createHash('md5');
+  let checking = new Promise((resolve, reject) => {
+    usersModel.findAdminByEmail(parm.email,(err,data) => {
+      if(err){
+        logger('model',err);
+        reject(err);
+      }else{
+        resolve(data)
+      };
+    });
+  });
+  let saving = new Promise((resolve, reject) => {
+    let _user = new usermodel({
+      nickName   : parm.nickName,
+      email      : parm.email,
+      password   : parm.password,
+      phoneNum   : parm.phoneNum,
+      admin      : true
+    })
+    _user.save((err, user) => {
+      if(err){
+        logger('error',err);
+        reject(err);
+      }else{
+        resolve(data)
+      }
+    })
+  });
+  let checkingStatus = yield checking.then((data) => {
+    if(data.length > 0){
+      this.body = {
+        status : 'FAIL::该邮箱已存在'
+      }
+      return false
+    }else {
+      return true
+    }
+  });
+  if(checkingStatus){
+    yield saving.then((data) => {
+      this.body = {
+        status : 'SUCCESS::初始化成功'
+      }
+    },(err) => {
+      this.body = {
+        status : 'FAIL::初始化失败'
+      }
+    })
+  }
+});
 
 /**
  * 1、登陆相关

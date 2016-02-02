@@ -5,10 +5,7 @@
  */
 
 import app from '../app';
-import init from '../init';
 import http from 'http';
-import usersModel from '../models/Users';
-import logger from './logger';
 
 /**
  * Get port from environment and store.
@@ -21,25 +18,12 @@ let port = normalizePort(process.env.PORT || '3030');
  * Create HTTP server.
  */
 
-usersModel.findAdmin((err,data) => {
- if(err){
-   logger('error',err)
- }else{
-   if(data.length <= 0){
-     //需要初始化
-    let server = http.createServer(app.callback());
-    server.listen(port);
-    server.on('error', onError);
-    server.on('listening', onListening);
-  }else{
-    //不需要初始化
-    let server = http.createServer(app.callback());
-    server.listen(port);
-    server.on('error', onError);
-    server.on('listening', onListening);
-  }
- }
-});
+
+let server = http.createServer(app.callback());
+server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening);
+
 
 /**
  * Normalize a port into a number, string, or false.

@@ -14,7 +14,7 @@ block layout
             input.form-control(type='email',placeholder='请输入邮箱',ng-model='email',reg='e',err-tip='请输入正确邮箱')
             span.glyphicon.glyphicon-user.form-control-feedback
           .form-group.has-feedback
-            input.form-control(type='password',placeholder='请输入密码',ng-model='password',reg='s6-18',err-tip='密码应当为6到18位非非特殊字符',autocomplete="off")
+            input.form-control(type='password',placeholder='请输入密码',ng-model='password',reg='s6-18',err-tip='密码应当为6到18位非非特殊字符',autocomplete='off')
             span.glyphicon.glyphicon-lock.form-control-feedback
           .form-group.has-feedback.clearfix
             .col-xs-8(style='margin-left: 0;padding: 0;')
@@ -45,12 +45,12 @@ block layout
             var status = data.status.split('::')[0],
             msg = data.status.split('::')[1];
             if(status === 'SUCCESS'){
-              $('#tip').append('<div class="callout callout-success"><p>'+msg+'</p></div>');
+              $('#tip').append('<div class='callout callout-success'><p>'+msg+'</p></div>');
               setTimeout(function(){
                 window.location.href = './'
               },2000)
             }else{
-              $('#tip').append('<div class="callout callout-danger"><p>'+msg+'</p></div>');
+              $('#tip').append('<div class='callout callout-danger'><p>'+msg+'</p></div>');
               $scope.reCode();
               setTimeout(function(){
                 $('#tip').html('');
@@ -58,7 +58,7 @@ block layout
             }
           })
         }else{
-          $('#tip').append('<div class="callout callout-danger"><p>用户名/密码/验证码信息不完整</p></div>');
+          $('#tip').append('<div class='callout callout-danger'><p>用户名/密码/验证码信息不完整</p></div>');
           $scope.reCode();
           setTimeout(function(){
             $('#tip').html('');

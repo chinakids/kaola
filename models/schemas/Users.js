@@ -13,7 +13,7 @@ let UserSchema = new mongoose.Schema({
   admin      : Boolean,//是否为管理员
   avatar     : {
     type     : String,//头像
-    default  : "/avatar/avatar.jpg"
+    default  : '/avatar/avatar.jpg'
   },
   group      : {
     type     : String,//用户组
