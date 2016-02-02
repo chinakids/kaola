@@ -7,7 +7,11 @@ import templateModel from './../models/Template';
 /**
  * [TemplateCache 缓存jade页面为jade-runtime]
  */
-
+if(!fs.existsSync(path.join(__dirname, './../views/cache'))){
+  fs.mkdirSync(path.join(__dirname, './../views/cache'));
+  fs.mkdirSync(path.join(__dirname, './../views/cache/fontend'));
+  fs.mkdirSync(path.join(__dirname, './../views/cache/backend'));
+};
 
 let pages = {
   backend:{},
@@ -46,6 +50,9 @@ function compileRenderService(){
 };
 
 function preCompile(filePath, pageName, group){
+  //文件储存缓存
+  fs.writeFile(path.join(__dirname,`./../views/cache/${group}/${pageName}.cache`),jade.compileFileClient(filePath))
+  //数据库存入副本
   templateModel.findByName({'name':pageName,'group':group}, (err,templates) => {
     if(err){
       logger('model',err);

@@ -1,5 +1,7 @@
 import jadeRuntime from 'jade/runtime';
 import templateModel from './../models/Template';
+import fs from 'fs';
+import path from 'path';
 import logger from './logger';
 import S from './../conf/setting';
 /**
@@ -15,20 +17,20 @@ function * render(name, source ,ctx){
   let self = ctx || this;
   let group = 'fontend';
   let data = source;
-  let path = self.request.path === undefined ? '' : self.request.path;
+  let urlPath = self.request.path === undefined ? '' : self.request.path;
   //根据path设置group
-  if(path.split('/')[1] === S.ADMIN_DOMAIN && name != 'error'){
+  if(urlPath.split('/')[1] === S.ADMIN_DOMAIN && name != 'error'){
     group = 'backend';
     //填充其他数据
     data.pageInfo = {
-      'path'        : path,
+      'path'        : urlPath,
       'adminDomain' : S.ADMIN_DOMAIN
     }
     data.userInfo = self.session.userInfo || {};
   }else{
     //填充其他数据
     data.pageInfo = {
-      'path'        : path
+      'path'        : urlPath
     }
     data.userInfo = self.session.userInfo || {};
   }
@@ -44,24 +46,11 @@ function * render(name, source ,ctx){
   }
   //DEBUG模式下不使用缓存
   if(S.DEBUG){
-    yield self.render(group+'/'+name, data);
+    yield self.render(`${group}/${name}`, data);
   }else {
-    let promise = new Promise((resolve, reject) => {
-      templateModel.findByName({'name':name,'group':group}, (err,templates) => {
-        if(err){
-          logger('model',err);
-          reject(err)
-        }else{
-          let templateJS= new Function('jade','data',templates[0].content+';return template(data)');
-          resolve(templateJS(jadeRuntime,data));
-        };
-      });
-    });
-    yield promise.then((html) => {
-      self.body = html;
-    },(err) => {
-      logger('error',err);
-    });
+    let cacheContent = fs.readFileSync(path.join(__dirname, `./../views/cache/${group}/${name}.cache`),'utf-8');
+    let templateJS = new Function('jade','data',`${cacheContent};return template(data)`);
+    self.body = templateJS(jadeRuntime,data);
   }
 }
 
