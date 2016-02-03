@@ -43,6 +43,21 @@ UserSchema.pre('save', function(next){
   next();
 })
 /*
+* 添加add实例
+*/
+UserSchema.method('add',function() {
+  let p = new Promise((resolve,reject) => {
+    this.save((error, data) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(null, data);
+      }
+    });
+  });
+  return p;
+});
+/*
 *   绑定静态方法
 *   thistype {Object}
 */

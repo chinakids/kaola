@@ -21,56 +21,23 @@ R.get('/init', function *(next) {
 R.post('/init', function *(next) {
   let parm = this.request.body;
   let md5 = crypto.createHash('md5');
-  let checking = new Promise((resolve, reject) => {
-    usersModel.findAdminByEmail(parm.email,(err,data) => {
-      if(err){
-        logger('model',err);
-        reject(err);
-      }else{
-        resolve(data)
-      };
-    });
-  });
-  let checkingStatus = yield checking.then((data) => {
-    if(data.length > 0){
-      this.body = {
-        status : 'FAIL::该邮箱已存在'
-      }
-      return false
-    }else {
-      return true
+  let checking = yield usersModel.findAdminByEmail(parm.email);
+  if(checking.length > 0){
+    this.body = {
+      status : 'FAIL::该邮箱已存在'
     }
-  },(err) => {
-    return false;
-  });
-  if(checkingStatus){
-    let saving = new Promise((resolve, reject) => {
-      let _user = new usermodel({
-        nickName   : parm.nickName,
-        email      : parm.email,
-        password   : md5.update(parm.password).digest('hex'),
-        phoneNum   : parm.phoneNum,
-        admin      : true
-      })
-      console.log(_user)
-      _user.save((err, user) => {
-        if(err){
-          logger('error',err);
-          reject(err);
-        }else{
-          resolve(user)
-        }
-      })
-    });
-    yield saving.then((data) => {
-      this.body = {
-        status : 'SUCCESS::初始化成功'
-      }
-    },(err) => {
-      this.body = {
-        status : 'FAIL::初始化失败'
-      }
+  }else{
+    let user = new usersModel({
+      nickName   : parm.nickName,
+      email      : parm.email,
+      password   : md5.update(parm.password).digest('hex'),
+      phoneNum   : parm.phoneNum,
+      admin      : true
     })
+    yield user.add()
+    this.body = {
+      status : 'SUCCESS::初始化成功'
+    }
   }
 });
 
@@ -88,7 +55,7 @@ R.get('/login', function *(next) {
 R.post('/login', function *(next) {
   let parm = this.request.body;
   let md5 = crypto.createHash('md5');
-  let result = usersModel.findAdminByEmail(parm.email);
+  let result = yield usersModel.findAdminByEmail(parm.email);
   if(result.length <= 0){
     this.body = {
       status : 'FAIL::用户不存在'
