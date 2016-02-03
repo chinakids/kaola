@@ -6,26 +6,15 @@ import logger from '../utils/logger';
 
 function * userInfo(next){
   if(this.session.login && !this.session.userInfo){
-    let promise = new Promise((resolve, reject) => {
-      usersModel.getInfoByEmail(this.session.email,(err,data) => {
-        if(err){
-          logger('error',err);
-          reject(err);
-        }else{
-          resolve(data)
-        };
-      });
-    });
-    yield promise.then((data) => {
-      if(data.length <= 0){
-        //置空登录状态
-        this.session.login = false;
-        this.session.email = '';
-      }else{
-        //TODO 将信息挂载字session上 后期要对关键数据过滤
-        this.session.userInfo = data[0];
-      }
-    });
+    let data = yield usersModel.getInfoByEmail(this.session.email);
+    if(data.length <= 0){
+      //置空登录状态
+      this.session.login = false;
+      this.session.email = '';
+    }else{
+      //TODO 将信息挂载字session上 后期要对关键数据过滤
+      this.session.userInfo = data[0];
+    }
     yield next;
   }else{
     yield next;

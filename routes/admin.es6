@@ -88,37 +88,25 @@ R.get('/login', function *(next) {
 R.post('/login', function *(next) {
   let parm = this.request.body;
   let md5 = crypto.createHash('md5');
-  let promise = new Promise((resolve, reject) => {
-    usersModel.findAdminByEmail(parm.email,(err,data) => {
-      if(err){
-        logger('model',err);
-        reject(err);
-      }else{
-        resolve(data)
-      };
-    });
-  });
-  yield promise.then((data) => {
-    if(data.length <= 0){
+  let result = usersModel.findAdminByEmail(parm.email);
+  if(result.length <= 0){
+    this.body = {
+      status : 'FAIL::用户不存在'
+    }
+  }else {
+    let ticket = md5.update((result[0].password + this.session.ccap).toUpperCase()).digest('hex');
+    if(parm.ticket.toUpperCase() === ticket.toUpperCase()){
+      this.session.email = parm.email;
+      this.session.login = true;
       this.body = {
-        status : 'FAIL::用户不存在'
+        status : 'SUCCESS::登陆成功'
       }
-    }else {
-      let result = data[0];
-      let ticket = md5.update((result.password + this.session.ccap).toUpperCase()).digest('hex');
-      if(parm.ticket.toUpperCase() === ticket.toUpperCase()){
-        this.session.email = parm.email;
-        this.session.login = true;
-        this.body = {
-          status : 'SUCCESS::登陆成功'
-        }
-      }else{
-        this.body = {
-          status : 'FAIL::密码或验证码错误'
-        }
+    }else{
+      this.body = {
+        status : 'FAIL::密码或验证码错误'
       }
     }
-  });
+  }
 });
 //登出
 R.all('/logout', function *(next) {
@@ -188,36 +176,13 @@ R.get('/groupManage', function *(next) {
 
 R.get('/adminManage', function *(next) {
   if(this.session.login){
-    let count = new Promise((resolve, reject) => {
-      usersModel.count({},(err,count) => {
-        if(err){
-          logger('error',err)
-        }else{
-          resolve(count);
-        }
-      })
-    });
-    let fetch = new Promise((resolve, reject) => {
-      usersModel.findAdmin((err,data) => {
-        if(err){
-          logger('error',err)
-        }else{
-          resolve(data);
-        }
-      })
-    });
-    let page = yield count.then((data) => {
-      return getPageCount(data);
-    });
-    let data = yield fetch.then((data) => {
-      return data;
-    });
-    page.index = 1;
+    let count = yield usersModel.count({});
+    let fetch = yield usersModel.findAdmin();
     yield render('adminManage',{
       title: '系统用户管理',
       desc: '',
-      page:JSON.stringify(page),
-      adminList:JSON.stringify(data)
+      page:JSON.stringify(getPageCount(count)),
+      adminList:JSON.stringify(fetch)
     },this);
   }else{
     this.redirect('./login')

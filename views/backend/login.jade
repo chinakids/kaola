@@ -45,12 +45,12 @@ block layout
             var status = data.status.split('::')[0],
             msg = data.status.split('::')[1];
             if(status === 'SUCCESS'){
-              $('#tip').append('<div class='callout callout-success'><p>'+msg+'</p></div>');
+              $('#tip').append('<div class=\'callout callout-success\'><p>'+msg+'</p></div>');
               setTimeout(function(){
                 window.location.href = './'
               },2000)
             }else{
-              $('#tip').append('<div class='callout callout-danger'><p>'+msg+'</p></div>');
+              $('#tip').append('<div class=\'callout callout-danger\'><p>'+msg+'</p></div>');
               $scope.reCode();
               setTimeout(function(){
                 $('#tip').html('');
@@ -58,7 +58,7 @@ block layout
             }
           })
         }else{
-          $('#tip').append('<div class='callout callout-danger'><p>用户名/密码/验证码信息不完整</p></div>');
+          $('#tip').append('<div class=\'callout callout-danger\'><p>用户名/密码/验证码信息不完整</p></div>');
           $scope.reCode();
           setTimeout(function(){
             $('#tip').html('');

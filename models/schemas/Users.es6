@@ -47,75 +47,75 @@ UserSchema.pre('save', function(next){
 *   thistype {Object}
 */
 UserSchema.statics = {
-  fetch(cb){
-    this.find({},{
+  fetch(){
+    return this.find({},{
         password:0 //获取info时过滤掉password
       })
       .populate('group')
       .sort('meta.updateAt')
-      .exec(cb)
+      .exec()
   },
-  findAdmin(cb){
-    this.find({
+  findAdmin(){
+    return this.find({
         admin:true
       },{
         password:0 //获取info时过滤掉password
       })
       .populate('group')
       .sort('meta.updateAt')
-      .exec(cb)
+      .exec()
   },
-  findUser(cb){
-    this.find({
+  findUser(){
+    return this.find({
         admin:false
       },{
         password:0 //获取info时过滤掉password
       })
       .populate('group')
       .sort('meta.updateAt')
-      .exec(cb)
+      .exec()
   },
-  findAdminById(id,cb){
-    this.find({
+  findAdminById(id){
+    return this.find({
         _id:id
       })
       .populate('group')
       .sort('meta.updateAt')
-      .exec(cb)
+      .exec()
   },
-  findAdminByEmail(email,cb){
-    this.find({
+  findAdminByEmail(email){
+    return this.find({
         email:email
       })
       .populate('group')
       .sort('meta.updateAt')
-      .exec(cb)
+      .exec()
   },
-  findUserById(id,cb){
-    this.find({
+  findUserById(id){
+    return this.find({
         _id:id
       })
       .populate('group')
       .sort('meta.updateAt')
-      .exec(cb)
+      .exec()
   },
-  findUserByEmail(email,cb){
-    this.find({
+  findUserByEmail(email){
+    return this.find({
         email:email
       })
       .populate('group')
       .sort('meta.updateAt')
-      .exec(cb)
+      .exec()
   },
-  getInfoByEmail(email,cb){
-    this.find({
+  getInfoByEmail(email){
+    return this.find({
         email:email
       },{
         password:0 //获取info时过滤掉password
       })
       .populate('group')
       .sort('meta.updateAt')
-      .exec(cb)
+      .exec()
   }
 }
 
