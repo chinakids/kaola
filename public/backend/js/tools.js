@@ -78,6 +78,7 @@ angular.module('Kaola.tools',[])
     }
   }
 }])
+//权限模型
 .factory('powerModal',function(){
   var powerModal = [{
       id: 'systemMange',
@@ -174,6 +175,7 @@ angular.module('Kaola.tools',[])
     }
   }
 })
+//树组件
 .directive('tree',['powerModal',function(powerModal) {
   return {
     require: '?ngModel',
