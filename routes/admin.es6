@@ -65,6 +65,7 @@ R.post('/login', function *(next) {
     if(parm.ticket.toUpperCase() === ticket.toUpperCase()){
       this.session.email = parm.email;
       this.session.login = true;
+      this.session.ccap = '';
       this.body = {
         status : 'SUCCESS::登陆成功'
       }
