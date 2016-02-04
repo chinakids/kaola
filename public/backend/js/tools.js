@@ -81,7 +81,7 @@ angular.module('Kaola.tools',[])
 //权限模型
 .factory('powerModal',function(){
   var powerModal = [{
-      id: 'systemMange',
+      id: 'systemManage',
       pId: 0,
       name: '系统管理',
       open: true
@@ -147,7 +147,7 @@ angular.module('Kaola.tools',[])
       open: true
     },{
       id: 'backupsMange',
-      pId: 'backupsMange',
+      pId: 'dataManage',
       name: '备份管理',
       open: true
     }, {
@@ -161,7 +161,7 @@ angular.module('Kaola.tools',[])
     }, {
       id: 'logManage',
       pId: 'systemManage',
-      name: '文件管理',
+      name: '日志管理',
       open: true
     }, {
       id: 'logManage.view',
@@ -176,7 +176,7 @@ angular.module('Kaola.tools',[])
   }
 })
 //树组件
-.directive('tree',['powerModal',function(powerModal) {
+.directive('powerTree',['powerModal',function(powerModal) {
   return {
     require: '?ngModel',
     restrict: 'A',
@@ -190,6 +190,9 @@ angular.module('Kaola.tools',[])
             enable: true
           }
         },
+        check:{
+          enable:attrs.powerTree
+        },
         callback: {
           onClick: function(event, treeId, treeNode, clickFlag) {
             $scope.$apply(function() {
@@ -198,7 +201,7 @@ angular.module('Kaola.tools',[])
           }
         }
       };
-      $.fn.zTree.init(element, setting, powerModal.get());
+      $.fn.zTree.init($('.ztree'), setting, powerModal.get());
     }
   };
 }])
