@@ -78,3 +78,125 @@ angular.module('Kaola.tools',[])
     }
   }
 }])
+.factory('powerModal',function(){
+  var powerModal = [{
+      id: 'systemMange',
+      pId: 0,
+      name: '系统管理',
+      open: true
+    }, {
+      id: 'adminManage',
+      pId: 'systemManage',
+      name: '系统用户管理',
+      open: true
+    }, {
+      id: 'adminManage.add',
+      pId: 'adminManage',
+      name: '新增'
+    }, {
+      id: 'adminManage.view',
+      pId: 'adminManage',
+      name: '查看'
+    }, {
+      id: 'adminManage.edit',
+      pId: 'adminManage',
+      name: '修改'
+    }, {
+      id: 'adminManage.del',
+      pId: 'adminManage',
+      name: '删除'
+    }, {
+      id: 'groupManage',
+      pId: 'systemManage',
+      name: '权限组管理',
+      open: true
+    }, {
+      id: 'groupManage.add',
+      pId: 'groupManage',
+      name: '新增'
+    }, {
+      id: 'groupManage.view',
+      pId: 'groupManage',
+      name: '查看'
+    }, {
+      id: 'groupManage.edit',
+      pId: 'groupManage',
+      name: '修改'
+    }, {
+      id: 'groupManage.del',
+      pId: 'groupManage',
+      name: '删除'
+    }, {
+      id: 'filesManage',
+      pId: 'systemManage',
+      name: '文件管理',
+      open: true
+    }, {
+      id: 'filesManage.view',
+      pId: 'filesManage',
+      name: '查看'
+    }, {
+      id: 'filesManage.del',
+      pId: 'filesManage',
+      name: '删除'
+    }, {
+      id: 'dataManage',
+      pId: 'systemManage',
+      name: '数据管理',
+      open: true
+    },{
+      id: 'backupsMange',
+      pId: 'backupsMange',
+      name: '备份管理',
+      open: true
+    }, {
+      id: 'backupsMange.add',
+      pId: 'backupsMange',
+      name: '备份'
+    }, {
+      id: 'backupsMange.del',
+      pId: 'backupsMange',
+      name: '删除'
+    }, {
+      id: 'logManage',
+      pId: 'systemManage',
+      name: '文件管理',
+      open: true
+    }, {
+      id: 'logManage.view',
+      pId: 'logManage',
+      name: '查看'
+    }
+  ]
+  return {
+    get : function(){
+      return powerModal;
+    }
+  }
+})
+.directive('tree',['powerModal',function(powerModal) {
+  return {
+    require: '?ngModel',
+    restrict: 'A',
+    link: function($scope, element, attrs, ngModel) {
+      var setting = {
+        data: {
+          key: {
+            title: "t"
+          },
+          simpleData: {
+            enable: true
+          }
+        },
+        callback: {
+          onClick: function(event, treeId, treeNode, clickFlag) {
+            $scope.$apply(function() {
+              ngModel.$setViewValue(treeNode);
+            });
+          }
+        }
+      };
+      $.fn.zTree.init(element, setting, powerModal.get());
+    }
+  };
+}])
