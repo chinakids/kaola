@@ -7,6 +7,8 @@
     "test": "supervisor -x babel-node ./bin/www"
   },
   "dependencies": {
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-stage-0": "^6.3.13",
     "ccap": "^0.6.4",
     "co": "^4.6.0",
     "crypto-js": "^3.1.6",
@@ -25,7 +27,6 @@
     "koa-views": "^3.1.0",
     "mini-logger": "^1.1.0",
     "mongoose": "^4.3.4",
-    "underscore": "^1.8.3",
-    "babel-preset-es2015": "^6.3.13"
+    "underscore": "^1.8.3"
   }
 }

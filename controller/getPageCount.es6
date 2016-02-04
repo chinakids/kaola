@@ -7,7 +7,7 @@ function getPageCount(count,page = 1,limit = 10){
     count : count,
     totalPage : Math.ceil(count / limit),
     limit : limit,
-    page : page,
+    index : page,
   }
 }
 

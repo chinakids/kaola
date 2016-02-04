@@ -43,11 +43,23 @@ UserSchema.pre('save', function(next){
   next();
 })
 /*
-* 添加add实例
+* 添加实例方法
 */
 UserSchema.method('add',function() {
   let p = new Promise((resolve,reject) => {
     this.save((error, data) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(null, data);
+      }
+    });
+  });
+  return p;
+});
+UserSchema.method('del',function() {
+  let p = new Promise((resolve,reject) => {
+    this.remove((error, data) => {
       if (error) {
         reject(error);
       } else {

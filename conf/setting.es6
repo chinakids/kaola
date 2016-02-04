@@ -17,7 +17,7 @@ const globalSetting =  {
   //debug 为 true 时，用于本地调试
   DEBUG: true,
   SERVICE: 'pm2',  //进程维护工具
-  NEED_INIT: true, //是否需要初始化管理员账户，设置为true访问 ‘http://{{ALLOW_DOMAIN}}/{{ADMIN_DOMAIN}}/init’设置管理员账户,设置完毕记得关掉
+  NEED_INIT: false, //是否需要初始化管理员账户，设置为true访问 ‘http://{{ALLOW_DOMAIN}}/{{ADMIN_DOMAIN}}/init’设置管理员账户,设置完毕记得关掉
 
   //日志记录
   LOG_DIR:process.cwd() + '/log', //日志目录

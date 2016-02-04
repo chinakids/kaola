@@ -1,9 +1,11 @@
 import router from 'koa-router';
 import render from './../utils/render';
 import ccap from 'ccap';
+import _ from 'underscore';
 import crypto from 'crypto';
-import usersModel from '../models/Users';
+import usersModel from './../models/Users';
 import getPageCount from './../controller/getPageCount';
+import S from './../conf/setting';
 
 let R = router();
 
@@ -12,6 +14,10 @@ let R = router();
  */
 
 R.get('/init', function *(next) {
+  if(S.NEED_INIT){
+  }else{
+    this.redirect('./login')
+  }
   //还要创建root限权
   yield render('init',{
     title: '初始化账户'
@@ -19,24 +25,30 @@ R.get('/init', function *(next) {
 });
 
 R.post('/init', function *(next) {
-  let parm = this.request.body;
-  let md5 = crypto.createHash('md5');
-  let checking = yield usersModel.findAdminByEmail(parm.email);
-  if(checking.length > 0){
-    this.body = {
-      status : 'FAIL::该邮箱已存在'
+  if(S.NEED_INIT){
+    let parm = this.request.body;
+    let md5 = crypto.createHash('md5');
+    let checking = yield usersModel.findAdminByEmail(parm.email);
+    if(checking.length > 0){
+      this.body = {
+        status : 'FAIL::该邮箱已存在'
+      }
+    }else{
+      let user = new usersModel({
+        nickName   : parm.nickName,
+        email      : parm.email,
+        password   : md5.update(parm.password).digest('hex'),
+        phoneNum   : parm.phoneNum,
+        admin      : true
+      })
+      yield user.add()
+      this.body = {
+        status : 'SUCCESS::成功增加管理员账号'
+      }
     }
   }else{
-    let user = new usersModel({
-      nickName   : parm.nickName,
-      email      : parm.email,
-      password   : md5.update(parm.password).digest('hex'),
-      phoneNum   : parm.phoneNum,
-      admin      : true
-    })
-    yield user.add()
     this.body = {
-      status : 'SUCCESS::初始化成功'
+      status : 'FAIL::系统已关闭初始化'
     }
   }
 });
@@ -154,6 +166,84 @@ R.get('/adminManage', function *(next) {
     },this);
   }else{
     this.redirect('./login')
+  }
+});
+
+R.post('/adminManage/addAdmin', function *(next) {
+  if(this.session.login){
+    let parm = this.request.body;
+    let md5 = crypto.createHash('md5');
+    let checking = yield usersModel.findAdminByEmail(parm.email);
+    if(checking.length > 0){
+      this.body = {
+        status : 'FAIL::该邮箱已存在'
+      }
+    }else{
+      let user = new usersModel({
+        nickName   : parm.nickName,
+        email      : parm.email,
+        password   : md5.update(parm.password).digest('hex'),
+        phoneNum   : parm.phoneNum,
+        admin      : true
+      })
+      yield user.add()
+      this.body = {
+        status : 'SUCCESS::成功增加管理员账号'
+      }
+    }
+  }else{
+    this.body = {
+      status : 'FAIL::该接口需要登录'
+    }
+  }
+});
+
+R.post('/adminManage/editAdmin', function *(next) {
+  if(this.session.login){
+    let parm = this.request.body;
+    let md5 = crypto.createHash('md5');
+    let admin = yield usersModel.findAdminById(parm._id);
+    if(admin.length <= 0){
+      this.body = {
+        status : 'FAIL::该账号不存在'
+      }
+    }else{
+      console.log(admin[0])
+      //加密
+      parm.password = md5.update(parm.password).digest('hex')
+      //合并
+      let _admin = _.extend(admin[0],parm);
+      console.log(_admin)
+      yield _admin.save()
+      this.body = {
+        status : 'SUCCESS::成功修改管理员账号'
+      }
+    }
+  }else{
+    this.body = {
+      status : 'FAIL::该接口需要登录'
+    }
+  }
+});
+
+R.post('/adminManage/delAdmin', function *(next) {
+  if(this.session.login){
+    let parm = this.request.body;
+    let admin = yield usersModel.findAdminById(parm._id);
+    if(admin.length <= 0){
+      this.body = {
+        status : 'FAIL::该账号不存在'
+      }
+    }else{
+      yield admin[0].del()
+      this.body = {
+        status : 'SUCCESS::成功删除管理员账号'
+      }
+    }
+  }else{
+    this.body = {
+      status : 'FAIL::该接口需要登录'
+    }
   }
 });
 
