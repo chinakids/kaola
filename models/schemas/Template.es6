@@ -22,7 +22,21 @@ let TemplateSchema = new mongoose.Schema({
     }
   }
 });
-
+/*
+* 添加实例方法
+*/
+TemplateSchema.method('add',function() {
+  let p = new Promise((resolve,reject) => {
+    this.save((error, data) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(null, data);
+      }
+    });
+  });
+  return p;
+});
 /*
 *   给save方法添加预处理
 */
@@ -34,25 +48,25 @@ TemplateSchema.pre('save', function(next){
     this.meta.updateAt = Date.now();
   }
   next();
-})
+});
 
 /*
 *   绑定静态方法
 *   thistype {Object}
 */
 TemplateSchema.statics = {
-  fetch(cb){
-    this.find({})
+  fetch(){
+    return this.find({})
       .sort('meta.updateAt')
-      .exec(cb)
+      .exec()
   },
-  findByName(query,cb){
-    this.find({
+  findByName(query){
+    return this.find({
         name:query.name,
         group:query.group
       })
       .sort('meta.updateAt')
-      .exec(cb)
+      .exec()
   }
 }
 

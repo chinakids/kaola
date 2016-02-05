@@ -23,7 +23,7 @@ import userInfo from './controller/getUserInfo';
 //实例化
 let app = koa();
 let R = route();
-let C = connect();
+//let C = connect();
 //设置模板相关参数
 app.use(views('views', {
   root: __dirname + '/views',
@@ -34,6 +34,8 @@ app.use(koaBodyparser({
   formLimit:'5mb',
   jsonLimit:'200kb'
 }));
+//链接数据库
+app.use(connect);
 app.use(json());
 app.use(koaLogger());
 //设置静态资源相关参数
