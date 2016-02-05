@@ -38,6 +38,9 @@ block layout
         'phoneNum'   : ''//电话
       }
       $scope.submit = function(){
+        $('#init input').each(function(){
+          $(this).trigger('focus').trigger('blur');
+        })
         if($('#init .reg-success').size() === 5){
           console.log($scope.initData)
           $.post('./init',$scope.initData,function(data){

@@ -208,12 +208,10 @@ R.post('/adminManage/editAdmin', function *(next) {
         status : 'FAIL::该账号不存在'
       }
     }else{
-      console.log(admin[0])
       //加密
       parm.password = md5.update(parm.password).digest('hex')
       //合并
       let _admin = _.extend(admin[0],parm);
-      console.log(_admin)
       yield _admin.save()
       this.body = {
         status : 'SUCCESS::成功修改管理员账号'

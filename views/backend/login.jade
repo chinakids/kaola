@@ -35,6 +35,9 @@ block layout
       $scope.password = '';
       $scope.securityCode = '';
       $scope.submit = function(){
+        $('#login input').each(function(){
+          $(this).trigger('focus').trigger('blur');
+        })
         if($('#login .reg-success').size() === 3){
           //这里的密码混合验证码加密传输,避免重放攻击
           var loginData = {

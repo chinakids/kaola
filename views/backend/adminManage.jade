@@ -101,6 +101,9 @@ block content
         }else{
           angular.element(document.getElementById('myModal')).css({'display':'none'})
           //关闭清空
+          $('#add input').each(function(){
+            $(this).removeClass('reg-success').removeClass('reg-error');
+          })
           $scope.type = 'add';
           $scope.adminData = {
             'email'      : '',//邮箱
@@ -124,6 +127,9 @@ block content
         }
       }
       $scope.submit = function(){
+        $('#add input').each(function(){
+          $(this).trigger('focus').trigger('blur');
+        })
         if($('#add .reg-success').size() === 5){
           if($scope.type === 'add'){
             //新增
