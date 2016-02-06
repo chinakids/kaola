@@ -6,3 +6,8 @@
   background-color: #f2dede;
   border-color: #a94442;
 }
+.ztree{
+  border:1px solid #d2d6de;
+  max-height: 400px;
+  overflow: auto;
+}

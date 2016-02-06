@@ -1,0 +1,15 @@
+div.box-footer
+  div.row
+    div.col-xs-6
+      div(style='padding-top:4px')
+        |  每页  
+        select(ng-options='item for item in limitList',ng-model='limit')
+        |  条，共 {{page.count}} 条记录 
+    div.col-xs-6
+      ul.pagination.pagination-sm.pull-right(style='margin:0')
+        li
+          a(href='javascript:;',) ← 上一页
+        li.disabled
+          a(href='javascript:;') 第{{page.index}}页
+        li
+          a(href='javascript:;') 下一页 → 

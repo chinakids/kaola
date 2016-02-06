@@ -9,7 +9,6 @@ let UserGroupSchema = new mongoose.Schema({
     type     : String,
     default  : 'default'
   },//权限
-  comments   : String,//备注
   meta       : {
     createAt : {
       type      : Date,
@@ -21,7 +20,33 @@ let UserGroupSchema = new mongoose.Schema({
     }
   }
 });
-
+/*
+* 添加实例方法
+*/
+UserGroupSchema.method('add',function() {
+  let p = new Promise((resolve,reject) => {
+    this.save((error, data) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(null, data);
+      }
+    });
+  });
+  return p;
+});
+UserGroupSchema.method('del',function() {
+  let p = new Promise((resolve,reject) => {
+    this.remove((error, data) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(null, data);
+      }
+    });
+  });
+  return p;
+});
 /*
 *   给save方法添加预处理
 */
@@ -34,5 +59,29 @@ UserGroupSchema.pre('save', function(next){
   }
   next();
 })
-
+/*
+*   绑定静态方法
+*   thistype {Object}
+*/
+UserGroupSchema.statics = {
+  fetch(){
+    return this.find({})
+      .sort('meta.updateAt')
+      .exec()
+  },
+  findByName(name){
+    return this.find({
+        name:name
+      })
+      .sort('meta.updateAt')
+      .exec()
+  },
+  findById(id){
+    return this.find({
+        _id:id
+      })
+      .sort('meta.updateAt')
+      .exec()
+  }
+}
 export default UserGroupSchema;

@@ -8,6 +8,19 @@ angular.module('Kaola.tools',[])
     }
   }
 })
+//将权限数组过滤成可读字符串
+.filter('powerStr',function(){
+  return function(str){
+    var arr = [],
+    json = JSON.parse(str)
+    for(var item in json){
+      if(json[item]){
+        arr.push(item);
+      }
+    }
+    return '['+arr.join('],[')+']';
+  }
+})
 //input正则验证，除预置验证外，也可自己传入正则
 .directive('reg',['$rootScope',function($rootscope){
   return{
@@ -88,22 +101,22 @@ angular.module('Kaola.tools',[])
     }, {
       id: 'adminManage',
       pId: 'systemManage',
-      name: '系统用户管理',
+      name: '用户管理',
       open: true
     }, {
-      id: 'adminManage.add',
+      id: 'adminManage-add',
       pId: 'adminManage',
       name: '新增'
     }, {
-      id: 'adminManage.view',
+      id: 'adminManage-view',
       pId: 'adminManage',
       name: '查看'
     }, {
-      id: 'adminManage.edit',
+      id: 'adminManage-edit',
       pId: 'adminManage',
       name: '修改'
     }, {
-      id: 'adminManage.del',
+      id: 'adminManage-del',
       pId: 'adminManage',
       name: '删除'
     }, {
@@ -112,19 +125,19 @@ angular.module('Kaola.tools',[])
       name: '权限组管理',
       open: true
     }, {
-      id: 'groupManage.add',
+      id: 'groupManage-add',
       pId: 'groupManage',
       name: '新增'
     }, {
-      id: 'groupManage.view',
+      id: 'groupManage-view',
       pId: 'groupManage',
       name: '查看'
     }, {
-      id: 'groupManage.edit',
+      id: 'groupManage-edit',
       pId: 'groupManage',
       name: '修改'
     }, {
-      id: 'groupManage.del',
+      id: 'groupManage-del',
       pId: 'groupManage',
       name: '删除'
     }, {
@@ -133,11 +146,11 @@ angular.module('Kaola.tools',[])
       name: '文件管理',
       open: true
     }, {
-      id: 'filesManage.view',
+      id: 'filesManage-view',
       pId: 'filesManage',
       name: '查看'
     }, {
-      id: 'filesManage.del',
+      id: 'filesManage-del',
       pId: 'filesManage',
       name: '删除'
     }, {
@@ -151,11 +164,11 @@ angular.module('Kaola.tools',[])
       name: '备份管理',
       open: true
     }, {
-      id: 'backupsMange.add',
+      id: 'backupsMange-add',
       pId: 'backupsMange',
       name: '备份'
     }, {
-      id: 'backupsMange.del',
+      id: 'backupsMange-del',
       pId: 'backupsMange',
       name: '删除'
     }, {
@@ -164,23 +177,45 @@ angular.module('Kaola.tools',[])
       name: '日志管理',
       open: true
     }, {
-      id: 'logManage.view',
+      id: 'logManage-view',
       pId: 'logManage',
       name: '查看'
     }
   ]
   return {
-    get : function(){
+    getTree : function(){
       return powerModal;
+    },
+    getModal : function(){
+      var modal = {}
+      for(var i =0,len =powerModal.length;i<len;i++){
+        if(!powerModal[i].open){
+          modal[powerModal[i].id] = false;
+        }
+      }
+      return modal;
     }
   }
 })
 //树组件
 .directive('powerTree',['powerModal',function(powerModal) {
   return {
-    require: '?ngModel',
     restrict: 'A',
-    link: function($scope, element, attrs, ngModel) {
+    link: function($scope, element, attrs) {
+      $scope[attrs.modal] = powerModal.getModal();
+      //解构目录
+      function eachGroup(nodes,status){
+        for(var i = 0,len=nodes.length;i<len;i++){
+          if(nodes[i].open){
+            eachGroup(nodes[i].children,status)
+          }else{
+            $scope.$apply(function(){
+              $scope[attrs.modal][nodes[i].id] = status;
+            })
+          }
+        }
+      }
+
       var setting = {
         data: {
           key: {
@@ -194,14 +229,30 @@ angular.module('Kaola.tools',[])
           enable:attrs.powerTree
         },
         callback: {
-          onClick: function(event, treeId, treeNode, clickFlag) {
-            $scope.$apply(function() {
-              ngModel.$setViewValue(treeNode);
-            });
+          onCheck: function(event, treeId, treeNode) {
+            if(treeNode.checked){
+              //选中
+              if(treeNode.open){
+                eachGroup(treeNode.children,true);
+              }else{
+                $scope.$apply(function(){
+                  $scope[attrs.modal][treeNode.id] = true;
+                })
+              }
+            }else{
+              //移除
+              if(treeNode.open){
+                eachGroup(treeNode.children,false);
+              }else{
+                $scope.$apply(function(){
+                  $scope[attrs.modal][treeNode.id] = false;
+                })
+              }
+            }
           }
         }
       };
-      $.fn.zTree.init($('.ztree'), setting, powerModal.get());
+      $.fn.zTree.init($('.ztree'), setting, powerModal.getTree());
     }
   };
 }])

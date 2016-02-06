@@ -6,7 +6,7 @@ block content
     div.col-md-12
       div.panel
         div.btn-group
-          a.btn.btn-primary.btn-sm(href='#')
+          a.btn.btn-primary.btn-sm(href='javascript:;',ng-click='modal = true')
             i.fa.fa-plus-square
             |  添加用户组
     div.col-md-12
@@ -14,48 +14,153 @@ block content
         div.box-header.with-border
           h5.box-title #{title}
         div.box-body.table-responsive.no-padding
-          ul.ztree(power-tree='false')
           table.table.table-hover
             tbody
               tr
                 th 组名
                 th 权限范围
                 th 操作
-              tr.datalist
-                td 二手运动鞋
-                td 2015-12-31 11:28:17
+              tr.datalist(ng-repeat='item in groupList')
+                td {{item.name}}
+                td(style='max-width:400px;overflow:hidden',title='{{item.power | powerStr}}') {{item.power | powerStr}}
                 td
                   div.btn-group
-                    button.btn.btn-primary.btn-xs
+                    button.btn.btn-primary.btn-xs(ng-click='edit($index)')
                       span.fa.fa-fw.fa-edit
                       | 编辑
-                    button.btn.btn-default.btn-xs
+                    button.btn.btn-default.btn-xs(ng-click='del(item.name,item._id)')
                       span.fa.fa-fw.fa-trash-o
                       | 删除
-        div.box-footer
-          div.row
-            div.col-xs-6
-              div(style='padding-top:4px')
-                |  每页  
-                select
-                  option(value='string:10', label='10', selected='selected') 10    
-                  option(value='string:20', label='20') 20   
-                  option(value='string:30', label='30') 30
-                |  条，共 37 条记录 
-            div.col-xs-6
-              ul.pagination.pagination-sm.pull-right(style='margin:0')
-                li
-                  a(href='javascript:;',) ← 上一页
-                li
-                  a(href='javascript:;') 1
-                li.active
-                  a(href='javascript:;') 2
-                li.disabled
-                  a(href='javascript:;') 下一页 → 
+        include ./layout/listFooter
         #dataLoading.overlay.hide
           i.fa.fa-refresh.fa-spin
+    div#myModal.modal(ng-class='{in:modal,fade:!modal}')
+      div.modal-dialog(role='document')
+        div.modal-content
+          div.modal-header
+            button.close(type='button',ng-click='modal = false')
+              span &times;
+            h4#myModalLabel.modal-title 新增权限组
+          div.modal-body.clearfix
+            div.col-xs-12.clearfix
+              form#add
+                .form-group.has-feedback
+                  input.form-control(type='text',ng-model='groupName',placeholder='请输入权限组名称',reg='s1-6',err-tip='请输入1到6位非特殊字符')
+                  span.ar.ar-usergroup-b.form-control-feedback
+                .form-group.has-feedback
+                  ul#ztree.ztree(power-tree='false',modal='power')
+                .form-group.has-feedback#tip
+                .form-group.has-feedback
+                  button.btn.btn-primary.btn-block.btn-flat(type='button',ng-click='submit()') 确 定
   script.
     angular.module('Kaola',['Kaola.tools'])
-    .controller('GroupManageCtrl',['$scope',function($scope){
-      
+    .controller('GroupManageCtrl',['$scope','$filter',function($scope,$filter){
+      $scope.limitList = [10,20,30];
+      $scope.limit = $scope.limitList[0];
+      $scope.page = !{page};
+      $scope.groupList = !{groupList};
+      $scope.modal = false;
+      $scope.type = 'add';
+      $scope.power = {};
+      $scope.groupName = '';
+      var treeObj = {};
+      $scope.$watch('modal',function(){
+        if($scope.modal){
+          angular.element(document.getElementById('myModal')).css({'display':'block'})
+          treeObj = $.fn.zTree.getZTreeObj("ztree");
+          for(var item in $scope.power){
+            var node = treeObj.getNodeByParam('id',item,null);
+            if($scope.power[item] == true){
+              treeObj.checkNode(node,$scope.power[item],true)
+            }
+          }
+        }else{
+          angular.element(document.getElementById('myModal')).css({'display':'none'})
+          //关闭清空
+          $('#add input').each(function(){
+            $(this).removeClass('reg-success').removeClass('reg-error');
+          })
+          $scope.type = 'add';
+          $scope.power = {};
+          treeObj = $.fn.zTree.getZTreeObj("ztree")
+          treeObj.checkAllNodes(false);
+        }
+      })
+      $scope.editId = '';
+      //管理员是允许修改自己全部信息的
+      $scope.edit = function(i){
+        $scope.type = 'edit'
+        $scope.editId = $scope.groupList[i]._id;
+        $scope.groupName = $scope.groupList[i].name;
+        $scope.power = JSON.parse($scope.groupList[i].power);
+        $scope.modal = true;
+      }
+      $scope.submit = function(){
+        $('#add input').each(function(){
+          $(this).trigger('focus').trigger('blur');
+        })
+        if($('#add .reg-success').size() === 1){
+          if($scope.type === 'add'){
+            $.post('./groupManage/addGroup',{
+              'name' : $scope.groupName,
+              'power': JSON.stringify($scope.power)
+            },function(data){
+              var status = data.status.split('::')[0],
+              msg = data.status.split('::')[1];
+              if(status === 'SUCCESS'){
+                $('#tip').append('<div class=\'callout callout-success\'><p>'+msg+'</p></div>');
+                setTimeout(function(){
+                  window.location.reload()
+                },2000)
+              }else{
+                $('#tip').append('<div class=\'callout callout-danger\'><p>'+msg+'</p></div>');
+                setTimeout(function(){
+                  $('#tip').html('');
+                },2000)
+              }
+            })
+          }else if($scope.type === 'edit'){
+            //修改
+            $.post('./groupManage/editGroup',{
+              '_id'       : $scope.editId,
+              'name'      : $scope.groupName,
+              'power'     : JSON.stringify($scope.power)
+            },function(data){
+              var status = data.status.split('::')[0],
+              msg = data.status.split('::')[1];
+              if(status === 'SUCCESS'){
+                $('#tip').append('<div class=\'callout callout-success\'><p>'+msg+'</p></div>');
+                setTimeout(function(){
+                  window.location.reload()
+                },2000)
+              }else{
+                $('#tip').append('<div class=\'callout callout-danger\'><p>'+msg+'</p></div>');
+                setTimeout(function(){
+                  $('#tip').html('');
+                },2000)
+              }
+            })
+          }  
+        }else{
+          $('#tip').append('<div class=\'callout callout-danger\'><p>填写信息不完整</p></div>');
+          setTimeout(function(){
+            $('#tip').html('');
+          },2000)
+        }
+      }
+      $scope.del = function(name,id){
+        if(confirm('是否删除"'+name+'"?')){
+          //删除
+          $.post('./groupManage/delGroup',{'_id':id},function(data){
+            var status = data.status.split('::')[0],
+            msg = data.status.split('::')[1];
+            if(status === 'SUCCESS'){
+              alert(msg)
+              window.location.reload()
+            }else{
+              alert(msg)
+            }
+          })
+        }
+      }
     }])
