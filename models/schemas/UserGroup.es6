@@ -65,7 +65,10 @@ UserGroupSchema.pre('save', function(next){
 */
 UserGroupSchema.statics = {
   fetch(){
-    return this.find({})
+    //全部查询忽略最高权限
+    return this.find({
+        power:{'$ne':'root'}
+      })
       .sort('meta.updateAt')
       .exec()
   },
