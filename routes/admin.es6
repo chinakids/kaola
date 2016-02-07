@@ -6,6 +6,7 @@ import crypto from 'crypto';
 import usersModel from './../models/Users';
 import userGroupModel from './../models/UserGroup';
 import getPageCount from './../controller/getPageCount';
+import getAccess from './../controller/getAccess';
 import S from './../conf/setting';
 
 let R = router();
@@ -72,9 +73,13 @@ R.post('/init', function*(next) {
 
 //登陆
 R.get('/login', function*(next) {
-  yield render('login', {
-    title: '管理员登陆'
-  }, this);
+  if (!this.session.login) {
+    yield render('login', {
+      title: '管理员登陆'
+    }, this);
+  } else {
+    this.redirect('./')
+  }
 });
 //登陆接口
 R.post('/login', function*(next) {
@@ -142,10 +147,17 @@ R.get('/', function*(next) {
 
 R.get('/goodsManage', function*(next) {
   if (this.session.login) {
+    //if (getAccess(this, 'goodsManage-view')) {
     yield render('goodsManage', {
       title: '商品管理',
       desc: ''
     }, this);
+    // } else {
+    //   //TODO
+    //   this.body = {
+    //     status: 'FAIL::没有操作权限'
+    //   }
+    // }
   } else {
     this.redirect('./login')
   }
@@ -158,14 +170,22 @@ R.get('/goodsManage', function*(next) {
 //管理员管理
 R.get('/adminManage', function*(next) {
   if (this.session.login) {
+    //if (getAccess('adminManage-view')) {
     let count = yield usersModel.count({});
-    let fetch = yield usersModel.findAdmin();
+    let userFetch = yield usersModel.findAdmin();
+    let groupFetch = yield userGroupModel.fetch();
     yield render('adminManage', {
       title: '系统用户管理',
       desc: '',
       page: JSON.stringify(getPageCount(count)),
-      adminList: JSON.stringify(fetch)
+      adminList: JSON.stringify(userFetch),
+      groupList: JSON.stringify(groupFetch)
     }, this);
+    // } else {
+    //   this.body = {
+    //     status: 'FAIL::没有操作权限'
+    //   }
+    // }
   } else {
     this.redirect('./login')
   }
@@ -173,6 +193,7 @@ R.get('/adminManage', function*(next) {
 //管理员管理 - 增加
 R.post('/adminManage/addAdmin', function*(next) {
   if (this.session.login) {
+    //if (getAccess('adminManage-add')) {
     let parm = this.request.body;
     let md5 = crypto.createHash('md5');
     let checking = yield usersModel.findAdminByEmail(parm.email);
@@ -186,13 +207,19 @@ R.post('/adminManage/addAdmin', function*(next) {
         email: parm.email,
         password: md5.update(parm.password).digest('hex'),
         phoneNum: parm.phoneNum,
-        admin: true
+        admin: true,
+        group: parm.group
       })
       yield user.add()
       this.body = {
         status: 'SUCCESS::成功增加管理员账号'
       }
     }
+    // } else {
+    //   this.body = {
+    //     status: 'FAIL::没有操作权限'
+    //   }
+    // }
   } else {
     this.body = {
       status: 'FAIL::该接口需要登录'
@@ -202,6 +229,7 @@ R.post('/adminManage/addAdmin', function*(next) {
 //管理员管理 - 修改
 R.post('/adminManage/editAdmin', function*(next) {
   if (this.session.login) {
+    //if (getAccess('adminManage-edit')) {
     let parm = this.request.body;
     let md5 = crypto.createHash('md5');
     let admin = yield usersModel.findAdminById(parm._id);
@@ -210,15 +238,26 @@ R.post('/adminManage/editAdmin', function*(next) {
         status: 'FAIL::该账号不存在'
       }
     } else {
-      //加密
-      parm.password = md5.update(parm.password).digest('hex')
-        //合并
-      let _admin = _.extend(admin[0], parm);
-      yield _admin.save()
-      this.body = {
-        status: 'SUCCESS::成功修改管理员账号'
+      if (admin[0].group.power === 'root') {
+        this.body = {
+          status: 'FAIL::Root权限账号无法修改'
+        }
+      } else {
+        //加密
+        parm.password = md5.update(parm.password).digest('hex')
+          //合并
+        let _admin = _.extend(admin[0], parm);
+        yield _admin.save()
+        this.body = {
+          status: 'SUCCESS::成功修改管理员账号'
+        }
       }
     }
+    // } else {
+    //   this.body = {
+    //     status: 'FAIL::没有操作权限'
+    //   }
+    // }
   } else {
     this.body = {
       status: 'FAIL::该接口需要登录'
@@ -228,6 +267,7 @@ R.post('/adminManage/editAdmin', function*(next) {
 //管理员管理 - 删除
 R.post('/adminManage/delAdmin', function*(next) {
   if (this.session.login) {
+    //if (getAccess('adminManage-del')) {
     let parm = this.request.body;
     let admin = yield usersModel.findAdminById(parm._id);
     if (admin.length <= 0) {
@@ -235,11 +275,22 @@ R.post('/adminManage/delAdmin', function*(next) {
         status: 'FAIL::该账号不存在'
       }
     } else {
-      yield admin[0].del()
-      this.body = {
-        status: 'SUCCESS::成功删除管理员账号'
+      if (admin[0].group.power === 'root') {
+        this.body = {
+          status: 'FAIL::Root权限账号无法删除'
+        }
+      } else {
+        yield admin[0].del()
+        this.body = {
+          status: 'SUCCESS::成功删除管理员账号'
+        }
       }
     }
+    // } else {
+    //   this.body = {
+    //     status: 'FAIL::没有操作权限'
+    //   }
+    // }
   } else {
     this.body = {
       status: 'FAIL::该接口需要登录'
@@ -249,6 +300,7 @@ R.post('/adminManage/delAdmin', function*(next) {
 //权限组管理
 R.get('/groupManage', function*(next) {
   if (this.session.login) {
+    //if (getAccess('groupManage-view')) {
     let count = yield userGroupModel.count({});
     let fetch = yield userGroupModel.fetch();
     yield render('groupManage', {
@@ -257,6 +309,12 @@ R.get('/groupManage', function*(next) {
       page: JSON.stringify(getPageCount(count)),
       groupList: JSON.stringify(fetch)
     }, this);
+    // } else {
+    //   //TODO
+    //   this.body = {
+    //     status: 'FAIL::没有操作权限'
+    //   }
+    // }
   } else {
     this.redirect('./login')
   }
@@ -264,6 +322,7 @@ R.get('/groupManage', function*(next) {
 //管理员管理 - 增加
 R.post('/groupManage/addGroup', function*(next) {
   if (this.session.login) {
+    //if (getAccess('groupManage-add')) {
     //存入
     let parm = this.request.body;
     let checking = yield userGroupModel.findByName(parm.name);
@@ -281,6 +340,11 @@ R.post('/groupManage/addGroup', function*(next) {
         status: 'SUCCESS::成功增加权限组'
       }
     }
+    // } else {
+    //   this.body = {
+    //     status: 'FAIL::没有操作权限'
+    //   }
+    // }
   } else {
     this.body = {
       status: 'FAIL::该接口需要登录'
@@ -290,6 +354,7 @@ R.post('/groupManage/addGroup', function*(next) {
 //管理员管理 - 修改
 R.post('/groupManage/editGroup', function*(next) {
   if (this.session.login) {
+    //if (getAccess('groupManage-edit')) {
     let parm = this.request.body;
     let group = yield userGroupModel.findById(parm._id);
     if (group.length <= 0) {
@@ -298,12 +363,23 @@ R.post('/groupManage/editGroup', function*(next) {
       }
     } else {
       //合并
-      let _group = _.extend(group[0], parm);
-      yield _group.save()
-      this.body = {
-        status: 'SUCCESS::成功修改权限组'
+      if (group[0].power === 'root') {
+        this.body = {
+          status: 'FAIL::Root权限无法修改'
+        }
+      } else {
+        let _group = _.extend(group[0], parm);
+        yield _group.save()
+        this.body = {
+          status: 'SUCCESS::成功修改权限组'
+        }
       }
     }
+    // } else {
+    //   this.body = {
+    //     status: 'FAIL::没有操作权限'
+    //   }
+    // }
   } else {
     this.body = {
       status: 'FAIL::该接口需要登录'
@@ -313,6 +389,7 @@ R.post('/groupManage/editGroup', function*(next) {
 //管理员管理 - 删除
 R.post('/groupManage/delGroup', function*(next) {
   if (this.session.login) {
+    //if (getAccess('groupManage-del')) {
     let parm = this.request.body;
     let group = yield userGroupModel.findById(parm._id);
     if (group.length <= 0) {
@@ -320,11 +397,22 @@ R.post('/groupManage/delGroup', function*(next) {
         status: 'FAIL::该权限组不存在'
       }
     } else {
-      yield group[0].del()
-      this.body = {
-        status: 'SUCCESS::成功删除权限组'
+      if (group[0].power === 'root') {
+        this.body = {
+          status: 'FAIL::Root权限无法删除'
+        }
+      } else {
+        yield group[0].del()
+        this.body = {
+          status: 'SUCCESS::成功删除权限组'
+        }
       }
     }
+    // } else {
+    //   this.body = {
+    //     status: 'FAIL::没有操作权限'
+    //   }
+    // }
   } else {
     this.body = {
       status: 'FAIL::该接口需要登录'
