@@ -11,6 +11,10 @@ import S from './../conf/setting';
 
 let R = router();
 
+R.use(function*(next) {
+  yield next;
+})
+
 /**
  * 0、初始化
  */
