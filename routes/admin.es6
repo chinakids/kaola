@@ -6,6 +6,7 @@ import crypto from 'crypto';
 import usersModel from './../models/Users';
 import userGroupModel from './../models/UserGroup';
 import getPageCount from './../controller/getPageCount';
+import userInfo from './controller/getUserInfo';
 import S from './../conf/setting';
 //route
 import goodsManage from './admin/goodsManage';
@@ -13,6 +14,7 @@ import adminManage from './admin/adminManage';
 import groupManage from './admin/groupManage';
 
 let R = router();
+//获取最新权限
 
 R.get('/', function*(next) {
   if (this.session.login) {

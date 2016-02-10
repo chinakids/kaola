@@ -81,7 +81,7 @@ app.use(function *(next){
     yield next;
   }
 })
-app.use(userInfo);
+R.use(userInfo);
 //路由设置
 R.use('/', index.routes(), index.allowedMethods());
 R.use('/api', api.routes(), api.allowedMethods());
