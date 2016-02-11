@@ -6,7 +6,6 @@ import crypto from 'crypto';
 import usersModel from './../models/Users';
 import userGroupModel from './../models/UserGroup';
 import getPageCount from './../controller/getPageCount';
-import userInfo from './controller/getUserInfo';
 import S from './../conf/setting';
 //route
 import goodsManage from './admin/goodsManage';

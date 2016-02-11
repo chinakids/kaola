@@ -4,6 +4,7 @@ import _ from 'underscore';
 import crypto from 'crypto';
 import userGroupModel from './../../models/UserGroup';
 import getPageCount from './../../controller/getPageCount';
+import getAccess from './../../controller/getAccess';
 
 let R = router();
 /**
@@ -25,7 +26,7 @@ R.use(function*(next) {
 })
 
 //权限组管理
-R.get('/', function*(next) {
+R.get('/', getAccess('groupManage-view'), function*(next) {
     //if (getAccess('groupManage-view')) {
   let count = yield userGroupModel.count({});
   let fetch = yield userGroupModel.fetch();
