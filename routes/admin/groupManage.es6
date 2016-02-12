@@ -44,7 +44,7 @@ R.get('/', getAccess('groupManage-view'), function*(next) {
   // }
 });
 //管理员管理 - 增加
-R.post('/addGroup', function*(next) {
+R.post('/addGroup', getAccess('groupManage-add'), function*(next) {
   //if (getAccess('groupManage-add')) {
   //存入
   let parm = this.request.body;
@@ -70,7 +70,7 @@ R.post('/addGroup', function*(next) {
   // }
 });
 //管理员管理 - 修改
-R.post('/editGroup', function*(next) {
+R.post('/editGroup',getAccess('groupManage-edit'), function*(next) {
   //if (getAccess('groupManage-edit')) {
   let parm = this.request.body;
   let group = yield userGroupModel.findById(parm._id);
@@ -99,7 +99,7 @@ R.post('/editGroup', function*(next) {
   // }
 });
 //管理员管理 - 删除
-R.post('/delGroup', function*(next) {
+R.post('/delGroup', getAccess('groupManage-del'), function*(next) {
   //if (getAccess('groupManage-del')) {
   let parm = this.request.body;
   let group = yield userGroupModel.findById(parm._id);
