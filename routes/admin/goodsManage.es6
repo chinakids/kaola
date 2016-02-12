@@ -11,7 +11,7 @@ R.use(function*(next) {
   yield next;
 })
 
-R.get('/', function*(next) {
+R.get('/', getAccess('goodsManage-view'), function*(next) {
   if (this.session.login) {
     //if (getAccess(this, 'goodsManage-view')) {
     yield render('goodsManage', {
