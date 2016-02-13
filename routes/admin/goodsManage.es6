@@ -1,5 +1,6 @@
 import router from 'koa-router';
 import render from './../../utils/render';
+import getAccess from './../../controller/getAccess';
 
 let R = router();
 /**

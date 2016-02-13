@@ -5,6 +5,7 @@ import crypto from 'crypto';
 import usersModel from './../../models/Users';
 import userGroupModel from './../../models/UserGroup';
 import getPageCount from './../../controller/getPageCount';
+import getAccess from './../../controller/getAccess';
 
 let R = router();
 
@@ -26,7 +27,7 @@ R.use(function*(next) {
  * 4.系统管理相关
  */
 //管理员管理
-R.get('/', function*(next) {
+R.get('/', getAccess('adminManage-view'), function*(next) {
   //if (getAccess('adminManage-view')) {
   let count = yield usersModel.count({});
   let userFetch = yield usersModel.findAdmin();
@@ -45,7 +46,7 @@ R.get('/', function*(next) {
   // }
 });
 //管理员管理 - 增加
-R.post('/addAdmin', function*(next) {
+R.post('/addAdmin', getAccess('adminManage-add'), function*(next) {
   //if (getAccess('adminManage-add')) {
   let parm = this.request.body;
   let md5 = crypto.createHash('md5');
@@ -75,7 +76,7 @@ R.post('/addAdmin', function*(next) {
   // }
 });
 //管理员管理 - 修改
-R.post('/editAdmin', function*(next) {
+R.post('/editAdmin', getAccess('adminManage-edit'), function*(next) {
   //if (getAccess('adminManage-edit')) {
   let parm = this.request.body;
   let md5 = crypto.createHash('md5');
@@ -107,7 +108,7 @@ R.post('/editAdmin', function*(next) {
   // }
 });
 //管理员管理 - 删除
-R.post('/delAdmin', function*(next) {
+R.post('/delAdmin', getAccess('adminManage-del'), function*(next) {
   //if (getAccess('adminManage-del')) {
   let parm = this.request.body;
   let admin = yield usersModel.findAdminById(parm._id);
