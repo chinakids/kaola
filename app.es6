@@ -52,7 +52,7 @@ app.use(session({
     db:S.REDIS_DB
   }),
   cookie:{
-    maxAge: 24 * 60 * 60 * 7000 //7 day in ms
+    maxAge: 24 * 60 * 60 * 3000 //3 day in ms
   }
 }));
 //设置应用名称
