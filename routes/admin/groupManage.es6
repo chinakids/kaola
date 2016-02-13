@@ -27,7 +27,6 @@ R.use(function*(next) {
 
 //权限组管理
 R.get('/', getAccess('groupManage-view'), function*(next) {
-    //if (getAccess('groupManage-view')) {
   let count = yield userGroupModel.count({});
   let fetch = yield userGroupModel.fetch();
   yield render('groupManage', {
@@ -36,16 +35,9 @@ R.get('/', getAccess('groupManage-view'), function*(next) {
     page: JSON.stringify(getPageCount(count)),
     groupList: JSON.stringify(fetch)
   }, this);
-  // } else {
-  //   //TODO
-  //   this.body = {
-  //     status: 'FAIL::没有操作权限'
-  //   }
-  // }
 });
 //管理员管理 - 增加
 R.post('/addGroup', getAccess('groupManage-add'), function*(next) {
-  //if (getAccess('groupManage-add')) {
   //存入
   let parm = this.request.body;
   let checking = yield userGroupModel.findByName(parm.name);
@@ -63,15 +55,9 @@ R.post('/addGroup', getAccess('groupManage-add'), function*(next) {
       status: 'SUCCESS::成功增加权限组'
     }
   }
-  // } else {
-  //   this.body = {
-  //     status: 'FAIL::没有操作权限'
-  //   }
-  // }
 });
 //管理员管理 - 修改
 R.post('/editGroup',getAccess('groupManage-edit'), function*(next) {
-  //if (getAccess('groupManage-edit')) {
   let parm = this.request.body;
   let group = yield userGroupModel.findById(parm._id);
   if (group.length <= 0) {
@@ -92,15 +78,9 @@ R.post('/editGroup',getAccess('groupManage-edit'), function*(next) {
       }
     }
   }
-  // } else {
-  //   this.body = {
-  //     status: 'FAIL::没有操作权限'
-  //   }
-  // }
 });
 //管理员管理 - 删除
 R.post('/delGroup', getAccess('groupManage-del'), function*(next) {
-  //if (getAccess('groupManage-del')) {
   let parm = this.request.body;
   let group = yield userGroupModel.findById(parm._id);
   if (group.length <= 0) {
@@ -119,11 +99,6 @@ R.post('/delGroup', getAccess('groupManage-del'), function*(next) {
       }
     }
   }
-  // } else {
-  //   this.body = {
-  //     status: 'FAIL::没有操作权限'
-  //   }
-  // }
 });
 
 export default R;

@@ -28,7 +28,6 @@ R.use(function*(next) {
  */
 //管理员管理
 R.get('/', getAccess('adminManage-view'), function*(next) {
-  //if (getAccess('adminManage-view')) {
   let count = yield usersModel.count({});
   let userFetch = yield usersModel.findAdmin();
   let groupFetch = yield userGroupModel.fetch();
@@ -39,15 +38,9 @@ R.get('/', getAccess('adminManage-view'), function*(next) {
     adminList: JSON.stringify(userFetch),
     groupList: JSON.stringify(groupFetch)
   }, this);
-  // } else {
-  //   this.body = {
-  //     status: 'FAIL::没有操作权限'
-  //   }
-  // }
 });
 //管理员管理 - 增加
 R.post('/addAdmin', getAccess('adminManage-add'), function*(next) {
-  //if (getAccess('adminManage-add')) {
   let parm = this.request.body;
   let md5 = crypto.createHash('md5');
   let checking = yield usersModel.findAdminByEmail(parm.email);
@@ -69,15 +62,9 @@ R.post('/addAdmin', getAccess('adminManage-add'), function*(next) {
       status: 'SUCCESS::成功增加管理员账号'
     }
   }
-  // } else {
-  //   this.body = {
-  //     status: 'FAIL::没有操作权限'
-  //   }
-  // }
 });
 //管理员管理 - 修改
 R.post('/editAdmin', getAccess('adminManage-edit'), function*(next) {
-  //if (getAccess('adminManage-edit')) {
   let parm = this.request.body;
   let md5 = crypto.createHash('md5');
   let admin = yield usersModel.findAdminById(parm._id);
@@ -101,15 +88,9 @@ R.post('/editAdmin', getAccess('adminManage-edit'), function*(next) {
       }
     }
   }
-  // } else {
-  //   this.body = {
-  //     status: 'FAIL::没有操作权限'
-  //   }
-  // }
 });
 //管理员管理 - 删除
 R.post('/delAdmin', getAccess('adminManage-del'), function*(next) {
-  //if (getAccess('adminManage-del')) {
   let parm = this.request.body;
   let admin = yield usersModel.findAdminById(parm._id);
   if (admin.length <= 0) {
@@ -128,11 +109,6 @@ R.post('/delAdmin', getAccess('adminManage-del'), function*(next) {
       }
     }
   }
-  // } else {
-  //   this.body = {
-  //     status: 'FAIL::没有操作权限'
-  //   }
-  // }
 });
 
 
