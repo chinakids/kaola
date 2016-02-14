@@ -10,3 +10,5 @@ sftp-config.json
 log/
 public/lib
 public/upload
+.idea
+*.bak
