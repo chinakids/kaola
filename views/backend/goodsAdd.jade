@@ -1,0 +1,58 @@
+extends ./layout/layout
+block content
+  include ./layout/breadcrumbNav
+  section.content(ng-controller='GoodsAddCtrl')
+    div.col-md-12
+      div.box.box-solid.big-form.clearfix
+        form#add
+          dl.clearfix.col-md-12
+            dt 标题:
+            dd.form-group
+              input.form-control(type='text',placeholder='请输入标题',reg='s',err-tip='标题 - 不可输入特殊字符或为空')
+          dl.clearfix.col-md-6
+            dt 价格:
+            dd.form-group
+              input.form-control(type='text',placeholder='请输入价格',reg='n',err-tip='价格 - 只可输入数字')
+          dl.clearfix.col-md-6
+            dt 联系方式:
+            dd.form-group
+              div.input-group
+                div.input-group-btn
+                  button.btn.btn-default.dropdown-toggle(type='button',data-toggle='dropdown',aria-haspopup='true',aria-expanded='false')
+                    | 微信&nbsp;
+                    span.caret
+                  ul.dropdown-menu
+                    li
+                      a(href='javascript:;') 微信
+                    li
+                      a(href='javascript:;') QQ
+                    li
+                      a(href='javascript:;') 电话
+                input.form-control(type='text',placeholder='请输入联系方式',reg='s',err-tip='联系方式 - 不可输入特殊字符或为空')
+          dl.clearfix.col-md-12
+            dt 正文:
+            dd.form-group
+              iframe.form-control(src='/editor/index.html')
+          dl.clearfix.col-md-6
+            dt 置顶:
+            dd.form-group.checkbox
+              label
+                input(type='checkbox')
+                | 置顶
+              label
+                input(type='checkbox')
+                | 不显示
+              label
+                input(type='checkbox')
+                | 售完
+          dl.clearfix.col-md-6
+            dt 操作:
+            dd
+              button.btn.btn-primary.pull-right(type='button',ng-click='submit()') 确 定
+
+  script.
+    angular.module('Kaola', ['Kaola.tools'])
+    .controller('GoodsAddCtrl', ['$scope', function ($scope) {
+
+    }])
+                                                                               

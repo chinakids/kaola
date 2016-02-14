@@ -11,11 +11,11 @@ let GoodSchema = new mongoose.Schema({
     price      : Number, //价格
     info       : {
         location : String,//位置
-        callWay  : {
+        callType : {
             type: Number,
             default: 0
         },//联系方式
-        callStr  : String//联系数据
+        callway  : String//联系数据
     },
     imgList    : String,//图片
     //category: {

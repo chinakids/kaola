@@ -11,3 +11,59 @@
   max-height: 400px;
   overflow: auto;
 }
+.big-form{
+  padding: 20px;
+}
+.big-form dl{
+  margin: 0;
+}
+.big-form dt{
+  width: 80px;
+  float: left;
+  line-height: 34px;
+  text-align: right;
+  padding-right: 10px;
+  display: none;
+}
+.big-form input{
+  border-top:none;
+  border-right: none;
+  border-left: none;
+  padding-left:0;
+  padding-right: 0;
+  background: none;
+}
+.big-form .reg-error{
+  background-color: transparent;
+  border-color: #a94442;
+}
+.big-form .btn-default{
+  border-top:none;
+  border-right: none;
+  border-left: none;
+  background: none !important;
+  margin-bottom: -1px;
+  color:#ccc;
+  border-color:#ccc;
+  outline: none;
+  box-shadow: none;
+  padding-left: 0;
+  border-radius: 0;
+}
+.big-form .open .btn-default,.big-form .open .btn-default:hover,.big-form .open .btn-default:active{
+  color:#333;
+  background: none !important;
+  outline: none;
+  border-color:#ccc;
+  box-shadow: none;
+}
+.big-form iframe{
+  border:none;
+  min-height: 500px;
+  height: auto;
+  padding:10px 0 0 0;
+  border-bottom:1px solid #ccc;
+}
+.big-form .checkbox label{
+  margin-right: 15px;
+}
