@@ -99,7 +99,7 @@ T3: 2014-01-02, 9d"></i>
         <i title="帮助" class="fa fa-question-circle" data-remodal-target="help-modal"></i>
         <i title="关于" class="fa fa-info-circle" data-remodal-target="about-modal"></i>
         <i class="dividor">|</i>
-        <i class="ar ar-fullscreen" title="切换预览面板" id="fullscreen"></i>
+        <i class="fa fa-eye" title="预览" id="preview"></i>
       </div>
     </div>
     <div class="ui-layout-center">
@@ -239,13 +239,13 @@ T3: 2014-01-02, 9d"></i>
     var time = setInterval(function(){
       //存入
       db.set(getUrlMes().md,editor.session.getValue())
-      $('.edit-foot .success-auto').fadeIn(1000, function() {
-        var _this = $(this);
-        setTimeout(function(){
-          _this.fadeOut(1000);
-        },1000)
-      });
-    },10000)
+//      $('.edit-foot .success-auto').fadeIn(1000, function() {
+//        var _this = $(this);
+//        setTimeout(function(){
+//          _this.fadeOut(1000);
+//        },1000)
+//      });
+    },500)
   }
   $(function(){
     var oldContent = '';
@@ -255,8 +255,9 @@ T3: 2014-01-02, 9d"></i>
 //      $('#title').html('<i class="fa fa-book"></i>'+data.title);
 //      autoSave();
 //    });
+    autoSave();
     $('.ui-layout-toggler-east').trigger('click');
-    $('#fullscreen').click(function(){
+    $('#preview').click(function(){
       $('.ui-layout-toggler-east').trigger('click');
     })
     if(typeof(top.dialog)=="function"){
