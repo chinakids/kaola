@@ -5,7 +5,6 @@ import usersModel from '../models/Users';
 import logger from '../utils/logger';
 
 function * userInfo(next){
-  console.log('获取用户信息')
   if(this.session.login){
     let data = yield usersModel.getInfoByEmail(this.session.email);
     if(data.length <= 0){
