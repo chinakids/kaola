@@ -277,14 +277,12 @@ angular.module('Kaola.tools',[])
       }
     },
     remove : function(key){
-      //console.log("close:"+key);
       window.localStorage.removeItem(key);
     }
   }
 })
 .filter('calltype',function(){
   return function(str){
-    console.log(parseInt(str))
     switch(parseInt(str)){
       case 0:
         return '微信';

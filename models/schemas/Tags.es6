@@ -6,7 +6,7 @@ let TagsSchema = new mongoose.Schema({
   name       : String,//名称
   count      : {
     type     : Number,
-    default  : 0  //TODO 这里还没考虑编辑造成的重复统计
+    default  : 0  //TODO 这里还没考虑编辑造成的重复统计,在edit的时候做个diff去掉已经存在的
   },//数量
   meta       : {
     createAt : {
