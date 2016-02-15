@@ -67,3 +67,20 @@
 .big-form .checkbox label{
   margin-right: 15px;
 }
+.big-form .tag-group{
+  position: relative;
+}
+.big-form .tag-group ul{
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+}
+.big-form .tag-group ul li{
+  margin-right: 5px;
+  float: left;
+}
+.big-form .tag-group ul li span{
+  padding-left: 10px;
+}

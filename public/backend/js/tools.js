@@ -256,3 +256,25 @@ angular.module('Kaola.tools',[])
     }
   };
 }])
+.factory('db',function(){
+  return {
+    get : function(key){
+      var data = window.localStorage[key] || "";
+      return data;
+    },
+    set : function(key,data){
+      if(typeof(data) == "object"){
+        window.localStorage[key] = data;
+        for(item in data){
+          window.localStorage[item] = data[item];
+        }
+      }else{
+        window.localStorage[key] = data;
+      }
+    },
+    remove : function(key){
+      //console.log("close:"+key);
+      window.localStorage.removeItem(key);
+    }
+  }
+})

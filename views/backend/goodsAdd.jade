@@ -8,27 +8,35 @@ block content
           dl.clearfix.col-md-12
             dt 标题:
             dd.form-group
-              input.form-control(type='text',placeholder='请输入标题',reg='s',err-tip='标题 - 不可输入特殊字符或为空')
+              input.form-control(type='text',placeholder='请输入标题',reg='s',err-tip='标题 - 不可输入特殊字符或为空',ng-model='goodData.title')
+          dl.clearfix.col-md-12
+            dt 标签:
+            dd.tag-group.form-group
+              ul
+                li.btn.btn-primary.btn-sm(ng-repeat='item in tag track by $index')
+                  | {{item}}
+                  span(ng-click='delTag($index)') x
+              input#tag.form-control(type='text',placeholder='请输入标签,回车添加标签')
           dl.clearfix.col-md-6
             dt 价格:
             dd.form-group
-              input.form-control(type='text',placeholder='请输入价格',reg='n',err-tip='价格 - 只可输入数字')
+              input.form-control(type='text',placeholder='请输入价格',reg='n',err-tip='价格 - 只可输入数字',ng-model='goodData.price')
           dl.clearfix.col-md-6
             dt 联系方式:
             dd.form-group
               div.input-group
                 div.input-group-btn
                   button.btn.btn-default.dropdown-toggle(type='button',data-toggle='dropdown',aria-haspopup='true',aria-expanded='false')
-                    | 微信&nbsp;
+                    | {{}}&nbsp;
                     span.caret
                   ul.dropdown-menu
                     li
-                      a(href='javascript:;') 微信
+                      a(href='javascript:;',ng-click='changeType(0)') 微信
                     li
-                      a(href='javascript:;') QQ
+                      a(href='javascript:;',ng-click='changeType(1)') QQ
                     li
-                      a(href='javascript:;') 电话
-                input.form-control(type='text',placeholder='请输入联系方式',reg='s',err-tip='联系方式 - 不可输入特殊字符或为空')
+                      a(href='javascript:;',ng-click='changeType(2)') 电话
+                input.form-control(type='text',placeholder='请输入联系方式',reg='s',err-tip='联系方式 - 不可输入特殊字符或为空',ng-model='goodData.callway')
           dl.clearfix.col-md-12
             dt 正文:
             dd.form-group
@@ -37,14 +45,14 @@ block content
             dt 置顶:
             dd.form-group.checkbox
               label
-                input(type='checkbox')
+                input(type='checkbox',ng-model='goodData.state.top',ng-checked='goodData.state.top')
                 | 置顶
               label
-                input(type='checkbox')
-                | 不显示
+                input(type='checkbox',ng-model='goodData.state.display',ng-checked='goodData.state.display')
+                | 显示
               label
-                input(type='checkbox')
-                | 售完
+                input(type='checkbox',ng-model='goodData.state.sell',ng-checked='goodData.state.sell')
+                | 在售
           dl.clearfix.col-md-6
             dt 操作:
             dd
@@ -53,6 +61,61 @@ block content
   script.
     angular.module('Kaola', ['Kaola.tools'])
     .controller('GoodsAddCtrl', ['$scope', function ($scope) {
-
+      $scope.tag = [];
+      var onlyTag = function(key){
+        var status = true;
+        for(var i= 0,len=$scope.tag.length;i<len;i++){
+          if($scope.tag[i] == key){
+            status = false;
+          }
+        }
+        return status;
+      }
+      $('#tag').keyup(function(e){
+        if(e.keyCode === 13){
+          var val = $(this).val();
+          if(onlyTag(val) && val.replace(/\s/g,'') != ''){
+            $scope.$apply(function(){
+              $scope.tag.push(val)
+            })
+            $(this).val('').css({paddingLeft:$(this).siblings('ul').width()})
+          }else{
+            alert('标签已存在或不可为空')
+          }
+        }
+      })
+      $scope.delTag = function(index){
+        var arr = [];
+        for(var i= 0,len=$scope.tag.length;i<len;i++){
+          if(i != index){
+            arr.push($scope.tag[i])
+          }
+        }
+        $scope.tag = arr;
+        setTimeout(function(){$('#tag').css({paddingLeft:$('#tag').siblings('ul').width()})},100)
+      }
+      $scope.goodData = {
+        title:'',
+        tag:'',
+        price:'',
+        info:{
+          location : '',//位置
+          callType : 0,//联系方式
+          callWay  : ''//联系数据
+        },
+        imgList:'',
+        state      : {
+          display  : true,//是否显示
+          top      : false,//是否置顶
+          sell     : false//售出状态
+        }
+      }
+      $scope.submit = function() {
+        $('#add input').each(function () {
+          $(this).trigger('focus').trigger('blur');
+        })
+        if ($('#add .reg-success').size() === 3 ) {
+        }
+      }
     }])
                                                                                

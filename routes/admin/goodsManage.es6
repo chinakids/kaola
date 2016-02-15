@@ -34,11 +34,15 @@ R.get('/', getAccess('goodsManage-view'), function*(next) {
   }, this);
 });
 
-R.get('/?add', getAccess('goodsManage-add'), function*(next) {
+R.get('/add', getAccess('goodsManage-add'), function*(next) {
   yield render('goodsAdd', {
     title: '添加商品',
     desc: ''
   }, this);
+});
+
+R.post('/add', getAccess('goodsManage-add'), function*(next) {
+  let parm = this.request.body;
 });
 
 export default R;

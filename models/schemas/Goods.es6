@@ -15,17 +15,14 @@ let GoodSchema = new mongoose.Schema({
             type: Number,
             default: 0
         },//联系方式
-        callway  : String//联系数据
+        callWay  : String//联系数据
     },
     imgList    : String,//图片
     //category: {
     //    type     : String,
     //    ref      : 'Category'
     //}, //文章类别
-    //tag        : {
-    //    type     : String,
-    //    ref      : 'Tag'
-    //}, //标签
+    tag        : String, //标签
     author     : {
         type     : String,
         ref      : 'Users'

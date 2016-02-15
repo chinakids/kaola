@@ -231,95 +231,24 @@ T3: 2014-01-02, 9d"></i>
   }
   function autoSave(){
     if(db.get(getUrlMes().md)){
-      if(confirm('检测到有自动保存记录，是否继续编辑？')){
-        //是
-        editor.session.setValue(db.get(getUrlMes().md), -1);
-      }
+      var time = setInterval(function(){
+        //存入
+        db.set(getUrlMes().md,editor.session.getValue())
+      },500)
+    }else{
+      var time = setInterval(function(){
+        //存入
+        db.set('newAdd',editor.session.getValue())
+      },500)
     }
-    var time = setInterval(function(){
-      //存入
-      db.set(getUrlMes().md,editor.session.getValue())
-//      $('.edit-foot .success-auto').fadeIn(1000, function() {
-//        var _this = $(this);
-//        setTimeout(function(){
-//          _this.fadeOut(1000);
-//        },1000)
-//      });
-    },500)
+
   }
   $(function(){
-    var oldContent = '';
-//    $.get('/api/getContent?md='+getUrlMes().md, function(data) { // load sample text
-//      editor.session.setValue(data.content, -1);
-//      oldContent = data.content;
-//      $('#title').html('<i class="fa fa-book"></i>'+data.title);
-//      autoSave();
-//    });
     autoSave();
     $('.ui-layout-toggler-east').trigger('click');
     $('#preview').click(function(){
       $('.ui-layout-toggler-east').trigger('click');
     })
-    if(typeof(top.dialog)=="function"){
-			var dialog = top.dialog.get(window);
-			$('.close').click( function () {
-        var newContent=editor.session.getValue(),dialog = top.dialog.get(window);
-        if(newContent == oldContent){
-            dialog.close();
-            dialog.remove();
-        }else{
-          if(!confirm('文档尚未保存\n 是否确认退出？(下次可继续编辑)')){
-            return false;
-          }
-  				dialog.close();
-  				dialog.remove();
-        }
-			});
-		}
-    $('.ok').click(function(){
-      var _this = $(this);
-      _this.addClass('load');
-      var status = true,newContent=editor.session.getValue();
-      if(newContent == oldContent){
-          var dialog = top.dialog.get(window);
-  				dialog.close();
-  				dialog.remove();
-      }else{
-        if(status){
-          status = false;
-          //post
-          $.post('/api/saveBookContent',{
-            md      : getUrlMes().md,
-            content : newContent
-          },function(data){
-            status = true;
-            //console.log(data);
-            if(data.status == 1){
-              _this.removeClass('load');
-              db.remove(getUrlMes().md);
-              $('.edit-foot .success').fadeIn(1000, function() {
-                var _this = $(this);
-                setTimeout(function(){
-                  _this.fadeOut(1000,function(){
-                    window.top.location.reload();
-                  });
-                },1000)
-              });
-            }else{
-              $('.edit-foot .error').fadeIn(1000, function() {
-                var _this = $(this);
-                setTimeout(function(){
-                  _this.fadeOut(1000);
-                },1000)
-              });
-            }
-          })
-        }
-      }
-
-    })
-
-
   })
   </script>
 </html>
