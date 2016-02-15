@@ -1,5 +1,5 @@
 /**
- * [setLog 用来记录用户操作]
+ * [setLog 用来记录用户操作,非阻塞操作]
  */
 import Log from '../models/Log';
 import logger from './../utils/logger';

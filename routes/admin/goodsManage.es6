@@ -4,6 +4,7 @@ import _ from 'underscore';
 import goodsModel from './../../models/Goods';
 import getPageCount from './../../controller/getPageCount';
 import getAccess from './../../controller/getAccess';
+import setTag from './../../controller/setTag';
 
 let R = router();
 /**
@@ -42,7 +43,7 @@ R.get('/addGood', getAccess('goodsManage-add'), function*(next) {
   }, this);
 });
 
-R.post('/addGood', getAccess('goodsManage-add'), function*(next) {
+R.post('/addGood', getAccess('goodsManage-add'), setTag, function*(next) {
   let parm = this.request.body;
   parm.author = this.session.userInfo._id;
   let good = new goodsModel(parm)
@@ -67,7 +68,7 @@ R.get('/editGood', getAccess('goodsManage-edit'), function*(next) {
     }, this);
   }
 });
-R.post('/editGood', getAccess('goodsManage-edit'), function*(next) {
+R.post('/editGood', getAccess('goodsManage-edit'), setTag, function*(next) {
   let parm = this.request.body;
   let good = yield goodsModel.findById(parm._id);
   if (good.length <= 0) {
