@@ -18,7 +18,7 @@ block content
             tbody
               tr
                 th 备份时间
-                th 操作
+                th.col-md-3 操作
               tr.datalist(ng-repeat='item in backupsList')
                 td {{item | date:' yyyy/MM/dd HH:mm:ss'}}
                 td
