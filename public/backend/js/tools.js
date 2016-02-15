@@ -172,6 +172,10 @@ angular.module('Kaola.tools',[])
       pId: 'backupsMange',
       name: '删除'
     }, {
+      id: 'backupsMange-re',
+      pId: 'backupsMange',
+      name: '恢复'
+    }, {
       id: 'logManage',
       pId: 'systemManage',
       name: '日志管理',
