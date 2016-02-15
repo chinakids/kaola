@@ -24,7 +24,7 @@ R.use(function*(next) {
 })
 
 /**
- * 4.系统管理相关
+ * 系统管理相关
  */
 //管理员管理
 R.get('/', getAccess('adminManage-view'), function*(next) {

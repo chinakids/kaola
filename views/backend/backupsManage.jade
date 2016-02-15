@@ -1,0 +1,81 @@
+extends ./layout/layout
+
+block content
+  include ./layout/breadcrumbNav
+  section.content(ng-controller='backupsManageCtrl')
+    div.col-md-12
+      div.panel
+        div.btn-group
+          a.btn.btn-primary.btn-sm(href='javascript:;',ng-click='backup()')
+            i.fa.fa-plus-square
+            |  备份
+    div.col-md-12
+      div.box.box-solid
+        div.box-header.with-border
+          h5.box-title #{title}
+        div.box-body.table-responsive.no-padding
+          table.table.table-hover
+            tbody
+              tr
+                th 备份时间
+                th 操作
+              tr.datalist(ng-repeat='item in backupsList')
+                td {{item | date:' yyyy/MM/dd HH:mm:ss'}}
+                td
+                  div.btn-group
+                    button.btn.btn-default.btn-xs(ng-click='restore(item,"true")',title='将删除备份后新增内容')
+                      span.fa.fa-history
+                      | 全量恢复
+                    button.btn.btn-default.btn-xs(ng-click='restore(item,"false")',title='仅恢复备份中的内容')
+                      span.fa.fa-history
+                      | 增量恢复
+                    button.btn.btn-danger.btn-xs(ng-click='del(item)')
+                      span.fa.fa-fw.fa-trash-o
+                      | 删除
+        include ./layout/listFooter
+        #dataLoading.overlay.hide
+          i.fa.fa-refresh.fa-spin
+  script.
+    angular.module('Kaola',['Kaola.tools'])
+    .controller('backupsManageCtrl',['$scope','$filter',function($scope,$filter){
+      $scope.limitList = [10,20,30];
+      $scope.limit = $scope.limitList[0];
+      $scope.page = !{page};
+      $scope.backupsList = !{backupsList};
+      $scope.backup = function(){
+        $.post('./backupsManage/addBackup',function(data){
+          var status = data.status.split('::')[0],
+          msg = data.status.split('::')[1];
+          if(status === 'SUCCESS'){
+            alert(msg);
+            window.location.reload();
+          }else{
+            alert(msg);
+          }
+        })
+      }
+      $scope.del = function(time){
+        $.post('./backupsManage/delBackup',{time:time},function(data){
+          var status = data.status.split('::')[0],
+          msg = data.status.split('::')[1];
+          if(status === 'SUCCESS'){
+            alert(msg);
+            window.location.reload();
+          }else{
+            alert(msg);
+          }
+        })
+      }
+      $scope.restore = function(time,type){
+        $.post('./backupsManage/restore',{time:time,drop:type},function(data){
+          var status = data.status.split('::')[0],
+          msg = data.status.split('::')[1];
+          if(status === 'SUCCESS'){
+            alert(msg);
+            window.location.reload();
+          }else{
+            alert(msg);
+          }
+        })
+      }
+    }])

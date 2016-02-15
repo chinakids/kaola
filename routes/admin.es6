@@ -11,6 +11,7 @@ import S from './../conf/setting';
 import goodsManage from './admin/goodsManage';
 import adminManage from './admin/adminManage';
 import groupManage from './admin/groupManage';
+import backupsManage from './admin/backupsManage';
 
 let R = router();
 //获取最新权限
@@ -142,5 +143,6 @@ R.all('/logout', function*(next) {
 R.use('/goodsManage', goodsManage.routes(), goodsManage.allowedMethods());
 R.use('/adminManage', adminManage.routes(), adminManage.allowedMethods());
 R.use('/groupManage', groupManage.routes(), groupManage.allowedMethods());
+R.use('/backupsManage', backupsManage.routes(), backupsManage.allowedMethods());
 
 export default R;
