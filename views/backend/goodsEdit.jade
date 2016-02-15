@@ -1,7 +1,7 @@
 extends ./layout/layout
 block content
   include ./layout/breadcrumbNav
-  section.content(ng-controller='GoodsAddCtrl')
+  section.content(ng-controller='GoodsEditCtrl')
     div.col-md-12
       div.box.box-solid.big-form.clearfix
         form#add
@@ -44,7 +44,7 @@ block content
           dl.clearfix.col-md-12
             dt 正文:
             dd.form-group
-              iframe.form-control(src='/editor/index.html')
+              iframe.form-control(ng-src='{{frameUrl}}')
           dl.clearfix.col-md-6
             dt 置顶:
             dd.form-group.checkbox
@@ -65,8 +65,8 @@ block content
 
   script.
     angular.module('Kaola', ['Kaola.tools'])
-    .controller('GoodsAddCtrl', ['$scope','db', function ($scope,db) {
-      $scope.tag = [];
+    .controller('GoodsEditCtrl', ['$scope','db', function ($scope,db) {
+      
       var onlyTag = function(key){
         var status = true;
         for(var i= 0,len=$scope.tag.length;i<len;i++){
@@ -99,23 +99,12 @@ block content
         $scope.tag = arr;
         setTimeout(function(){$('#tag').css({paddingLeft:$('#tag').siblings('ul').width()})},100)
       }
-      $scope.goodData = {
-        title:'',
-        tag:'',
-        price:'',
-        content:'',
-        info:{
-          location : '',//位置
-          callType : 0,//联系方式
-          callWay  : ''//联系数据
-        },
-        imgList:'',
-        state      : {
-          display  : true,//是否显示
-          top      : false,//是否置顶
-          sell     : false//售出状态
-        }
-      }
+      $scope.goodData = !{goodData};
+      db.set($scope.goodData._id,$scope.goodData.content);
+      $scope.tag = $scope.goodData.tag.split(',');
+      setTimeout(function(){$('#tag').css({paddingLeft:$('#tag').siblings('ul').width()})},100);
+      $scope.frameUrl = '/editor/index.html?md='+$scope.goodData._id;
+
       $scope.changeType = function(type){
         $scope.goodData.info.callType = parseInt(type);
       }
@@ -124,10 +113,10 @@ block content
           $(this).trigger('focus').trigger('blur');
         })
         if ($('#add .reg-success').size() === 4) {
-          if(db.get('newAdd').replace(/\s/g,'').length >= 20){
-            $scope.goodData.content = db.get('newAdd');
+          if(db.get($scope.goodData._id).replace(/\s/g,'').length >= 20){
+            $scope.goodData.content = db.get($scope.goodData._id);
             $scope.goodData.tag = $scope.tag.join(',');
-            $.post('./addGood',$scope.goodData,function(data){
+            $.post('./editGood',$scope.goodData,function(data){
               var status = data.status.split('::')[0],
               msg = data.status.split('::')[1];
               if(status === 'SUCCESS'){

@@ -1,5 +1,6 @@
 import router from 'koa-router';
 import render from './../../utils/render';
+import _ from 'underscore';
 import goodsModel from './../../models/Goods';
 import getPageCount from './../../controller/getPageCount';
 import getAccess from './../../controller/getAccess';
@@ -50,5 +51,102 @@ R.post('/addGood', getAccess('goodsManage-add'), function*(next) {
     status: 'SUCCESS::成功发布商品'
   }
 });
-
+//修改商品
+R.get('/editGood', getAccess('goodsManage-edit'), function*(next) {
+  let parm = this.request.query;
+  let good = yield goodsModel.findById(parm.id);
+  if (good.length <= 0) {
+    this.body = {
+      status: 'FAIL::该商品不存在'
+    }
+  } else {
+    yield render('goodsEdit', {
+      title: '修改商品',
+      desc: '',
+      goodData:JSON.stringify(good[0])
+    }, this);
+  }
+});
+R.post('/editGood', getAccess('goodsManage-edit'), function*(next) {
+  let parm = this.request.body;
+  let good = yield goodsModel.findById(parm._id);
+  if (good.length <= 0) {
+    this.body = {
+      status: 'FAIL::该商品不存在'
+    }
+  } else {
+    //合并
+    let _good = _.extend(good[0], parm);
+    yield _good.save();
+    this.body = {
+      status: 'SUCCESS::成功修改修改商品信息'
+    }
+  }
+});
+//修改商品 - 置顶
+R.post('/editGoodTop', getAccess('goodsManage-edit'), function*(next) {
+  let parm = this.request.body;
+  let good = yield goodsModel.findById(parm.id);
+  if (good.length <= 0) {
+    this.body = {
+      status: 'FAIL::该商品不存在'
+    }
+  } else {
+    //合并
+    good[0].state.top = !good[0].state.top;
+    yield good[0].save();
+    this.body = {
+      status: 'SUCCESS::'+(good[0].state.top?'成功置顶':'取消置顶')
+    }
+  }
+});
+//修改商品 - 销售状态
+R.post('/editGoodSell', getAccess('goodsManage-edit'), function*(next) {
+  let parm = this.request.body;
+  let good = yield goodsModel.findById(parm.id);
+  if (good.length <= 0) {
+    this.body = {
+      status: 'FAIL::该商品不存在'
+    }
+  } else {
+    //合并
+    good[0].state.sell = !good[0].state.sell;
+    yield good[0].save();
+    this.body = {
+      status: 'SUCCESS::'+(good[0].state.sell?'下架成功':'上架成功')
+    }
+  }
+});
+//修改商品 - 显示
+R.post('/editGoodDisplay', getAccess('goodsManage-edit'), function*(next) {
+  let parm = this.request.body;
+  let good = yield goodsModel.findById(parm.id);
+  if (good.length <= 0) {
+    this.body = {
+      status: 'FAIL::该商品不存在'
+    }
+  } else {
+    //合并
+    good[0].state.display = !good[0].state.display;
+    yield good[0].save();
+    this.body = {
+      status: 'SUCCESS::'+(good[0].state.display?'开启显示':'取消显示')
+    }
+  }
+});
+//删除商品
+R.post('/delGood', getAccess('goodsManage-del'), function*(next) {
+  let parm = this.request.body;
+  let good = yield goodsModel.findById(parm.id);
+  if (good.length <= 0) {
+    this.body = {
+      status: 'FAIL::该商品不存在'
+    }
+  } else {
+    yield good[0].del();
+    this.body = {
+      status: 'SUCCESS::成功删除商品'
+    }
+  }
+});
 export default R;

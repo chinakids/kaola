@@ -6,7 +6,7 @@ block content
     div.col-md-12
       div.panel
         div.btn-group
-          a.btn.btn-primary.btn-sm(href='./goodsManage/addGood')
+          a.btn.btn-primary.btn-sm(href='./addGood')
             i.fa.fa-plus-square
             |  添加商品
         div.pull-right
@@ -35,8 +35,8 @@ block content
                 th 操作
               tr.datalist(ng-repeat='item in goodList')
                 td(ng-bind='item.title')
-                td(ng-bind='item.meta.createAt | date: "yyyy/mm/dd HH:mm"')
-                td **
+                td(ng-bind='item.meta.createAt | date: "yy/MM/dd HH:mm"')
+                td {{item.category.name}}
                 td(ng-switch,on='item.state.sell')
                   span.label.label-success(ng-switch-when='false') 待售
                   span.label.label-warning(ng-switch-when='true') 售出
@@ -54,21 +54,21 @@ block content
                 td(ng-bind='item.author.nickName')
                 td
                   div.btn-group
-                    a.btn.btn-primary.btn-xs(href='./goodsManage/editGood?id={{item._id}}', role='button', title='编辑')
+                    a.btn.btn-primary.btn-xs(href='./editGood?id={{item._id}}', role='button', title='编辑')
                       i.fa.fa-edit
-                    a.btn.btn-warning.btn-xs(href='javascript:;', role='button', title='推荐',ng-hide='item.state.top')
+                    a.btn.btn-warning.btn-xs(href='javascript:;', role='button', title='推荐',ng-hide='item.state.top',ng-click='changeTop($index,item._id)')
                       i.fa.fa-thumbs-o-up
-                    a.btn.btn-default.btn-xs(href='javascript:;', role='button', title='取消推荐',ng-show='item.state.top')
+                    a.btn.btn-default.btn-xs(href='javascript:;', role='button', title='取消推荐',ng-show='item.state.top',ng-click='changeTop($index,item._id)')
                       i.fa.fa-thumbs-o-down
-                    a.btn.btn-default.btn-xs(href='javascript:;', role='button', title='上架',ng-show='item.state.sell')
+                    a.btn.btn-default.btn-xs(href='javascript:;', role='button', title='上架',ng-show='item.state.sell',ng-click='changeSell($index,item._id)')
                       i.fa.fa-cloud-upload
-                    a.btn.btn-warning.btn-xs(href='javascript:;', role='button', title='下架',ng-hide='item.state.sell')
+                    a.btn.btn-warning.btn-xs(href='javascript:;', role='button', title='下架',ng-hide='item.state.sell',ng-click='changeSell($index,item._id)')
                       i.fa.fa-cloud-download
-                    a.btn.btn-default.btn-xs(href='javascript:;', role='button', title='关闭显示',ng-show='item.state.display')
+                    a.btn.btn-default.btn-xs(href='javascript:;', role='button', title='关闭显示',ng-show='item.state.display',ng-click='changeDisplay($index,item._id)')
                       i.fa.fa-eye-slash
-                    a.btn.btn-warning.btn-xs(href='javascript:;', role='button', title='显示',ng-hide='item.state.display')
+                    a.btn.btn-warning.btn-xs(href='javascript:;', role='button', title='显示',ng-hide='item.state.display',ng-click='changeDisplay($index,item._id)')
                       i.fa.fa-eye
-                    button.btn.btn-danger.btn-xs(type='button', title='删除')
+                    button.btn.btn-danger.btn-xs(type='button', title='删除',ng-click='del($index,item._id)')
                       i.fa.fa-trash-o
         include ./layout/listFooter
         #dataLoading.overlay.hide
@@ -80,4 +80,57 @@ block content
       $scope.limit = $scope.limitList[0];
       $scope.page = !{page};
       $scope.goodList = !{goodList};
+      $scope.changeTop = function(index,id){
+        $.post('./editGoodTop',{id:id},function(data){
+          var status = data.status.split('::')[0],
+          msg = data.status.split('::')[1];
+          if(status === 'SUCCESS'){
+            $scope.$apply(function(){
+              $scope.goodList[index].state.top = !$scope.goodList[index].state.top;
+            })
+          }else{
+            console.log(msg);
+          }
+        })
+      }
+      $scope.changeSell = function(index,id){
+        $.post('./editGoodSell',{id:id},function(data){
+          var status = data.status.split('::')[0],
+          msg = data.status.split('::')[1];
+          if(status === 'SUCCESS'){
+            $scope.$apply(function(){
+              $scope.goodList[index].state.sell = !$scope.goodList[index].state.sell;
+            })
+          }else{
+            console.log(msg);
+          }
+        })
+      }
+      $scope.changeDisplay = function(index,id){
+        $.post('./editGoodDisplay',{id:id},function(data){
+          var status = data.status.split('::')[0],
+          msg = data.status.split('::')[1];
+          if(status === 'SUCCESS'){
+            $scope.$apply(function(){
+              $scope.goodList[index].state.display = !$scope.goodList[index].state.display;
+            })
+          }else{
+            console.log(msg);
+          }
+        })
+      }
+      $scope.del = function(index,id){
+        if(confirm('是否删除商品<<'+$scope.goodList[index].title+'>>')){
+          $.post('./delGood',{id:id},function(data){
+            var status = data.status.split('::')[0],
+            msg = data.status.split('::')[1];
+            if(status === 'SUCCESS'){
+              alert(msg)
+              window.location.reload()
+            }else{
+              alert(msg);
+            }
+          })
+        }
+      }
     }])

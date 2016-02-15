@@ -231,6 +231,7 @@ T3: 2014-01-02, 9d"></i>
   }
   function autoSave(){
     if(db.get(getUrlMes().md)){
+      editor.session.setValue(db.get(getUrlMes().md), -1);
       var time = setInterval(function(){
         //存入
         db.set(getUrlMes().md,editor.session.getValue())

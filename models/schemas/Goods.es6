@@ -114,6 +114,14 @@ GoodSchema.statics = {
             .populate('author')
             .sort('meta.updateAt')
             .exec()
+    },
+    findById(id){
+        return this.find({
+                _id:id
+            })
+            .populate('author')
+            .sort('meta.updateAt')
+            .exec()
     }
 }
 
