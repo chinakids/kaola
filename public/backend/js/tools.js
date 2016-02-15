@@ -278,3 +278,21 @@ angular.module('Kaola.tools',[])
     }
   }
 })
+.filter('calltype',function(){
+  return function(str){
+    console.log(parseInt(str))
+    switch(parseInt(str)){
+      case 0:
+        return '微信';
+        break;
+      case 1:
+        return 'QQ';
+        break;
+      case 2:
+        return '电话';
+        break;
+      default:
+        return '未知'
+    }
+  }
+})

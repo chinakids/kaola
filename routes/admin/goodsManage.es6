@@ -22,7 +22,7 @@ R.use(function*(next) {
     }
   }
 })
-
+//商品管理
 R.get('/', getAccess('goodsManage-view'), function*(next) {
   let count = yield goodsModel.count({});
   let goodFetch = yield goodsModel.fetch();
@@ -33,16 +33,22 @@ R.get('/', getAccess('goodsManage-view'), function*(next) {
     goodList: JSON.stringify(goodFetch)
   }, this);
 });
-
-R.get('/add', getAccess('goodsManage-add'), function*(next) {
+//添加商品
+R.get('/addGood', getAccess('goodsManage-add'), function*(next) {
   yield render('goodsAdd', {
     title: '添加商品',
     desc: ''
   }, this);
 });
 
-R.post('/add', getAccess('goodsManage-add'), function*(next) {
+R.post('/addGood', getAccess('goodsManage-add'), function*(next) {
   let parm = this.request.body;
+  parm.author = this.session.userInfo._id;
+  let good = new goodsModel(parm)
+  yield good.add()
+  this.body = {
+    status: 'SUCCESS::成功发布商品'
+  }
 });
 
 export default R;

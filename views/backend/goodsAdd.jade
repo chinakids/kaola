@@ -17,17 +17,21 @@ block content
                   | {{item}}
                   span(ng-click='delTag($index)') x
               input#tag.form-control(type='text',placeholder='请输入标签,回车添加标签')
-          dl.clearfix.col-md-6
+          dl.clearfix.col-md-4
             dt 价格:
             dd.form-group
               input.form-control(type='text',placeholder='请输入价格',reg='n',err-tip='价格 - 只可输入数字',ng-model='goodData.price')
-          dl.clearfix.col-md-6
+          dl.clearfix.col-md-4
+            dt 价格:
+            dd.form-group
+              input.form-control(type='text',placeholder='位置',reg='s',err-tip='位置 - 不可输入特殊字符',ng-model='goodData.info.location')
+          dl.clearfix.col-md-4
             dt 联系方式:
             dd.form-group
               div.input-group
                 div.input-group-btn
                   button.btn.btn-default.dropdown-toggle(type='button',data-toggle='dropdown',aria-haspopup='true',aria-expanded='false')
-                    | {{}}&nbsp;
+                    | {{goodData.info.callType | calltype }}&nbsp;
                     span.caret
                   ul.dropdown-menu
                     li
@@ -36,7 +40,7 @@ block content
                       a(href='javascript:;',ng-click='changeType(1)') QQ
                     li
                       a(href='javascript:;',ng-click='changeType(2)') 电话
-                input.form-control(type='text',placeholder='请输入联系方式',reg='s',err-tip='联系方式 - 不可输入特殊字符或为空',ng-model='goodData.callway')
+                input.form-control(type='text',placeholder='请输入联系方式',reg='s',err-tip='联系方式 - 不可输入特殊字符或为空',ng-model='goodData.info.callWay')
           dl.clearfix.col-md-12
             dt 正文:
             dd.form-group
@@ -52,15 +56,16 @@ block content
                 | 显示
               label
                 input(type='checkbox',ng-model='goodData.state.sell',ng-checked='goodData.state.sell')
-                | 在售
+                | 售出
           dl.clearfix.col-md-6
             dt 操作:
             dd
               button.btn.btn-primary.pull-right(type='button',ng-click='submit()') 确 定
+              div#tip.pull-right
 
   script.
     angular.module('Kaola', ['Kaola.tools'])
-    .controller('GoodsAddCtrl', ['$scope', function ($scope) {
+    .controller('GoodsAddCtrl', ['$scope','db', function ($scope,db) {
       $scope.tag = [];
       var onlyTag = function(key){
         var status = true;
@@ -98,6 +103,7 @@ block content
         title:'',
         tag:'',
         price:'',
+        content:'',
         info:{
           location : '',//位置
           callType : 0,//联系方式
@@ -110,11 +116,43 @@ block content
           sell     : false//售出状态
         }
       }
+      $scope.changeType = function(type){
+        $scope.goodData.info.callType = parseInt(type);
+      }
       $scope.submit = function() {
         $('#add input').each(function () {
           $(this).trigger('focus').trigger('blur');
         })
-        if ($('#add .reg-success').size() === 3 ) {
+        if ($('#add .reg-success').size() === 4) {
+          if(db.get('newAdd').replace(/\s/g,'').length >= 20){
+            $scope.goodData.content = db.get('newAdd');
+            $scope.goodData.tag = $scope.tag.join(',');
+            $.post('./addGood',$scope.goodData,function(data){
+              var status = data.status.split('::')[0],
+              msg = data.status.split('::')[1];
+              if(status === 'SUCCESS'){
+                $('#tip').append('<div class=\'callout callout-success\'><p>'+msg+'</p></div>');
+                setTimeout(function(){
+                  window.location.href = './'
+                },2000)
+              }else{
+                $('#tip').append('<div class=\'callout callout-danger\'><p>'+msg+'</p></div>');
+                setTimeout(function(){
+                  $('#tip').html('');
+                },2000)
+              }
+            })
+          }else{
+            $('#tip').append('<div class=\'callout callout-danger\'><p>内容不可少于20字</p></div>');
+            setTimeout(function(){
+              $('#tip').html('');
+            },2000)
+          }
+        }else{
+          $('#tip').append('<div class=\'callout callout-danger\'><p>填写信息不完整</p></div>');
+          setTimeout(function(){
+            $('#tip').html('');
+          },2000)
         }
       }
     }])

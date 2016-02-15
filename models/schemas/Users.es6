@@ -1,6 +1,4 @@
 import mongoose from 'mongoose';
-
-import UserGroup from '../UserGroup';
 /*
 *   创建用户的shcema
 *   thistype {mongoose}

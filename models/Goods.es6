@@ -6,6 +6,6 @@
 import mongoose from 'mongoose';
 import GoodSchema from './schemas/Goods';
 
-const Good = mongoose.model('Goods',GoodSchema);
+const Goods = mongoose.model('Goods',GoodSchema);
 
-export default Good;
+export default Goods;

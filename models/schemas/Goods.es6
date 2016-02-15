@@ -3,7 +3,6 @@
  *   商品的shcema
  */
 import mongoose from 'mongoose';
-import Users from '../Users';
 
 let GoodSchema = new mongoose.Schema({
     title      : String, //标题
@@ -112,7 +111,7 @@ GoodSchema.method('del',function() {
 GoodSchema.statics = {
     fetch(){
         return this.find({})
-            .populate('Users')
+            .populate('author')
             .sort('meta.updateAt')
             .exec()
     }
