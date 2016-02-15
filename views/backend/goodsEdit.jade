@@ -116,7 +116,7 @@ block content
           if(db.get($scope.goodData._id).replace(/\s/g,'').length >= 20){
             $scope.goodData.content = db.get($scope.goodData._id);
             $scope.goodData.tag = $scope.tag.join(',');
-            $.post('./editGood',$scope.goodData,function(data){
+            $.post('/#{pageInfo.adminDomain}/goodsManage/editGood',$scope.goodData,function(data){
               var status = data.status.split('::')[0],
               msg = data.status.split('::')[1];
               if(status === 'SUCCESS'){

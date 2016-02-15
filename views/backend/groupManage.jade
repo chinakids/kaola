@@ -101,7 +101,7 @@ block content
         })
         if($('#add .reg-success').size() === 1){
           if($scope.type === 'add'){
-            $.post('./groupManage/addGroup',{
+            $.post('/#{pageInfo.adminDomain}/groupManage/addGroup',{
               'name' : $scope.groupName,
               'power': JSON.stringify($scope.power)
             },function(data){
@@ -121,7 +121,7 @@ block content
             })
           }else if($scope.type === 'edit'){
             //修改
-            $.post('./groupManage/editGroup',{
+            $.post('/#{pageInfo.adminDomain}/groupManage/editGroup',{
               '_id'       : $scope.editId,
               'name'      : $scope.groupName,
               'power'     : JSON.stringify($scope.power)
@@ -151,7 +151,7 @@ block content
       $scope.del = function(name,id){
         if(confirm('是否删除"'+name+'"?')){
           //删除
-          $.post('./groupManage/delGroup',{'_id':id},function(data){
+          $.post('/#{pageInfo.adminDomain}/groupManage/delGroup',{'_id':id},function(data){
             var status = data.status.split('::')[0],
             msg = data.status.split('::')[1];
             if(status === 'SUCCESS'){

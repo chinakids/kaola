@@ -6,7 +6,7 @@ block content
     div.col-md-12
       div.panel
         div.btn-group
-          a.btn.btn-primary.btn-sm(href='./addGood')
+          a.btn.btn-primary.btn-sm(href='/#{pageInfo.adminDomain}/goodsManage/addGood')
             i.fa.fa-plus-square
             |  添加商品
         div.pull-right
@@ -54,7 +54,7 @@ block content
                 td(ng-bind='item.author.nickName')
                 td
                   div.btn-group
-                    a.btn.btn-primary.btn-xs(href='./editGood?id={{item._id}}', role='button', title='编辑')
+                    a.btn.btn-primary.btn-xs(href='/#{pageInfo.adminDomain}/goodsManage/editGood?id={{item._id}}', role='button', title='编辑')
                       i.fa.fa-edit
                     a.btn.btn-warning.btn-xs(href='javascript:;', role='button', title='推荐',ng-hide='item.state.top',ng-click='changeTop($index,item._id)')
                       i.fa.fa-thumbs-o-up
@@ -81,7 +81,7 @@ block content
       $scope.page = !{page};
       $scope.goodList = !{goodList};
       $scope.changeTop = function(index,id){
-        $.post('./editGoodTop',{id:id},function(data){
+        $.post('/#{pageInfo.adminDomain}/goodsManage/editGoodTop',{id:id},function(data){
           var status = data.status.split('::')[0],
           msg = data.status.split('::')[1];
           if(status === 'SUCCESS'){
@@ -94,7 +94,7 @@ block content
         })
       }
       $scope.changeSell = function(index,id){
-        $.post('./editGoodSell',{id:id},function(data){
+        $.post('/#{pageInfo.adminDomain}/goodsManage/editGoodSell',{id:id},function(data){
           var status = data.status.split('::')[0],
           msg = data.status.split('::')[1];
           if(status === 'SUCCESS'){
@@ -107,7 +107,7 @@ block content
         })
       }
       $scope.changeDisplay = function(index,id){
-        $.post('./editGoodDisplay',{id:id},function(data){
+        $.post('/#{pageInfo.adminDomain}/goodsManage/editGoodDisplay',{id:id},function(data){
           var status = data.status.split('::')[0],
           msg = data.status.split('::')[1];
           if(status === 'SUCCESS'){
@@ -121,7 +121,7 @@ block content
       }
       $scope.del = function(index,id){
         if(confirm('是否删除商品<<'+$scope.goodList[index].title+'>>')){
-          $.post('./delGood',{id:id},function(data){
+          $.post('/#{pageInfo.adminDomain}/goodsManage/delGood',{id:id},function(data){
             var status = data.status.split('::')[0],
             msg = data.status.split('::')[1];
             if(status === 'SUCCESS'){

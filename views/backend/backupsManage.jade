@@ -43,7 +43,7 @@ block content
       $scope.page = !{page};
       $scope.backupsList = !{backupsList};
       $scope.backup = function(){
-        $.post('./backupsManage/addBackup',function(data){
+        $.post('/#{pageInfo.adminDomain}/backupsManage/addBackup',function(data){
           var status = data.status.split('::')[0],
           msg = data.status.split('::')[1];
           if(status === 'SUCCESS'){
@@ -55,7 +55,7 @@ block content
         })
       }
       $scope.del = function(time){
-        $.post('./backupsManage/delBackup',{time:time},function(data){
+        $.post('/#{pageInfo.adminDomain}/backupsManage/delBackup',{time:time},function(data){
           var status = data.status.split('::')[0],
           msg = data.status.split('::')[1];
           if(status === 'SUCCESS'){
@@ -67,7 +67,7 @@ block content
         })
       }
       $scope.restore = function(time,type){
-        $.post('./backupsManage/restore',{time:time,drop:type},function(data){
+        $.post('/#{pageInfo.adminDomain}/backupsManage/restore',{time:time,drop:type},function(data){
           var status = data.status.split('::')[0],
           msg = data.status.split('::')[1];
           if(status === 'SUCCESS'){

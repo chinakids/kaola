@@ -34,7 +34,7 @@ block layout
                           a.btn.btn-default.btn-flat(href='javascript:;')
                             i.fa.fa-gears  设置
                         .pull-right
-                          a.btn.btn-default.btn-flat(href='./logout')
+                          a.btn.btn-default.btn-flat(href='/#{pageInfo.adminDomain}/logout')
                             i.fa.fa-sign-out  退出
         aside.main-sidebar
           section.sidebar
@@ -57,7 +57,7 @@ block layout
                   i.fa.fa-angle-left.pull-right
                 ul.treeview-menu
                   li
-                    a(href='/#{pageInfo.adminDomain}/goodsManage')
+                    a(href='/#{pageInfo.adminDomain}/goodsManage/')
                       i.fa.fa-file-text-o 
                       | 商品管理
                   li
@@ -109,15 +109,15 @@ block layout
                   i.fa.fa-angle-left.pull-right
                 ul.treeview-menu
                   li
-                    a(href='/#{pageInfo.adminDomain}/adminManage')
+                    a(href='/#{pageInfo.adminDomain}/adminManage/')
                       i.fa.fa-user
                       | 系统用户管理
                   li
-                    a(href='/#{pageInfo.adminDomain}/groupManage')
+                    a(href='/#{pageInfo.adminDomain}/groupManage/')
                       i.fa.fa-group
                       | 权限组设定
                   li
-                    a(href='/#{pageInfo.adminDomain}/filesManage')
+                    a(href='/#{pageInfo.adminDomain}/filesManage/')
                       i.fa.fa-file-text
                       | 文件管理器
                   li
@@ -127,11 +127,11 @@ block layout
                       i.fa.fa-angle-left.pull-right
                     ul.treeview-menu
                       li
-                        a(href='/#{pageInfo.adminDomain}/backupsManage')
+                        a(href='/#{pageInfo.adminDomain}/backupsManage/')
                           i.fa.fa-copy
                           | 数据备份
                   li
-                    a(href='/#{pageInfo.adminDomain}/logManage')
+                    a(href='/#{pageInfo.adminDomain}/logManage/')
                       i.fa.fa-clipboard
                       | 系统日志
 

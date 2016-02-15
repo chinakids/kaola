@@ -129,7 +129,7 @@ block content
         if($('#add .reg-success').size() === 5 && $scope.adminData.group){
           if($scope.type === 'add'){
             //新增
-            $.post('./adminManage/addAdmin',$scope.adminData,function(data){
+            $.post('/#{pageInfo.adminDomain}/adminManage/addAdmin',$scope.adminData,function(data){
               var status = data.status.split('::')[0],
               msg = data.status.split('::')[1];
               if(status === 'SUCCESS'){
@@ -146,7 +146,7 @@ block content
             })
           }else if($scope.type === 'edit'){
             //修改
-            $.post('./adminManage/editAdmin',{
+            $.post('/#{pageInfo.adminDomain}/adminManage/editAdmin',{
               '_id'        : $scope.editId,
               'email'      : $scope.adminData.email,//邮箱
               'nickName'   : $scope.adminData.nickName,//昵称
@@ -179,7 +179,7 @@ block content
       $scope.del = function(name,id){
         if(confirm('是否删除"'+name+'"?')){
           //删除
-          $.post('./adminManage/delAdmin',{'_id':id},function(data){
+          $.post('/#{pageInfo.adminDomain}/adminManage/delAdmin',{'_id':id},function(data){
             var status = data.status.split('::')[0],
             msg = data.status.split('::')[1];
             if(status === 'SUCCESS'){
