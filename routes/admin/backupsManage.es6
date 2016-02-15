@@ -4,7 +4,6 @@ import fs from 'fs';
 import cp from 'child_process';
 import getPageCount from './../../controller/getPageCount';
 import getAccess from './../../controller/getAccess';
-import bakDb from './../../controller/bakDb';
 import S from './../../conf/setting';
 
 let R = router();
@@ -52,7 +51,7 @@ R.post('/addBackup', getAccess('backupsManage-add'), function*(next) {
     //创建备份
     cp.execSync(`mongodump -h ${S.DB_HOST}:${S.DB_PORT} -d ${S.DB_NAME} -o ${process.cwd()}/bak/${time}`);
     this.body = {
-      status: 'SUEECSS::备份成功'
+      status: 'SUCCESS::备份成功'
     }
   }
 });
@@ -67,11 +66,11 @@ R.post('/delBackup', getAccess('backupsManage-del'), function*(next) {
       cp.execSync(`rm -R ${process.cwd()}/bak/${parm.time}`);
     }
     this.body = {
-      status: 'SUEECSS::删除备份成功'
+      status: 'SUCCESS::删除备份成功'
     }
   }else{
     this.body = {
-      status: 'SUEECSS::不存在此备份'
+      status: 'FAIL::不存在此备份'
     }
   }
 });
@@ -87,7 +86,7 @@ R.post('/restore', getAccess('backupsManage-re'), function*(next) {
         cp.execSync(`mongorestore -h ${S.DB_HOST}:${S.DB_PORT} -d ${S.DB_NAME} ${process.cwd()}/bak/${parm.time}/${S.DB_NAME}`);
       }
       this.body = {
-        status: 'SUEECSS::恢复备份成功'
+        status: 'SUCCESS::恢复备份成功'
       }
     }else{
       if(parm.drop == 'true'){
@@ -96,12 +95,12 @@ R.post('/restore', getAccess('backupsManage-re'), function*(next) {
         cp.execSync(`mongorestore -h ${S.DB_HOST}:${S.DB_PORT} -d ${S.DB_NAME} -u ${S.DB_USERNAME} -p ${S.DB_PASSWORD} ${process.cwd()}/bak/${parm.time}/${S.DB_NAME}`);
       }
       this.body = {
-        status: 'SUEECSS::恢复备份成功'
+        status: 'SUCCESS::恢复备份成功'
       }
     }
   }else{
     this.body = {
-      status: 'SUEECSS::不存在此备份'
+      status: 'FAIL::不存在此备份'
     }
   }
 });
