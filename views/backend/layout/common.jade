@@ -50,7 +50,7 @@ html(lang='zh',ng-app='Kaola')
   script.
     $(function() {
       var path = window.location.pathname.split('/').slice(0,3).join('/');
-      var sv = $('a[href="' + path + '"]');
+      var sv = $('a[href="' + path + '/"]');
       $('.treeview-menu').removeClass('open-menu');
       $(".sidebar-menu").find("li").removeClass('active');
       sv.parents('li').addClass('active');
