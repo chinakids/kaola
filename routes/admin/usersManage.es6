@@ -80,6 +80,10 @@ R.post('/editUser', getAccess('usersManage-edit'), function*(next) {
         //加密
         parm.password = md5.update(parm.password).digest('hex')
       }
+      //用户信息禁止修改邮件地址
+      if(parm.email){
+        delete parm.email;
+      }
       //合并
       let _user = _.extend(user[0], parm);
       yield _user.save()

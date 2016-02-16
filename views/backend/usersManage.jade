@@ -52,7 +52,7 @@ block content
             div.col-xs-12.clearfix
               form#add
                 .form-group.has-feedback
-                  input.form-control(type='email',ng-model='userData.email',placeholder='邮箱',reg='e',err-tip='请输入正确邮箱')
+                  input.form-control(type='email',ng-model='userData.email',placeholder='邮箱',reg='e',err-tip='请输入正确邮箱',ng-readonly='type == "edit"')
                   span.glyphicon.glyphicon-envelope.form-control-feedback
                 .form-group.has-feedback
                   input.form-control(type='text',ng-model='userData.nickName',placeholder='昵称',reg='nick',err-tip='1到12位非特殊字符')
@@ -153,7 +153,6 @@ block content
               //修改
               $.post('/#{pageInfo.adminDomain}/usersManage/editUser',{
                 '_id'        : $scope.editId,
-                'email'      : $scope.userData.email,//邮箱
                 'nickName'   : $scope.userData.nickName,
                 'phoneNum'   : $scope.userData.phoneNum
               },ajaxCb)
@@ -171,7 +170,6 @@ block content
               //修改
               $.post('/#{pageInfo.adminDomain}/usersManage/editUser',{
                 '_id'        : $scope.editId,
-                'email'      : $scope.userData.email,//邮箱
                 'nickName'   : $scope.userData.nickName,
                 'password'   : $scope.userData.password,
                 'phoneNum'   : $scope.userData.phoneNum
