@@ -14,7 +14,7 @@ let UserSchema = new mongoose.Schema({
     default  : '/avatar/avatar.jpg'
   },
   group      : {
-    type     : String,//用户组
+    type     : String,//用户组,只有管理员账号才存在关联查询,普通账户只有已激活(activated)和未激活(activation)两种
     ref      : 'UserGroup'
   },
   meta       : {
@@ -96,7 +96,6 @@ UserSchema.statics = {
       },{
         password:0 //获取info时过滤掉password
       })
-      .populate('group')
       .sort('meta.updateAt')
       .exec()
   },
@@ -120,7 +119,6 @@ UserSchema.statics = {
     return this.find({
         _id:id
       })
-      .populate('group')
       .sort('meta.updateAt')
       .exec()
   },
@@ -128,7 +126,6 @@ UserSchema.statics = {
     return this.find({
         email:email
       })
-      .populate('group')
       .sort('meta.updateAt')
       .exec()
   },

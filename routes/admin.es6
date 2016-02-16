@@ -13,6 +13,7 @@ import adminManage from './admin/adminManage';
 import articlesManage from './admin/articlesManage';
 import groupManage from './admin/groupManage';
 import backupsManage from './admin/backupsManage';
+import usersManage from './admin/usersManage';
 
 let R = router();
 //获取最新权限
@@ -146,5 +147,6 @@ R.use('/adminManage', adminManage.routes(), adminManage.allowedMethods());
 R.use('/articlesManage', articlesManage.routes(), articlesManage.allowedMethods());
 R.use('/groupManage', groupManage.routes(), groupManage.allowedMethods());
 R.use('/backupsManage', backupsManage.routes(), backupsManage.allowedMethods());
+R.use('/usersManage', usersManage.routes(), usersManage.allowedMethods());
 
 export default R;

@@ -47,6 +47,9 @@ angular.module('Kaola.tools',[])
           if(e == null ){
             element.removeClass('reg-success').addClass('reg-error');
             element.val('');
+            // 置空model
+            var str = 'scope["'+attrs.ngModel.split('.').join('"]["') +'"] = ""';
+            eval(str);
             element.attr('placeholder',_errTip)
           }else{
             element.removeClass('reg-error').addClass('reg-success');

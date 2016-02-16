@@ -2,13 +2,13 @@ extends ./layout/layout
 
 block content
   include ./layout/breadcrumbNav
-  section.content(ng-controller='AdminManageCtrl')
+  section.content(ng-controller='UserManageCtrl')
     div.col-md-12
       div.panel
         div.btn-group
           a.btn.btn-primary.btn-sm(href='javascript:;',ng-click='modal = true')
             i.fa.fa-plus-square
-            |  添加系统用户
+            |  添加用户
     div.col-md-12
       div.box.box-solid
         div.box-header.with-border
@@ -18,25 +18,25 @@ block content
             tbody
               tr
                 th 昵称
-                th 权限组
                 th 邮箱
                 th 联系方式
+                th 状态
                 th 操作
-              tr.datalist(ng-repeat='item in adminList')
+              tr.datalist(ng-repeat='item in userList')
                 td(ng-bind='item.nickName')
-                td(ng-bind='item.group.name')
                 td(ng-bind='item.email')
                 td(ng-bind='item.phoneNum')
+                td(ng-switch,on='item.group')
+                  span.label.label-success(ng-switch-when='activated') 已激活
+                  span.label.label-warning(ng-switch-when='activation') 未激活
                 td
-                  div.btn-group(ng-if='item.group.name != \'root\'')
+                  div.btn-group
                     button.btn.btn-primary.btn-xs(ng-click='edit($index)')
                       span.fa.fa-fw.fa-edit
                       | 编辑
                     button.btn.btn-default.btn-xs(ng-click='del(item.nickName,item._id)')
                       span.fa.fa-fw.fa-trash-o
                       | 删除
-                  div.btn-group(ng-if='item.group.name == \'root\'')
-                    button.btn.btn-warning.btn-xs Root账号不支持编辑
         include ./layout/listFooter
         #dataLoading.overlay.hide
           i.fa.fa-refresh.fa-spin
@@ -46,24 +46,22 @@ block content
           div.modal-header
             button.close(type='button',ng-click='modal = false')
               span &times;
-            h4#myModalLabel.modal-title 新增管理员
+            h4#myModalLabel.modal-title 新增用户
+              small 密码为空则为不修改密码
           div.modal-body.clearfix
             div.col-xs-12.clearfix
               form#add
                 .form-group.has-feedback
-                  input.form-control(type='email',ng-model='adminData.email',placeholder='邮箱',reg='e',err-tip='请输入正确邮箱')
+                  input.form-control(type='email',ng-model='userData.email',placeholder='邮箱',reg='e',err-tip='请输入正确邮箱')
                   span.glyphicon.glyphicon-envelope.form-control-feedback
                 .form-group.has-feedback
-                  input.form-control(type='text',ng-model='adminData.nickName',placeholder='昵称',reg='nick',err-tip='1到12位非特殊字符')
+                  input.form-control(type='text',ng-model='userData.nickName',placeholder='昵称',reg='nick',err-tip='1到12位非特殊字符')
                   span.glyphicon.glyphicon-user.form-control-feedback
                 .form-group.has-feedback
-                  input.form-control(type='text',ng-model='adminData.phoneNum',placeholder='电话',reg='m',err-tip='请输入正确的手机号码')
+                  input.form-control(type='text',ng-model='userData.phoneNum',placeholder='电话',reg='m',err-tip='请输入正确的手机号码')
                   span.glyphicon.glyphicon-phone.form-control-feedback
                 .form-group.has-feedback
-                  select.form-control(ng-options='item._id as item.name for item in groupList',ng-model='adminData.group')
-                    option(value='') 选择权限组
-                .form-group.has-feedback
-                  input.form-control#password(type='password',ng-model='adminData.password',placeholder='密码',reg='s6-18',err-tip='密码应当为6到18位非非特殊字符',autocomplete='off')
+                  input.form-control#password(type='password',ng-model='userData.password',placeholder='密码',reg='s6-18',err-tip='密码应当为6到18位非非特殊字符',autocomplete='off')
                   span.glyphicon.glyphicon-lock.form-control-feedback
                 .form-group.has-feedback
                   input.form-control(type='password',name='repassword',placeholder='再次输入密码',regto='password',err-tip='两次密码输入不一致',autocomplete='off')
@@ -73,22 +71,19 @@ block content
                   button.btn.btn-primary.btn-block.btn-flat(type='button',ng-click='submit()') 确 定
   script.
     angular.module('Kaola',['Kaola.tools'])
-    .controller('AdminManageCtrl',['$scope',function($scope){
+    .controller('UserManageCtrl',['$scope',function($scope){
       $scope.limitList = [10,20,30];
       $scope.limit = $scope.limitList[0];
       $scope.page = !{page};
-      $scope.adminList = !{adminList};
-      $scope.groupList = !{groupList};
+      $scope.userList = !{userList};
       $scope.modal = false;
       $scope.type = 'add';
-      $scope.adminData = {
+      $scope.userData = {
         'email'      : '',//邮箱
         'nickName'   : '',//昵称
         'password'   : '',//密码
-        'phoneNum'   : '',//电话
-        'group'      : ''
+        'phoneNum'   : ''
       }
-      
       $scope.$watch('modal',function(){
         if($scope.modal){
           angular.element(document.getElementById('myModal')).css({'display':'block'})
@@ -99,12 +94,11 @@ block content
             $(this).removeClass('reg-success').removeClass('reg-error');
           })
           $scope.type = 'add';
-          $scope.adminData = {
+          $scope.userData = {
             'email'      : '',//邮箱
             'nickName'   : '',//昵称
             'password'   : '',//密码
-            'phoneNum'   : '',//电话
-            'group'      : ''
+            'phoneNum'   : ''
           }
         }
       })
@@ -113,13 +107,12 @@ block content
       $scope.edit = function(i){
         $scope.type = 'edit'
         $scope.modal = true;
-        $scope.editId = $scope.adminList[i]._id;
-        $scope.adminData = {
-          'email'      : $scope.adminList[i].email,//邮箱
-          'nickName'   : $scope.adminList[i].nickName,//昵称
+        $scope.editId = $scope.userList[i]._id;
+        $scope.userData = {
+          'email'      : $scope.userList[i].email,//邮箱
+          'nickName'   : $scope.userList[i].nickName,//昵称
           'password'   : '',//密码
-          'phoneNum'   : $scope.adminList[i].phoneNum,//电话
-          'group'      : $scope.adminList[i].group._id
+          'phoneNum'   : $scope.userList[i].phoneNum
         }
       }
       var ajaxCb = function(data){
@@ -138,67 +131,64 @@ block content
         }
       }
       $scope.submit = function(){
-          if($scope.type === 'add'){
-            $('#add input').each(function(){
+        if($scope.type === 'add'){
+          $('#add input').each(function(){
+            $(this).trigger('focus').trigger('blur');
+          })
+          if($('#add .reg-success').size() === 5){
+            //新增
+            $.post('/#{pageInfo.adminDomain}/usersManage/addUser',$scope.userData,ajaxCb)
+          }else{
+            $('#tip').append('<div class=\'callout callout-danger\'><p>填写信息不完整</p></div>');
+            setTimeout(function(){
+              $('#tip').html('');
+            },2000)
+          }
+        }else if($scope.type === 'edit'){
+          if($scope.userData.password === ''){
+            $('#add input[type="email"],#add input[type="text"]').each(function(){
               $(this).trigger('focus').trigger('blur');
             })
-            if($('#add .reg-success').size() === 5 && $scope.adminData.group){
-              //新增
-              $.post('/#{pageInfo.adminDomain}/adminManage/addAdmin',$scope.adminData,ajaxCb)
+            if($('#add .reg-success').size() === 3){
+              //修改
+              $.post('/#{pageInfo.adminDomain}/usersManage/editUser',{
+                '_id'        : $scope.editId,
+                'email'      : $scope.userData.email,//邮箱
+                'nickName'   : $scope.userData.nickName,
+                'phoneNum'   : $scope.userData.phoneNum
+              },ajaxCb)
             }else{
               $('#tip').append('<div class=\'callout callout-danger\'><p>填写信息不完整</p></div>');
               setTimeout(function(){
                 $('#tip').html('');
               },2000)
-            }
-          }else if($scope.type === 'edit'){
-            if($scope.adminData.password === ''){
-              $('#add input[type="email"],#add input[type="text"]').each(function(){
-                $(this).trigger('focus').trigger('blur');
-              })
-              if($('#add .reg-success').size() === 3 && $scope.adminData.group){
-                //修改
-                $.post('/#{pageInfo.adminDomain}/adminManage/editAdmin',{
-                  '_id'        : $scope.editId,
-                  'email'      : $scope.adminData.email,//邮箱
-                  'nickName'   : $scope.adminData.nickName,//昵称
-                  'phoneNum'   : $scope.adminData.phoneNum,//电话
-                  'group'      : $scope.adminData.group
-                },ajaxCb)
-              }else{
-                $('#tip').append('<div class=\'callout callout-danger\'><p>填写信息不完整</p></div>');
-                setTimeout(function(){
-                  $('#tip').html('');
-                },2000)
-              }
+            }  
+          }else{
+            $('#add input').each(function(){
+              $(this).trigger('focus').trigger('blur');
+            })
+            if($('#add .reg-success').size() === 5){
+              //修改
+              $.post('/#{pageInfo.adminDomain}/usersManage/editUser',{
+                '_id'        : $scope.editId,
+                'email'      : $scope.userData.email,//邮箱
+                'nickName'   : $scope.userData.nickName,
+                'password'   : $scope.userData.password,
+                'phoneNum'   : $scope.userData.phoneNum
+              },ajaxCb)
             }else{
-              $('#add input').each(function(){
-                $(this).trigger('focus').trigger('blur');
-              })
-              if($('#add .reg-success').size() === 5 && $scope.adminData.group){
-                //修改
-                $.post('/#{pageInfo.adminDomain}/adminManage/editAdmin',{
-                  '_id'        : $scope.editId,
-                  'email'      : $scope.adminData.email,//邮箱
-                  'nickName'   : $scope.adminData.nickName,//昵称
-                  'password'   : $scope.adminData.password,//密码
-                  'phoneNum'   : $scope.adminData.phoneNum,//电话
-                  'group'      : $scope.adminData.group
-                },ajaxCb)
-              }else{
-                $('#tip').append('<div class=\'callout callout-danger\'><p>填写信息不完整</p></div>');
-                setTimeout(function(){
-                  $('#tip').html('');
-                },2000)
-              }
-            }
-          }  
-        
+              $('#tip').append('<div class=\'callout callout-danger\'><p>填写信息不完整</p></div>');
+              setTimeout(function(){
+                $('#tip').html('');
+              },2000)
+            }  
+          }     
+        }
       }
       $scope.del = function(name,id){
         if(confirm('是否删除"'+name+'"?')){
           //删除
-          $.post('/#{pageInfo.adminDomain}/adminManage/delAdmin',{'_id':id},function(data){
+          $.post('/#{pageInfo.adminDomain}/usersManage/delUser',{'_id':id},function(data){
             var status = data.status.split('::')[0],
             msg = data.status.split('::')[1];
             if(status === 'SUCCESS'){
