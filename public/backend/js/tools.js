@@ -94,6 +94,48 @@ angular.module('Kaola.tools',[])
 //权限模型
 .factory('powerModal',function(){
   var powerModal = [{
+      id: 'goodsManage',
+      pId: 0,
+      name: '商品管理',
+      open: true
+    }, {
+      id: 'goodsManage-add',
+      pId: 'goodsManage',
+      name: '新增'
+    }, {
+      id: 'goodsManage-view',
+      pId: 'goodsManage',
+      name: '查看'
+    }, {
+      id: 'goodsManage-edit',
+      pId: 'goodsManage',
+      name: '修改'
+    }, {
+      id: 'goodsManage-del',
+      pId: 'goodsManage',
+      name: '删除'
+    },{
+      id: 'articlesManage',
+      pId: 0,
+      name: '文章管理',
+      open: true
+    }, {
+      id: 'articlesManage-add',
+      pId: 'articlesManage',
+      name: '新增'
+    }, {
+      id: 'articlesManage-view',
+      pId: 'articlesManage',
+      name: '查看'
+    }, {
+      id: 'articlesManage-edit',
+      pId: 'articlesManage',
+      name: '修改'
+    }, {
+      id: 'articlesManage-del',
+      pId: 'articlesManage',
+      name: '删除'
+    },{
       id: 'systemManage',
       pId: 0,
       name: '系统管理',
