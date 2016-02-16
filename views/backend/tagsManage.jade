@@ -36,7 +36,7 @@ block content
               ul.chart-legend.clearfix
                 li(ng-repeat='item in ranking track by $index')
                   i.fa.fa-circle-o(style='color:{{item.color}}')
-                  |  [{{$index}}] {{item.label}}
+                  |  [{{$index+1}}] {{item.label}}
   script.
     angular.module('Kaola',['Kaola.tools'])
     .controller('TagManageCtrl',['$scope','$filter',function($scope,$filter){

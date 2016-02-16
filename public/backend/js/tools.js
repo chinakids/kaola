@@ -141,7 +141,7 @@ angular.module('Kaola.tools',[])
     },{
       id: 'tagsManage',
       pId: 0,
-      name: '文章管理',
+      name: '标签管理',
       open: true
     }, {
       id: 'tagsManage-view',

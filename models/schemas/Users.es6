@@ -99,6 +99,16 @@ UserSchema.statics = {
       .sort('meta.updateAt')
       .exec()
   },
+  getNewUsers(limit){
+    return this.find({
+        admin:false
+      },{
+        password:0 //获取info时过滤掉password
+      })
+      .sort('-meta.createAt')
+      .limit(limit)
+      .exec()
+  },
   findAdminById(id){
     return this.find({
         _id:id

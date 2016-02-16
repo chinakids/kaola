@@ -3,10 +3,13 @@ import render from './../utils/render';
 import ccap from 'ccap';
 import _ from 'underscore';
 import crypto from 'crypto';
-import usersModel from './../models/Users';
-import userGroupModel from './../models/UserGroup';
 import getPageCount from './../controller/getPageCount';
 import S from './../conf/setting';
+//model
+import userGroupModel from './../models/UserGroup';
+import goodsModel from './../models/Goods';
+import usersModel from './../models/Users';
+import articlesModel from './../models/Articles';
 //route
 import goodsManage from './admin/goodsManage';
 import adminManage from './admin/adminManage';
@@ -20,10 +23,28 @@ let R = router();
 //获取最新权限
 
 R.get('/', function*(next) {
+  let goodsCount = yield goodsModel.count({});
+  let articlesCount = yield articlesModel.count({});
+  let usersCount = yield usersModel.count({});
+  let newUsers = yield usersModel.getNewUsers(5);
   if (this.session.login) {
     yield render('index', {
       title: '管理面板',
-      desc: '日常管理面板'
+      desc: '日常管理面板',
+      panel:[
+        {
+          goodsCount:goodsCount,
+          articlesCount:articlesCount,
+          usersCount:usersCount,
+          commentsCount:0
+        },{
+
+        },
+        {
+          usersCount:usersCount,
+          newUsers:newUsers
+        }
+      ]
     }, this);
   } else {
     this.redirect('./login')
