@@ -139,6 +139,15 @@ angular.module('Kaola.tools',[])
       pId: 'articlesManage',
       name: '删除'
     },{
+      id: 'tagsManage',
+      pId: 0,
+      name: '文章管理',
+      open: true
+    }, {
+      id: 'tagsManage-view',
+      pId: 'tagsManage',
+      name: '查看'
+    }, {
       id: 'systemManage',
       pId: 0,
       name: '系统管理',
