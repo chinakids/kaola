@@ -1,0 +1,51 @@
+extends ./layout/common
+
+block layout
+  body.hold-transition.lockscreen(ng-controller='LockCtrl')
+    div.lockscreen-wrapper
+      div.lockscreen-logo
+        a(href='/')
+        b Kaola
+        |  CMS
+      div.lockscreen-name #{userInfo.nickName}
+      div.lockscreen-item
+        div.lockscreen-image
+          img(src='#{userInfo.avatar}',alt='User Image')
+        form.lockscreen-credentials
+          div.input-group
+            input#password.form-control(type='password',placeholder='password',ng-model='password')
+            div.input-group-btn
+              button.btn(ng-click='submit()')
+                i.fa.fa-arrow-right.text-muted
+      div.help-block.text-center
+        Enter 请输入密码以解除账号锁定
+      div.text-center
+        a(href='/#{pageInfo.adminDomain}/logut') 退出当前账号并重新登录
+      div.lockscreen-footer.text-center
+        | Copyright &copy; 2016-2018 
+        b
+          a.text-blackAlmsaeed(href='http://almsaeedstudio.com') Chinakids
+        br
+        | All rights reserved
+  script.
+    angular.module('Kaola',['Kaola.tools'])
+    .controller('LockCtrl', ['$scope','$http','$filter',function($scope,$http,$filter){
+      $scope.password = '';
+      $scope.submit = function(){
+        $.post('/#{pageInfo.adminDomain}/unlock',{
+          ticket : $filter('md5')($scope.password)
+        },function(data){
+          var status = data.status.split('::')[0],
+          msg = data.status.split('::')[1];
+          if(status !== 'SUCCESS'){
+            alert(msg)
+          }else{
+          	alert(msg)
+          	window.location.href = '/#{pageInfo.adminDomain}/';
+          }
+        })
+      }
+      $('#password').keyup(function(e){
+      	if(e.keyCode === 13) $scope.submit();
+      })
+    }])

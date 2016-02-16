@@ -9,14 +9,24 @@ import S from './../../conf/setting';
 let R = router();
 
 R.use(function*(next) {
-  if(this.session.login){
+  if(this.session.login  && !this.session.locked){
     yield next;
   }else{
-    if(this.request.method === 'GET'){
-      this.redirect('./login')
-    }else{
-      this.body = {
-        status: 'FAIL::该接口需要登录'
+    if(!this.session.login){
+      if(this.request.method === 'GET'){
+        this.redirect('./login')
+      }else{
+        this.body = {
+          status: 'FAIL::该接口需要登录'
+        }
+      }
+    }else if(this.session.locked){
+      if(this.request.method === 'GET'){
+        this.redirect('./lock')
+      }else{
+        this.body = {
+          status: 'FAIL::当前账号已被锁定'
+        }
       }
     }
   }

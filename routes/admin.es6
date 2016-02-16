@@ -27,7 +27,7 @@ R.get('/', function*(next) {
   let articlesCount = yield articlesModel.count({});
   let usersCount = yield usersModel.count({});
   let newUsers = yield usersModel.getNewUsers(5);
-  if (this.session.login) {
+  if (this.session.login && !this.session.locked) {
     yield render('index', {
       title: '管理面板',
       desc: '日常管理面板',
@@ -47,7 +47,11 @@ R.get('/', function*(next) {
       ]
     }, this);
   } else {
-    this.redirect('./login')
+    if(!this.session.login){
+      this.redirect('./login');
+    }else if(this.session.locked){
+      this.redirect('./lock')
+    }
   }
 });
 /**
@@ -114,7 +118,8 @@ R.post('/init', function*(next) {
 R.get('/login', function*(next) {
   if (!this.session.login) {
     yield render('login', {
-      title: '管理员登陆'
+      title: '管理员登陆',
+      desc: ''
     }, this);
   } else {
     this.redirect('./')
@@ -134,6 +139,7 @@ R.post('/login', function*(next) {
     if (parm.ticket.toUpperCase() === ticket.toUpperCase()) {
       this.session.email = parm.email;
       this.session.login = true;
+      this.session.locked = false;
       this.session.ccap = '';
       this.body = {
         status: 'SUCCESS::登陆成功'
@@ -160,6 +166,36 @@ R.all('/logout', function*(next) {
   } else {
     this.body = {
       status: 'FAIL::此接口不接受其他请求模式'
+    }
+  }
+});
+//锁定
+R.get('/lock', function*(next) {
+  this.session.locked = true;
+  yield render('lock', {
+    title: '账号已被锁定'
+  }, this);
+});
+//解锁
+R.post('/unlock', function*(next) {
+  let parm = this.request.body;
+  let md5 = crypto.createHash('md5');
+  let result = yield usersModel.findAdminByEmail(this.session.email);
+  if (result.length <= 0) {
+    this.body = {
+      status: 'FAIL::用户不存在'
+    }
+  } else {
+    console.log(parm.ticket.toUpperCase() === result[0].password.toUpperCase())
+    if (parm.ticket.toUpperCase() === result[0].password.toUpperCase()) {
+      this.session.locked = false;
+      this.body = {
+        status: 'SUCCESS::成功解锁'
+      }
+    } else {
+      this.body = {
+        status: 'FAIL::密码错误'
+      }
     }
   }
 });

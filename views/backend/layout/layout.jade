@@ -31,8 +31,8 @@ block layout
                         small #{userInfo.email}
                       li.user-footer
                         .pull-left
-                          a.btn.btn-default.btn-flat(href='javascript:;')
-                            i.fa.fa-gears  设置
+                          a.btn.btn-default.btn-flat(href='/#{pageInfo.adminDomain}/lock')
+                            i.fa.fa-lock  锁定
                         .pull-right
                           a.btn.btn-default.btn-flat(href='/#{pageInfo.adminDomain}/logout')
                             i.fa.fa-sign-out  退出
