@@ -17,7 +17,7 @@ function * setTag(next){
       yield tag.add()
     }else{
       tags[0].count = tags[0].count+1;
-      yield tag[0].add()
+      yield tags[0].add()
     }
   };
 }

@@ -1,14 +1,14 @@
 extends ./layout/layout
 block content
   include ./layout/breadcrumbNav
-  section.content(ng-controller='GoodsEditCtrl')
+  section.content(ng-controller='ArticlesAddCtrl')
     div.col-md-12
       div.box.box-solid.big-form.clearfix
         form#add
           dl.clearfix.col-md-12
             dt 标题:
             dd.form-group
-              input.form-control(type='text',placeholder='请输入标题',reg='s',err-tip='标题 - 不可输入特殊字符或为空',ng-model='goodData.title')
+              input.form-control(type='text',placeholder='请输入标题',reg='s',err-tip='标题 - 不可输入特殊字符或为空',ng-model='articleData.title')
           dl.clearfix.col-md-12
             dt 标签:
             dd.tag-group.form-group
@@ -17,46 +17,19 @@ block content
                   | {{item}}
                   span(ng-click='delTag($index)') x
               input#tag.form-control(type='text',placeholder='请输入标签,回车添加标签')
-          dl.clearfix.col-md-4
-            dt 价格:
-            dd.form-group
-              input.form-control(type='text',placeholder='请输入价格',reg='n',err-tip='价格 - 只可输入数字',ng-model='goodData.price')
-          dl.clearfix.col-md-4
-            dt 位置:
-            dd.form-group
-              input.form-control(type='text',placeholder='位置',reg='s',err-tip='位置 - 不可输入特殊字符或为空',ng-model='goodData.info.location')
-          dl.clearfix.col-md-4
-            dt 联系方式:
-            dd.form-group
-              div.input-group
-                div.input-group-btn
-                  button.btn.btn-default.dropdown-toggle(type='button',data-toggle='dropdown',aria-haspopup='true',aria-expanded='false')
-                    | {{goodData.info.callType | calltype }}&nbsp;
-                    span.caret
-                  ul.dropdown-menu
-                    li
-                      a(href='javascript:;',ng-click='changeType(0)') 微信
-                    li
-                      a(href='javascript:;',ng-click='changeType(1)') QQ
-                    li
-                      a(href='javascript:;',ng-click='changeType(2)') 电话
-                input.form-control(type='text',placeholder='请输入联系方式',reg='s',err-tip='联系方式 - 不可输入特殊字符或为空',ng-model='goodData.info.callWay')
           dl.clearfix.col-md-12
             dt 正文:
             dd.form-group
-              iframe.form-control(ng-src='{{frameUrl}}')
+              iframe.form-control(src='/editor/index.html')
           dl.clearfix.col-md-6
             dt 置顶:
             dd.form-group.checkbox
               label
-                input(type='checkbox',ng-model='goodData.state.top',ng-checked='goodData.state.top')
+                input(type='checkbox',ng-model='articleData.state.top',ng-checked='articleData.state.top')
                 | 置顶
               label
-                input(type='checkbox',ng-model='goodData.state.display',ng-checked='goodData.state.display')
+                input(type='checkbox',ng-model='articleData.state.display',ng-checked='articleData.state.display')
                 | 显示
-              label
-                input(type='checkbox',ng-model='goodData.state.sell',ng-checked='goodData.state.sell')
-                | 售出
           dl.clearfix.col-md-6
             dt 操作:
             dd
@@ -65,8 +38,8 @@ block content
 
   script.
     angular.module('Kaola', ['Kaola.tools'])
-    .controller('GoodsEditCtrl', ['$scope','db', function ($scope,db) {
-      
+    .controller('ArticlesAddCtrl', ['$scope','db', function ($scope,db) {
+      $scope.tag = [];
       var onlyTag = function(key){
         var status = true;
         for(var i= 0,len=$scope.tag.length;i<len;i++){
@@ -99,24 +72,29 @@ block content
         $scope.tag = arr;
         setTimeout(function(){$('#tag').css({paddingLeft:$('#tag').siblings('ul').width()})},100)
       }
-      $scope.goodData = !{goodData};
-      db.set($scope.goodData._id,$scope.goodData.content);
-      $scope.tag = $scope.goodData.tag.split(',');
-      setTimeout(function(){$('#tag').css({paddingLeft:$('#tag').siblings('ul').width()})},100);
-      $scope.frameUrl = '/editor/index.html?md='+$scope.goodData._id;
-
+      $scope.articleData = {
+        title:'',
+        tag:'',
+        price:'',
+        content:'',
+        imgList:'',
+        state      : {
+          display  : true,//是否显示
+          top      : false
+        }
+      }
       $scope.changeType = function(type){
-        $scope.goodData.info.callType = parseInt(type);
+        $scope.articleData.info.callType = parseInt(type);
       }
       $scope.submit = function() {
         $('#add input').each(function () {
           $(this).trigger('focus').trigger('blur');
         })
-        if ($('#add .reg-success').size() === 4) {
-          if(db.get($scope.goodData._id).replace(/\s/g,'').length >= 20){
-            $scope.goodData.content = db.get($scope.goodData._id);
-            $scope.goodData.tag = $scope.tag.join(',');
-            $.post('/#{pageInfo.adminDomain}/goodsManage/editGood',$scope.goodData,function(data){
+        if ($('#add .reg-success').size() === 1) {
+          if(db.get('newAdd').replace(/\s/g,'').length >= 20){
+            $scope.articleData.content = db.get('newAdd');
+            $scope.articleData.tag = $scope.tag.join(',');
+            $.post('/#{pageInfo.adminDomain}/articlesManage/addArticle',$scope.articleData,function(data){
               var status = data.status.split('::')[0],
               msg = data.status.split('::')[1];
               if(status === 'SUCCESS'){

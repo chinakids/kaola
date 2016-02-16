@@ -9,7 +9,6 @@ import koaStatic from 'koa-static';
 import koaBodyparser from 'koa-bodyparser';
 import session from 'koa-generic-session';
 import redisStore from 'koa-redis';
-import connect from './utils/mongodb';
 import render from './utils/render';
 //导入全局设置
 import S from './conf/setting'
@@ -34,7 +33,6 @@ app.use(koaBodyparser({
   jsonLimit:'200kb'
 }));
 //链接数据库
-app.use(connect);
 app.use(json());
 app.use(koaLogger());
 //设置静态资源相关参数

@@ -10,6 +10,7 @@ import S from './../conf/setting';
 //route
 import goodsManage from './admin/goodsManage';
 import adminManage from './admin/adminManage';
+import articlesManage from './admin/articlesManage';
 import groupManage from './admin/groupManage';
 import backupsManage from './admin/backupsManage';
 
@@ -142,6 +143,7 @@ R.all('/logout', function*(next) {
 
 R.use('/goodsManage', goodsManage.routes(), goodsManage.allowedMethods());
 R.use('/adminManage', adminManage.routes(), adminManage.allowedMethods());
+R.use('/articlesManage', articlesManage.routes(), articlesManage.allowedMethods());
 R.use('/groupManage', groupManage.routes(), groupManage.allowedMethods());
 R.use('/backupsManage', backupsManage.routes(), backupsManage.allowedMethods());
 

@@ -1,0 +1,109 @@
+extends ./layout/layout
+
+block content
+  include ./layout/breadcrumbNav
+  section.content(ng-controller='ArticlesManageCtrl')
+    div.col-md-12
+      div.panel
+        div.btn-group
+          a.btn.btn-primary.btn-sm(href='/#{pageInfo.adminDomain}/articlesManage/addArticle')
+            i.fa.fa-plus-square
+            |  添加文章
+        div.pull-right
+          div.input-group
+            input#searchInput.form-control.input-sm.pull-right(type='text',name='searchKey',style='width: 200px;', placeholder='请输入需要查询的关键字',value='')
+            div.input-group-btn(style='width: auto;')
+              button.btn.btn-sm.btn-default(type='button')
+                i.fa.fa-search
+    div.col-md-12
+      div.box.box-solid
+        div.box-header.with-border
+          h5.box-title #{title}
+        div.box-body.table-responsive.no-padding
+          table.table.table-hover
+            tbody
+              tr
+                th 文章标题
+                th 创建时间
+                th 类目
+                th 推荐
+                th 点击
+                th 状态
+                th 发布人
+                th 操作
+              tr.datalist(ng-repeat='item in articleList')
+                td(ng-bind='item.title')
+                td(ng-bind='item.meta.createAt | date: "yy/MM/dd HH:mm"')
+                td {{item.category.name}}
+                td(ng-class='{true:"text-danger"}[item.state.top==true]')
+                  i.fa.fa-fw.fa-flag
+                td(ng-bind='item.statistics.view')
+                td(ng-switch,on='item.state.display')
+                  span.label.label-success(ng-switch-when='true') 显示
+                  span.label.label-warning(ng-switch-when='false') 隐藏
+                td(ng-bind='item.author.nickName')
+                td
+                  div.btn-group
+                    a.btn.btn-primary.btn-xs(href='/#{pageInfo.adminDomain}/articlesManage/editArticle?id={{item._id}}', role='button', title='编辑')
+                      i.fa.fa-edit
+                    a.btn.btn-warning.btn-xs(href='javascript:;', role='button', title='推荐',ng-hide='item.state.top',ng-click='changeTop($index,item._id)')
+                      i.fa.fa-thumbs-o-up
+                    a.btn.btn-default.btn-xs(href='javascript:;', role='button', title='取消推荐',ng-show='item.state.top',ng-click='changeTop($index,item._id)')
+                      i.fa.fa-thumbs-o-down
+                    a.btn.btn-default.btn-xs(href='javascript:;', role='button', title='关闭显示',ng-show='item.state.display',ng-click='changeDisplay($index,item._id)')
+                      i.fa.fa-eye-slash
+                    a.btn.btn-warning.btn-xs(href='javascript:;', role='button', title='显示',ng-hide='item.state.display',ng-click='changeDisplay($index,item._id)')
+                      i.fa.fa-eye
+                    button.btn.btn-danger.btn-xs(type='button', title='删除',ng-click='del($index,item._id)')
+                      i.fa.fa-trash-o
+        include ./layout/listFooter
+        #dataLoading.overlay.hide
+          i.fa.fa-refresh.fa-spin
+  script.
+    angular.module('Kaola',['Kaola.tools'])
+    .controller('ArticlesManageCtrl',['$scope',function($scope){
+      $scope.limitList = [10,20,30];
+      $scope.limit = $scope.limitList[0];
+      $scope.page = !{page};
+      $scope.articleList = !{articleList};
+      $scope.changeTop = function(index,id){
+        $.post('/#{pageInfo.adminDomain}/articlesManage/editArticleTop',{id:id},function(data){
+          var status = data.status.split('::')[0],
+          msg = data.status.split('::')[1];
+          if(status === 'SUCCESS'){
+            $scope.$apply(function(){
+              $scope.articleList[index].state.top = !$scope.articleList[index].state.top;
+            })
+          }else{
+            console.log(msg);
+          }
+        })
+      }
+      $scope.changeDisplay = function(index,id){
+        $.post('/#{pageInfo.adminDomain}/articlesManage/editArticleDisplay',{id:id},function(data){
+          var status = data.status.split('::')[0],
+          msg = data.status.split('::')[1];
+          if(status === 'SUCCESS'){
+            $scope.$apply(function(){
+              $scope.articleList[index].state.display = !$scope.articleList[index].state.display;
+            })
+          }else{
+            console.log(msg);
+          }
+        })
+      }
+      $scope.del = function(index,id){
+        if(confirm('是否删除文章<<'+$scope.articleList[index].title+'>>')){
+          $.post('/#{pageInfo.adminDomain}/articlesManage/delArticle',{id:id},function(data){
+            var status = data.status.split('::')[0],
+            msg = data.status.split('::')[1];
+            if(status === 'SUCCESS'){
+              alert(msg)
+              window.location.reload()
+            }else{
+              alert(msg);
+            }
+          })
+        }
+      }
+    }])

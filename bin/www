@@ -6,7 +6,7 @@
 
 import app from '../app';
 import http from 'http';
-
+import connect from '../utils/mongodb'
 /**
  * Get port from environment and store.
  */
@@ -17,7 +17,6 @@ let port = normalizePort(process.env.PORT || '3030');
 /**
  * Create HTTP server.
  */
-
 
 let server = http.createServer(app.callback());
 server.listen(port);
@@ -76,6 +75,8 @@ function onError(error) {
  */
 
 function onListening() {
+  //连接数据库
+  connect();
   let addr = server.address();
   let bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
   console.log('Listening on ' + bind);

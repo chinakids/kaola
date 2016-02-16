@@ -5,7 +5,7 @@ import S from './../conf/setting';
 /**
  * [connect mongodb链接方法]
  */
-function * connect(next){
+function connect(){
   if(S.DB_USERNAME === '' && S.DB_PASSWORD === ''){
     //console.log('空口令登入')
     mongoose.connect(`mongodb://${S.DB_HOST}:${S.DB_PORT}/${S.DB_NAME}`,(err) => {
@@ -29,9 +29,7 @@ function * connect(next){
         templateCache();
       };
     });
-    //yield next;
   }
-  yield next;
 }
 
 export default connect;
