@@ -23,7 +23,6 @@ import userInfo from './controller/getUserInfo';
 //实例化
 let app = koa();
 let R = route();
-//let C = connect();
 //设置模板相关参数
 app.use(views('views', {
   root: __dirname + '/views',
