@@ -46,8 +46,8 @@ block content
           div.modal-header
             button.close(type='button',ng-click='modal = false')
               span &times;
-            h4#myModalLabel.modal-title 新增用户
-              small 密码为空则为不修改密码
+            h4#myModalLabel.modal-title {{type == 'add' ? '新增' : '修改'}}用户
+              small(ng-if='type == "edit"')  密码为空则为不修改密码
           div.modal-body.clearfix
             div.col-xs-12.clearfix
               form#add
