@@ -355,7 +355,7 @@ angular.module('Kaola.tools',[])
 .directive('uploadimg',['$rootScope',function($rootscope){
   return{
     restrict : 'ECAM',
-    template : '<div id="uploader" class="wu-example"><div class="uploader-list"><div id="thelist"><li ng-repeat="item in uploadList track by $index" id="{{item.id}}" class="file-item thumbnail" ng-class="{success:item.status}"><i class="ion-ios-close" ng-click="delUploadImg(item)"></i><span ng-if="item.noView != \'false\'">不能预览</span><img ng-src="{{item.url}}"><div class="info">{{item.name}}</div><div class="progress progress-striped active"><div class="progress-bar" role="progressbar" ng-if="item.percent != \'false\'" style="width: {{item.percentage}}%"></div></div></li></div><div class="btns" ng-show="allowUpload"><div id="picker"><i class="ion-ios-plus-empty"></i><p>选择图片</p></div></div></div></div>',
+    template : '<div id="uploader" class="wu-example"><div class="uploader-list"><div id="thelist"><li ng-repeat="item in uploadList track by $index" id="{{item.id}}" class="file-item thumbnail" ng-class="{success:item.tmp}"><i class="ion-ios-close" ng-click="delUploadImg(item)"></i><img ng-src="{{item.url}}"><div class="info">{{item.name}}</div></li></div><div class="btns" ng-show="allowUpload"><div id="picker"><i class="ion-ios-plus-empty"></i><p>选择图片</p></div></div></div></div>',
     replace : true,
     link:function(scope,element,attrs){
       var limit = parseInt(attrs.limit) || 1;
@@ -406,7 +406,7 @@ angular.module('Kaola.tools',[])
       //scope.$watch('uploadList',function(){console.log(scope.uploadList)},true)
       // 当有文件添加进来的时候
       uploader.on( 'fileQueued', function( file ) {
-        var model = {id:file.id ,name:file.name ,tmp:'',url:'',noView:false,percent:false,percentage:0,status:false};
+        var model = {id:file.id ,name:file.name ,tmp:'',url:''};
         scope.$apply(function(){
           scope.uploadList[file.id] = model; 
         })
@@ -415,12 +415,11 @@ angular.module('Kaola.tools',[])
         // 如果为非图片文件，可以不用调用此方法。
         // thumbnailWidth x thumbnailHeight 为 100 x 100
         uploader.makeThumb( file, function( error, src ) {
-          if ( error ) {
-            scope.uploadList[file.id]['noView'] = true;
+          if ( !error ) {
+            scope.$apply(function(){
+              scope.uploadList[file.id]['url'] = src
+            })
           }
-          scope.$apply(function(){
-            scope.uploadList[file.id]['url'] = src
-          })
         }, 100, 100 );
       });
       scope.delUploadImg = function(item){
@@ -454,14 +453,9 @@ angular.module('Kaola.tools',[])
         }
       }
       // 文件上传过程中创建进度条实时显示。
-      uploader.on( 'uploadProgress', function( file, percentage ) {
-        scope.uploadList[file.id]['percent'] = true;
-        scope.uploadList[file.id]['percentage'] = percentage * 100;
-      });
       uploader.on( 'uploadSuccess', function( file , req ) {
         if(req.status.split('::')[0] === 'SUCCESS'){
           scope.$apply(function(){
-            scope.uploadList[file.id]['status'] = true;
             scope.uploadList[file.id]['tmp'] = req.tmp;
           })
           if(length >= limit){
@@ -476,11 +470,6 @@ angular.module('Kaola.tools',[])
           })
           length--;
         }
-      });
-      uploader.on( 'uploadComplete', function( file ) {
-        scope.$apply(function(){
-          if(scope.uploadList[file.id]) scope.uploadList[file.id]['percent'] = false;
-        })
       });
     }
   }

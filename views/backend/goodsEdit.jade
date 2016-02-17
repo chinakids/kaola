@@ -111,7 +111,7 @@ block content
       setTimeout(function(){$('#tag').css({paddingLeft:$('#tag').siblings('ul').width()})},100);
       $scope.frameUrl = '/editor/index.html?md='+$scope.goodData._id;
       $scope.uploadList = $.parseJSON($scope.goodData.imgList);
-
+      console.log($scope.uploadList)
       $scope.changeType = function(type){
         $scope.goodData.info.callType = parseInt(type);
       }
