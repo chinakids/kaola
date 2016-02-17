@@ -13,3 +13,4 @@ public/upload
 .idea
 *.bak
 bak/
+.tmp
