@@ -7,18 +7,6 @@ import templateModel from './../models/Template';
 /**
  * [TemplateCache 缓存jade页面为jade-runtime]
  */
-if(!fs.existsSync(path.join(__dirname, './../views/.cache'))){
-  fs.mkdirSync(path.join(__dirname, './../views/.cache'));
-  fs.mkdirSync(path.join(__dirname, './../views/.cache/fontend'));
-  fs.mkdirSync(path.join(__dirname, './../views/.cache/backend'));
-};
-if(!fs.existsSync(path.join(__dirname, './../views/.cache/fontend'))){
-  fs.mkdirSync(path.join(__dirname, './../views/.cache/fontend'));
-};
-if(!fs.existsSync(path.join(__dirname, './../views/.cache/backend'))){
-  fs.mkdirSync(path.join(__dirname, './../views/.cache/backend'));
-};
-
 
 let pages = {
   backend:{},

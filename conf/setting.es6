@@ -45,10 +45,6 @@ const globalSetting =  {
   SITE_KEYWORDS: '', //站点关键字
   SITE_BASICKEYWORDS: '', //基础关键词（忽视文章seo必带的）
 
-
-  //上传
-  UPDATE_DIR: process.cwd() + '/public/upload', //默认上传文件夹本地路径
-
   //本地redis设置
   REDIS_HOST: '127.0.0.1',  //redis地址
   REDIS_PORT: 6379,  //redis端口
