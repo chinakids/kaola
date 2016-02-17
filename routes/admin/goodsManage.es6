@@ -4,6 +4,7 @@ import _ from 'underscore';
 import goodsModel from './../../models/Goods';
 import getPageCount from './../../controller/getPageCount';
 import setTag from './../../controller/setTag';
+import copyImage from './../../controller/copyImage';
 import { checkingAccess , checkingLogin } from './../../controller/getAccess';
 
 let R = router();
@@ -35,6 +36,7 @@ R.get('/addGood', checkingAccess('goodsManage-add'), function*(next) {
 R.post('/addGood', checkingAccess('goodsManage-add'), setTag, function*(next) {
   let parm = this.request.body;
   parm.author = this.session.userInfo._id;
+  parm.imgList = copyImage(parm.imgList,'goods');
   let good = new goodsModel(parm)
   yield good.add()
   this.body = {
