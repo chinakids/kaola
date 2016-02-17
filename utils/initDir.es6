@@ -4,6 +4,9 @@ import path from 'path';
  * [initDir 初始化目录]
  */
 function initDir(){
+	if(!fs.existsSync(path.join(__dirname, './../public/.tmp'))){
+	  fs.mkdirSync(path.join(__dirname, './../public/.tmp'));
+	};
 	if(!fs.existsSync(path.join(__dirname, './../public/upload'))){
 	  fs.mkdirSync(path.join(__dirname, './../public/upload'));
 	};

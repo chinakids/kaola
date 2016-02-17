@@ -4,39 +4,18 @@ import _ from 'underscore';
 import crypto from 'crypto';
 import userGroupModel from './../../models/UserGroup';
 import getPageCount from './../../controller/getPageCount';
-import getAccess from './../../controller/getAccess';
+import { checkingAccess , checkingLogin } from './../../controller/getAccess';
 
 let R = router();
+
+R.use(checkingLogin)
 /**
  * 3.商品管理相关
  */
 
-R.use(function*(next) {
-  if(this.session.login  && !this.session.locked){
-    yield next;
-  }else{
-    if(!this.session.login){
-      if(this.request.method === 'GET'){
-        this.redirect('./login')
-      }else{
-        this.body = {
-          status: 'FAIL::该接口需要登录'
-        }
-      }
-    }else if(this.session.locked){
-      if(this.request.method === 'GET'){
-        this.redirect('./lock')
-      }else{
-        this.body = {
-          status: 'FAIL::当前账号已被锁定'
-        }
-      }
-    }
-  }
-})
 
 //权限组管理
-R.get('/', getAccess('groupManage-view'), function*(next) {
+R.get('/', checkingAccess('groupManage-view'), function*(next) {
   let count = yield userGroupModel.count({});
   let fetch = yield userGroupModel.fetch();
   yield render('groupManage', {
@@ -47,7 +26,7 @@ R.get('/', getAccess('groupManage-view'), function*(next) {
   }, this);
 });
 //管理员管理 - 增加
-R.post('/addGroup', getAccess('groupManage-add'), function*(next) {
+R.post('/addGroup', checkingAccess('groupManage-add'), function*(next) {
   //存入
   let parm = this.request.body;
   let checking = yield userGroupModel.findByName(parm.name);
@@ -67,7 +46,7 @@ R.post('/addGroup', getAccess('groupManage-add'), function*(next) {
   }
 });
 //管理员管理 - 修改
-R.post('/editGroup',getAccess('groupManage-edit'), function*(next) {
+R.post('/editGroup',checkingAccess('groupManage-edit'), function*(next) {
   let parm = this.request.body;
   let group = yield userGroupModel.findById(parm._id);
   if (group.length <= 0) {
@@ -90,7 +69,7 @@ R.post('/editGroup',getAccess('groupManage-edit'), function*(next) {
   }
 });
 //管理员管理 - 删除
-R.post('/delGroup', getAccess('groupManage-del'), function*(next) {
+R.post('/delGroup', checkingAccess('groupManage-del'), function*(next) {
   let parm = this.request.body;
   let group = yield userGroupModel.findById(parm._id);
   if (group.length <= 0) {

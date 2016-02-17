@@ -5,39 +5,17 @@ import crypto from 'crypto';
 import usersModel from './../../models/Users';
 import userGroupModel from './../../models/UserGroup';
 import getPageCount from './../../controller/getPageCount';
-import getAccess from './../../controller/getAccess';
+import { checkingAccess , checkingLogin } from './../../controller/getAccess';
 
 let R = router();
 
-R.use(function*(next) {
-  if(this.session.login  && !this.session.locked){
-    yield next;
-  }else{
-    if(!this.session.login){
-      if(this.request.method === 'GET'){
-        this.redirect('./login')
-      }else{
-        this.body = {
-          status: 'FAIL::该接口需要登录'
-        }
-      }
-    }else if(this.session.locked){
-      if(this.request.method === 'GET'){
-        this.redirect('./lock')
-      }else{
-        this.body = {
-          status: 'FAIL::当前账号已被锁定'
-        }
-      }
-    }
-  }
-})
+R.use(checkingLogin)
 
 /**
  * 系统管理相关
  */
 //管理员管理
-R.get('/', getAccess('adminManage-view'), function*(next) {
+R.get('/', checkingAccess('adminManage-view'), function*(next) {
   let count = yield usersModel.count({});
   let userFetch = yield usersModel.findAdmin();
   let groupFetch = yield userGroupModel.fetch();
@@ -50,7 +28,7 @@ R.get('/', getAccess('adminManage-view'), function*(next) {
   }, this);
 });
 //管理员管理 - 增加
-R.post('/addAdmin', getAccess('adminManage-add'), function*(next) {
+R.post('/addAdmin', checkingAccess('adminManage-add'), function*(next) {
   let parm = this.request.body;
   let md5 = crypto.createHash('md5');
   let checking = yield usersModel.findAdminByEmail(parm.email);
@@ -74,7 +52,7 @@ R.post('/addAdmin', getAccess('adminManage-add'), function*(next) {
   }
 });
 //管理员管理 - 修改
-R.post('/editAdmin', getAccess('adminManage-edit'), function*(next) {
+R.post('/editAdmin', checkingAccess('adminManage-edit'), function*(next) {
   let parm = this.request.body;
   let md5 = crypto.createHash('md5');
   let admin = yield usersModel.findAdminById(parm._id);
@@ -102,7 +80,7 @@ R.post('/editAdmin', getAccess('adminManage-edit'), function*(next) {
   }
 });
 //管理员管理 - 删除
-R.post('/delAdmin', getAccess('adminManage-del'), function*(next) {
+R.post('/delAdmin', checkingAccess('adminManage-del'), function*(next) {
   let parm = this.request.body;
   let admin = yield usersModel.findAdminById(parm._id);
   if (admin.length <= 0) {

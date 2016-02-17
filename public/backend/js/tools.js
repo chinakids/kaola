@@ -355,13 +355,18 @@ angular.module('Kaola.tools',[])
 .directive('uploadimg',['$rootScope',function($rootscope){
   return{
     restrict : 'ECAM',
-    template : '<div id="uploader" class="wu-example"><div class="uploader-list"><div id="thelist"></div><div class="btns"><div id="picker"><i class="ion-ios-plus-empty"></i><p>选择图片</p></div></div></div></div>',
+    template : '<div id="uploader" class="wu-example"><div class="uploader-list"><div id="thelist"><li ng-repeat="item in uploadList track by $index" id="{{item.id}}" class="file-item thumbnail" ng-class="{success:item.status}"><i class="ion-ios-close" ng-click="delUploadImg(item)"></i><span ng-if="item.noView">不能预览</span><img ng-src="{{item.url}}"><div class="info">{{item.name}}</div><div class="progress progress-striped active"><div class="progress-bar" role="progressbar" ng-if="item.percent" style="width: {{item.percentage}}%"></div></div></li></div><div class="btns" ng-show="allowUpload"><div id="picker"><i class="ion-ios-plus-empty"></i><p>选择图片</p></div></div></div></div>',
     replace : true,
     link:function(scope,element,attrs){
+      var limit = parseInt(attrs.limit) || 1;
+      var type = attrs.type || 'add';
+      scope.uploadList = {}; //图片列表
+      scope.allowUpload = true;
+      var length = 0;
       //图片部分处理
       var uploader = WebUploader.create({
         // 选完文件后，是否自动上传。
-        auto: false,
+        auto: true,
         // swf文件路径
         swf: '/lib/fex-webuploader/dist/Uploader.swf',
         // 文件接收服务端。
@@ -388,7 +393,7 @@ angular.module('Kaola.tools',[])
           // 单位字节，如果图片大小小于此值，不会采用压缩。
           compressSize: 10000
         },
-        // 只允许选择图片文件。
+        //只允许选择图片文件。
         accept: {
           title: 'Images',
           extensions: 'gif,jpg,jpeg,bmp,png,webp',
@@ -399,50 +404,84 @@ angular.module('Kaola.tools',[])
         //去重
         duplicate:true
       });
+      //scope.$watch('uploadList',function(){console.log(scope.uploadList)},true)
       // 当有文件添加进来的时候
       uploader.on( 'fileQueued', function( file ) {
-        var $li = $(
-        '<li id="' + file.id + '" class="file-item thumbnail">' +
-            '<img>' +
-            '<div class="info">' + file.name + '</div>' +
-        '</li>'
-        ),
-        $img = $li.find('img');
-        // $list为容器jQuery实例
-        $('#thelist').append( $li );
+        var model = {id:file.id ,name:file.name ,tmp:'',url:'',noView:false,percent:false,percentage:0,status:false};
+        scope.$apply(function(){
+          scope.uploadList[file.id] = model; 
+        })
+        length++;
         // 创建缩略图
         // 如果为非图片文件，可以不用调用此方法。
         // thumbnailWidth x thumbnailHeight 为 100 x 100
         uploader.makeThumb( file, function( error, src ) {
           if ( error ) {
-            $img.replaceWith('<span>不能预览</span>');
-            return;
+            scope.uploadList[file.id]['noView'] = true;
           }
-          $img.attr( 'src', src );
+          scope.$apply(function(){
+            scope.uploadList[file.id]['url'] = src
+          })
         }, 100, 100 );
       });
+      scope.delUploadImg = function(item){
+        if(type === 'add'){
+          $.post('/api/delImgTmp?url='+item.tmp,function(data){
+            var status = data.status.split('::')[0],
+            msg = data.status.split('::')[1];
+            if(status === 'SUCCESS'){
+              alert(msg);
+              scope.$apply(function(){
+                delete scope.uploadList[item.id];
+              })
+            }else{
+              alert(msg);
+            }
+          })
+        }
+        if(type === 'edit'){
+          $.post('/api/delImg?url='+item.url,function(data){
+            var status = data.status.split('::')[0],
+            msg = data.status.split('::')[1];
+            if(status === 'SUCCESS'){
+              alert(msg);
+              scope.$apply(function(){
+                delete scope.uploadList[item.id];
+              })
+            }else{
+              alert(msg);
+            }
+          })
+        }
+      }
       // 文件上传过程中创建进度条实时显示。
       uploader.on( 'uploadProgress', function( file, percentage ) {
-        var $li = $( '#'+file.id ),
-        $percent = $li.find('.progress .progress-bar');
-        // 避免重复创建
-        if ( !$percent.length ) {
-          $percent = $('<div class="progress progress-striped active">' +
-            '<div class="progress-bar" role="progressbar" style="width: 0%">' +
-            '</div>' +
-          '</div>').appendTo( $li ).find('.progress-bar');
+        scope.uploadList[file.id]['percent'] = true;
+        scope.uploadList[file.id]['percentage'] = percentage * 100;
+      });
+      uploader.on( 'uploadSuccess', function( file , req ) {
+        if(req.status.split('::')[0] === 'SUCCESS'){
+          scope.$apply(function(){
+            scope.uploadList[file.id]['status'] = true;
+            scope.uploadList[file.id]['tmp'] = req.tmp;
+          })
+          if(length >= limit){
+            scope.$apply(function(){
+              scope.allowUpload = false;
+            })
+          }
+        }else{
+          alert(file.name+'上传失败')
+          scope.$apply(function(){
+            delete scope.uploadList[file.id];
+          })
+          length--;
         }
-        $li.find('p.state').text('上传中');
-        $percent.css( 'width', percentage * 100 + '%' );
-      });
-      uploader.on( 'uploadSuccess', function( file ) {
-        $( '#'+file.id ).find('p.state').text('已上传');
-      });
-      uploader.on( 'uploadError', function( file ) {
-        $( '#'+file.id ).find('p.state').text('上传出错');
       });
       uploader.on( 'uploadComplete', function( file ) {
-        $( '#'+file.id ).find('.progress').fadeOut();
+        scope.$apply(function(){
+          if(scope.uploadList[file.id]) scope.uploadList[file.id]['percent'] = false;
+        })
       });
     }
   }

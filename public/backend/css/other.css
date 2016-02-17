@@ -149,6 +149,18 @@ textarea{
     margin: 0 15px 15px 0;
     padding: 4px;
 }
+.file-item i{
+  display: none;
+  position: absolute;
+  right: -2px;
+  top: -8px;
+  color: #a94442;
+  font-size:25px;
+  cursor: pointer;
+}
+.file-item.success i{
+  display: block;
+}
 .file-item .error {
     position: absolute;
     top: 4px;

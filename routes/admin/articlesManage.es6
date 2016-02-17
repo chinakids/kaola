@@ -3,39 +3,18 @@ import render from './../../utils/render';
 import _ from 'underscore';
 import articlesModel from './../../models/Articles';
 import getPageCount from './../../controller/getPageCount';
-import getAccess from './../../controller/getAccess';
 import setTag from './../../controller/setTag';
+import { checkingAccess , checkingLogin } from './../../controller/getAccess';
 
 let R = router();
+
+R.use(checkingLogin)
 /**
  * 文章管理相关
  */
 
-R.use(function*(next) {
-  if(this.session.login  && !this.session.locked){
-    yield next;
-  }else{
-    if(!this.session.login){
-      if(this.request.method === 'GET'){
-        this.redirect('./login')
-      }else{
-        this.body = {
-          status: 'FAIL::该接口需要登录'
-        }
-      }
-    }else if(this.session.locked){
-      if(this.request.method === 'GET'){
-        this.redirect('./lock')
-      }else{
-        this.body = {
-          status: 'FAIL::当前账号已被锁定'
-        }
-      }
-    }
-  }
-})
 //文章管理
-R.get('/', getAccess('articlesManage-view'), function*(next) {
+R.get('/', checkingAccess('articlesManage-view'), function*(next) {
   let count = yield articlesModel.count({});
   let articleFetch = yield articlesModel.fetch();
   yield render('articlesManage', {
@@ -46,14 +25,14 @@ R.get('/', getAccess('articlesManage-view'), function*(next) {
   }, this);
 });
 //添加文章
-R.get('/addArticle', getAccess('articlesManage-add'), function*(next) {
+R.get('/addArticle', checkingAccess('articlesManage-add'), function*(next) {
   yield render('articlesAdd', {
     title: '添加文章',
     desc: ''
   }, this);
 });
 
-R.post('/addArticle', getAccess('articlesManage-add'), setTag, function*(next) {
+R.post('/addArticle', checkingAccess('articlesManage-add'), setTag, function*(next) {
   let parm = this.request.body;
   parm.author = this.session.userInfo._id;
   let article = new articlesModel(parm)
@@ -63,7 +42,7 @@ R.post('/addArticle', getAccess('articlesManage-add'), setTag, function*(next) {
   }
 });
 //修改文章
-R.get('/editArticle', getAccess('articlesManage-edit'), function*(next) {
+R.get('/editArticle', checkingAccess('articlesManage-edit'), function*(next) {
   let parm = this.request.query;
   let article = yield articlesModel.findById(parm.id);
   if (article.length <= 0) {
@@ -78,7 +57,7 @@ R.get('/editArticle', getAccess('articlesManage-edit'), function*(next) {
     }, this);
   }
 });
-R.post('/editArticle', getAccess('articlesManage-edit'), setTag, function*(next) {
+R.post('/editArticle', checkingAccess('articlesManage-edit'), setTag, function*(next) {
   let parm = this.request.body;
   let article = yield articlesModel.findById(parm._id);
   if (article.length <= 0) {
@@ -95,7 +74,7 @@ R.post('/editArticle', getAccess('articlesManage-edit'), setTag, function*(next)
   }
 });
 //修改文章 - 置顶
-R.post('/editArticleTop', getAccess('articlesManage-edit'), function*(next) {
+R.post('/editArticleTop', checkingAccess('articlesManage-edit'), function*(next) {
   let parm = this.request.body;
   let article = yield articlesModel.findById(parm.id);
   if (article.length <= 0) {
@@ -112,7 +91,7 @@ R.post('/editArticleTop', getAccess('articlesManage-edit'), function*(next) {
   }
 });
 //修改文章 - 显示
-R.post('/editArticleDisplay', getAccess('articlesManage-edit'), function*(next) {
+R.post('/editArticleDisplay', checkingAccess('articlesManage-edit'), function*(next) {
   let parm = this.request.body;
   let article = yield articlesModel.findById(parm.id);
   if (article.length <= 0) {
@@ -129,7 +108,7 @@ R.post('/editArticleDisplay', getAccess('articlesManage-edit'), function*(next) 
   }
 });
 //删除文章
-R.post('/delArticle', getAccess('articlesManage-del'), function*(next) {
+R.post('/delArticle', checkingAccess('articlesManage-del'), function*(next) {
   let parm = this.request.body;
   let article = yield articlesModel.findById(parm.id);
   if (article.length <= 0) {

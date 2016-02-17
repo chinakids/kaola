@@ -5,39 +5,17 @@ import crypto from 'crypto';
 import usersModel from './../../models/Users';
 import userGroupModel from './../../models/UserGroup';
 import getPageCount from './../../controller/getPageCount';
-import getAccess from './../../controller/getAccess';
+import { checkingAccess , checkingLogin } from './../../controller/getAccess';
 
 let R = router();
 
-R.use(function*(next) {
-  if(this.session.login  && !this.session.locked){
-    yield next;
-  }else{
-    if(!this.session.login){
-      if(this.request.method === 'GET'){
-        this.redirect('./login')
-      }else{
-        this.body = {
-          status: 'FAIL::该接口需要登录'
-        }
-      }
-    }else if(this.session.locked){
-      if(this.request.method === 'GET'){
-        this.redirect('./lock')
-      }else{
-        this.body = {
-          status: 'FAIL::当前账号已被锁定'
-        }
-      }
-    }
-  }
-})
+R.use(checkingLogin)
 
 /**
  * 会员管理相关
  */
 //会员管理
-R.get('/', getAccess('usersManage-view'), function*(next) {
+R.get('/', checkingAccess('usersManage-view'), function*(next) {
   let count = yield usersModel.count({});
   let userFetch = yield usersModel.findUser();
   yield render('usersManage', {
@@ -48,7 +26,7 @@ R.get('/', getAccess('usersManage-view'), function*(next) {
   }, this);
 });
 //会员管理 - 增加
-R.post('/addUser', getAccess('usersManage-add'), function*(next) {
+R.post('/addUser', checkingAccess('usersManage-add'), function*(next) {
   let parm = this.request.body;
   let md5 = crypto.createHash('md5');
   let checking = yield usersModel.findUserByEmail(parm.email);
@@ -72,7 +50,7 @@ R.post('/addUser', getAccess('usersManage-add'), function*(next) {
   }
 });
 //会员管理 - 修改
-R.post('/editUser', getAccess('usersManage-edit'), function*(next) {
+R.post('/editUser', checkingAccess('usersManage-edit'), function*(next) {
   let parm = this.request.body;
   let md5 = crypto.createHash('md5');
   let user = yield usersModel.findUserById(parm._id);
@@ -104,7 +82,7 @@ R.post('/editUser', getAccess('usersManage-edit'), function*(next) {
   }
 });
 //会员管理 - 删除
-R.post('/delUser', getAccess('usersManage-del'), function*(next) {
+R.post('/delUser', checkingAccess('usersManage-del'), function*(next) {
   let parm = this.request.body;
   let user = yield usersModel.findUserById(parm._id);
   if (user.length <= 0) {
