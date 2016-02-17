@@ -133,6 +133,7 @@ block content
           if(db.get('newAdd').replace(/\s/g,'').length >= 20){
             $scope.goodData.content = db.get('newAdd');
             $scope.goodData.tag = $scope.tag.join(',');
+            $scope.goodData.imgList = $scope.uploadList;
             $.post('/#{pageInfo.adminDomain}/goodsManage/addGood',$scope.goodData,function(data){
               var status = data.status.split('::')[0],
               msg = data.status.split('::')[1];

@@ -9,6 +9,14 @@ function initDir(){
 	};
 	if(!fs.existsSync(path.join(__dirname, './../public/upload'))){
 	  fs.mkdirSync(path.join(__dirname, './../public/upload'));
+	  fs.mkdirSync(path.join(__dirname, './../public/upload/goods'));
+	  fs.mkdirSync(path.join(__dirname, './../public/upload/articles'));
+	};
+	if(!fs.existsSync(path.join(__dirname, './../public/upload/goods'))){
+	  fs.mkdirSync(path.join(__dirname, './../public/upload/goods'));
+	};
+	if(!fs.existsSync(path.join(__dirname, './../public/upload/articles'))){
+	  fs.mkdirSync(path.join(__dirname, './../public/upload/articles'));
 	};
 	if(!fs.existsSync(path.join(__dirname, './../views/.cache'))){
 	  fs.mkdirSync(path.join(__dirname, './../views/.cache'));
