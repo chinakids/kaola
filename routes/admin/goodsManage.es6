@@ -67,6 +67,7 @@ R.post('/editGood', checkingAccess('goodsManage-edit'), setTag, function*(next) 
       status: 'FAIL::该商品不存在'
     }
   } else {
+    parm.imgList = copyImage(parm.imgList,'goods');
     //合并
     let _good = _.extend(good[0], parm);
     yield _good.save();

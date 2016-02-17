@@ -42,6 +42,10 @@ block content
                       a(href='javascript:;',ng-click='changeType(2)') 电话
                 input.form-control(type='text',placeholder='请输入联系方式',reg='s',err-tip='联系方式 - 不可输入特殊字符或为空',ng-model='goodData.info.callWay')
           dl.clearfix.col-md-12
+            dt 主图:
+            dd.form-group
+              uploadimg(limit='8',type='add')
+          dl.clearfix.col-md-12
             dt 正文:
             dd.form-group
               iframe.form-control(ng-src='{{frameUrl}}')
@@ -106,6 +110,7 @@ block content
       $scope.tag = $scope.goodData.tag.split(',');
       setTimeout(function(){$('#tag').css({paddingLeft:$('#tag').siblings('ul').width()})},100);
       $scope.frameUrl = '/editor/index.html?md='+$scope.goodData._id;
+      $scope.uploadList = $.parseJSON($scope.goodData.imgList);
 
       $scope.changeType = function(type){
         $scope.goodData.info.callType = parseInt(type);

@@ -355,12 +355,11 @@ angular.module('Kaola.tools',[])
 .directive('uploadimg',['$rootScope',function($rootscope){
   return{
     restrict : 'ECAM',
-    template : '<div id="uploader" class="wu-example"><div class="uploader-list"><div id="thelist"><li ng-repeat="item in uploadList track by $index" id="{{item.id}}" class="file-item thumbnail" ng-class="{success:item.status}"><i class="ion-ios-close" ng-click="delUploadImg(item)"></i><span ng-if="item.noView">不能预览</span><img ng-src="{{item.url}}"><div class="info">{{item.name}}</div><div class="progress progress-striped active"><div class="progress-bar" role="progressbar" ng-if="item.percent" style="width: {{item.percentage}}%"></div></div></li></div><div class="btns" ng-show="allowUpload"><div id="picker"><i class="ion-ios-plus-empty"></i><p>选择图片</p></div></div></div></div>',
+    template : '<div id="uploader" class="wu-example"><div class="uploader-list"><div id="thelist"><li ng-repeat="item in uploadList track by $index" id="{{item.id}}" class="file-item thumbnail" ng-class="{success:item.status}"><i class="ion-ios-close" ng-click="delUploadImg(item)"></i><span ng-if="item.noView != \'false\'">不能预览</span><img ng-src="{{item.url}}"><div class="info">{{item.name}}</div><div class="progress progress-striped active"><div class="progress-bar" role="progressbar" ng-if="item.percent != \'false\'" style="width: {{item.percentage}}%"></div></div></li></div><div class="btns" ng-show="allowUpload"><div id="picker"><i class="ion-ios-plus-empty"></i><p>选择图片</p></div></div></div></div>',
     replace : true,
     link:function(scope,element,attrs){
       var limit = parseInt(attrs.limit) || 1;
       var type = attrs.type || 'add';
-      scope.uploadList = {}; //图片列表
       scope.allowUpload = true;
       var length = 0;
       //图片部分处理
