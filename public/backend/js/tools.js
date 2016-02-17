@@ -396,7 +396,7 @@ angular.module('Kaola.tools',[])
         //只允许选择图片文件。
         accept: {
           title: 'Images',
-          extensions: 'gif,jpg,jpeg,bmp,png,webp',
+          extensions: 'gif,jpg,jpeg,bmp,png,webp,gif',
           mimeTypes: 'image/*'
         },
         //队列限制
