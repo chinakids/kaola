@@ -85,7 +85,6 @@ R.use('/api', api.routes(), api.allowedMethods());
 R.use('/users', users.routes(), users.allowedMethods());
 R.use('/'+S.ADMIN_DOMAIN, admin.routes(), admin.allowedMethods());
 
-
 //绑定路由
 app.use(R.routes());
 
