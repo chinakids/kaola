@@ -52,7 +52,7 @@ R.post('/uploadImg', checkingLogin, function *(next) {
 //删除缓存
 R.post('/delImgTmp', checkingLogin, function *(next) {
   let query = this.request.query;
-  fs.unlinkSync(path.join(process.cwd() + '/.tmp', query.url));
+  if(fs.existsSync(path.join(process.cwd() + '/.tmp', query.url))) fs.unlinkSync(path.join(process.cwd() + '/.tmp', query.url));
   this.body = {
   	status: 'SUCCESS::删除成功'
   }

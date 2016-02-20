@@ -423,6 +423,8 @@ angular.module('Kaola.tools',[])
         }, 100, 100 );
       });
       scope.delUploadImg = function(item){
+        console.log(scope.uploadList)
+        console.log(item)
         if(type === 'add'){
           $.post('/api/delImgTmp?url='+item.tmp,function(data){
             var status = data.status.split('::')[0],

@@ -11,7 +11,7 @@ function copyImage(oldList,type){
 			let oldPath = path.join(process.cwd() + '/.tmp', oldList[item].tmp);
 			let newPath = path.join(process.cwd() + '/public/upload/'+type, oldList[item].tmp);
 			fs.renameSync(oldPath,newPath);
-			newList[key].id = oldList[item].tmp;
+			newList[key].id = key;
 			newList[key].url = path.join('/upload/'+type, oldList[item].tmp);
 		}
 	}
