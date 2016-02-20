@@ -18,6 +18,9 @@ function initDir(){
 	if(!fs.existsSync(path.join(process.cwd(), 'public/upload/articles'))){
 	  fs.mkdirSync(path.join(process.cwd(), 'public/upload/articles'));
 	};
+	if(!fs.existsSync(path.join(process.cwd(), 'public/upload/avatar'))){
+	  fs.mkdirSync(path.join(process.cwd(), 'public/upload/avatar'));
+	};
 	if(!fs.existsSync(path.join(process.cwd(), 'views/.cache'))){
 	  fs.mkdirSync(path.join(process.cwd(), 'views/.cache'));
 	  fs.mkdirSync(path.join(process.cwd(), 'views/.cache/fontend'));
