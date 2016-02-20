@@ -58,12 +58,32 @@ app.name = S.NAME;
 app.keys = [S.COOKIE_NAME, S.ENCRYPT_KEY];
 //404
 app.use(function *(next){
-  yield next;
+  try {
+    yield next;
+  } catch (err) {
+    err.status = err.status || 500
+    this.status = err.status;
+    if(this.request.method === 'GET'){
+      yield render('error',{
+        debug: S.DEBUG,
+        title: '系统故障',
+        error: err
+      },this);
+    }else{
+      this.body = {
+        status : 'FAIL::系统故障',
+        err : err
+      }
+    }
+  }
   if (this.status !== 404) return;
   this.status = 404;
   yield render('error',{
     debug: S.DEBUG,
-    title: 'Not Found'
+    title: '页面未找到',
+    error: {
+      status : 404
+    }
   },this);
 })
 //过滤非法URL请求
@@ -90,6 +110,7 @@ app.use(R.routes());
 
 //错误监听
 app.on('error', function(err, ctx){
+  log.error('server error', err, ctx)
   logger('error',err);
 });
 
