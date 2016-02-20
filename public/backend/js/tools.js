@@ -277,7 +277,7 @@ angular.module('Kaola.tools',[])
       var setting = {
         data: {
           key: {
-            title: "t"
+            title: 't'
           },
           simpleData: {
             enable: true
@@ -317,11 +317,11 @@ angular.module('Kaola.tools',[])
 .factory('db',function(){
   return {
     get : function(key){
-      var data = window.localStorage[key] || "";
+      var data = window.localStorage[key] || '';
       return data;
     },
     set : function(key,data){
-      if(typeof(data) == "object"){
+      if(typeof(data) == 'object'){
         window.localStorage[key] = data;
         for(item in data){
           window.localStorage[item] = data[item];
@@ -471,6 +471,26 @@ angular.module('Kaola.tools',[])
           length--;
         }
       });
+    }
+  }
+}])
+.directive('editormd',['$rootScope',function($rootscope){
+  return{
+    restrict : 'ECAM',
+    template : '<div id="editormd"><textarea style="display:none;"></textarea></div>',
+    replace : true,
+    link:function(scope,element,attrs){
+      console.log(3)
+      scope.editor = editormd('editormd', {
+        path : '/lib/editor.md/lib/', // Autoload modules mode, codemirror, marked... dependents libs path
+        height : 300,
+        watch : false,
+        imageUpload: false,
+        toolbarIcons : function() {
+          return ['undo', 'redo', '|', 'bold', 'del', 'italic', 'quote', 'ucwords', 'uppercase', 'lowercase','|', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', '|', 'list-ul', 'list-ol', 'hr', '|', 'goto-line', 'watch', 'preview', 'fullscreen', 'clear', '|', 'help']
+        }
+      });
+      console.log(4)
     }
   }
 }])

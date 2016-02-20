@@ -9,14 +9,6 @@ block content
             dt 标题:
             dd.form-group
               input.form-control(type='text',placeholder='请输入标题',reg='s',err-tip='标题 - 不可输入特殊字符或为空',ng-model='goodData.title')
-          dl.clearfix.col-md-12
-            dt 标签:
-            dd.tag-group.form-group
-              ul
-                li.btn.btn-primary.btn-sm(ng-repeat='item in tag track by $index')
-                  | {{item}}
-                  span(ng-click='delTag($index)') x
-              input#tag.form-control(type='text',placeholder='请输入标签,回车添加标签')
           dl.clearfix.col-md-4
             dt 价格:
             dd.form-group
@@ -48,7 +40,15 @@ block content
           dl.clearfix.col-md-12
             dt 正文:
             dd.form-group
-              iframe.form-control(src='/editor/index.html')
+              editormd
+          dl.clearfix.col-md-12
+            dt 标签:
+            dd.tag-group.form-group
+              ul
+                li.btn.btn-primary.btn-sm(ng-repeat='item in tag track by $index')
+                  | {{item}}
+                  span(ng-click='delTag($index)') x
+              input#tag.form-control(type='text',placeholder='请输入标签,回车添加标签')
           dl.clearfix.col-md-6
             dt 置顶:
             dd.form-group.checkbox
@@ -110,6 +110,7 @@ block content
         tag:'',
         price:'',
         content:'',
+        imgList:'',
         info:{
           location : '',//位置
           callType : 0,//联系方式
@@ -131,8 +132,8 @@ block content
           $(this).trigger('focus').trigger('blur');
         })
         if ($('#add .reg-success').size() === 4) {
-          if(db.get('newAdd').replace(/\s/g,'').length >= 20){
-            $scope.goodData.content = db.get('newAdd');
+          if($scope.editor.getMarkdown().replace(/\s/g,'').length >= 20){
+            $scope.goodData.content = $scope.editor.getMarkdown();
             $scope.goodData.tag = $scope.tag.join(',');
             $scope.goodData.imgList = $scope.uploadList;
             $.post('/#{pageInfo.adminDomain}/goodsManage/addGood',$scope.goodData,function(data){

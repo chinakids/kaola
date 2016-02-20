@@ -4,6 +4,7 @@ import _ from 'underscore';
 import articlesModel from './../../models/Articles';
 import getPageCount from './../../controller/getPageCount';
 import setTag from './../../controller/setTag';
+import copyImage from './../../controller/copyImage';
 import { checkingAccess , checkingLogin } from './../../controller/getAccess';
 
 let R = router();
@@ -35,6 +36,7 @@ R.get('/addArticle', checkingAccess('articlesManage-add'), function*(next) {
 R.post('/addArticle', checkingAccess('articlesManage-add'), setTag, function*(next) {
   let parm = this.request.body;
   parm.author = this.session.userInfo._id;
+  parm.imgList = copyImage(parm.imgList,'articles');
   let article = new articlesModel(parm)
   yield article.add()
   this.body = {
@@ -65,6 +67,7 @@ R.post('/editArticle', checkingAccess('articlesManage-edit'), setTag, function*(
       status: 'FAIL::该文章不存在'
     }
   } else {
+    parm.imgList = copyImage(parm.imgList,'articles');
     //合并
     let _article = _.extend(article[0], parm);
     yield _article.save();

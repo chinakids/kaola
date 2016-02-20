@@ -7,7 +7,7 @@ import mongoose from 'mongoose';
 let ArticleSchema = new mongoose.Schema({
     title      : String, //标题
     content    : String, //内容markdown格式
-    imgList    : String,//图片
+    imgList    : String, //图片
     //category: {
     //    type     : String,
     //    ref      : 'Category'

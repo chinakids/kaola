@@ -6,7 +6,7 @@ import mongoose from 'mongoose';
 
 let GoodSchema = new mongoose.Schema({
     title      : String, //标题
-    content    : String, //内容markdown格式
+    content    : String, //源码markdown
     price      : Number, //价格
     info       : {
         location : String,//位置

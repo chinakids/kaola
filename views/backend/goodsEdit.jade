@@ -9,14 +9,6 @@ block content
             dt 标题:
             dd.form-group
               input.form-control(type='text',placeholder='请输入标题',reg='s',err-tip='标题 - 不可输入特殊字符或为空',ng-model='goodData.title')
-          dl.clearfix.col-md-12
-            dt 标签:
-            dd.tag-group.form-group
-              ul
-                li.btn.btn-primary.btn-sm(ng-repeat='item in tag track by $index')
-                  | {{item}}
-                  span(ng-click='delTag($index)') x
-              input#tag.form-control(type='text',placeholder='请输入标签,回车添加标签')
           dl.clearfix.col-md-4
             dt 价格:
             dd.form-group
@@ -48,7 +40,15 @@ block content
           dl.clearfix.col-md-12
             dt 正文:
             dd.form-group
-              iframe.form-control(ng-src='{{frameUrl}}')
+              editormd
+          dl.clearfix.col-md-12
+            dt 标签:
+            dd.tag-group.form-group
+              ul
+                li.btn.btn-primary.btn-sm(ng-repeat='item in tag track by $index')
+                  | {{item}}
+                  span(ng-click='delTag($index)') x
+              input#tag.form-control(type='text',placeholder='请输入标签,回车添加标签')
           dl.clearfix.col-md-6
             dt 置顶:
             dd.form-group.checkbox
@@ -106,12 +106,13 @@ block content
         setTimeout(function(){$('#tag').css({paddingLeft:$('#tag').siblings('ul').width()})},100)
       }
       $scope.goodData = !{goodData};
-      db.set($scope.goodData._id,$scope.goodData.content);
+
       $scope.tag = $scope.goodData.tag.split(',');
       setTimeout(function(){$('#tag').css({paddingLeft:$('#tag').siblings('ul').width()})},100);
-      $scope.frameUrl = '/editor/index.html?md='+$scope.goodData._id;
-      $scope.uploadList = $.parseJSON($scope.goodData.imgList);
-      console.log($scope.uploadList)
+      $scope.uploadList = $.parseJSON($scope.goodData.imgList || '{}');
+      //延时填充数据
+      setTimeout(function(){$scope.editor.setMarkdown($scope.goodData.content)},1000)
+
       $scope.changeType = function(type){
         $scope.goodData.info.callType = parseInt(type);
       }
@@ -120,9 +121,10 @@ block content
           $(this).trigger('focus').trigger('blur');
         })
         if ($('#add .reg-success').size() === 4) {
-          if(db.get($scope.goodData._id).replace(/\s/g,'').length >= 20){
-            $scope.goodData.content = db.get($scope.goodData._id);
+          if($scope.editor.getMarkdown().replace(/\s/g,'').length >= 20){
+            $scope.goodData.content = $scope.editor.getMarkdown();
             $scope.goodData.tag = $scope.tag.join(',');
+            $scope.goodData.imgList = $scope.uploadList;
             $.post('/#{pageInfo.adminDomain}/goodsManage/editGood',$scope.goodData,function(data){
               var status = data.status.split('::')[0],
               msg = data.status.split('::')[1];

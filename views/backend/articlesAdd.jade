@@ -10,6 +10,14 @@ block content
             dd.form-group
               input.form-control(type='text',placeholder='请输入标题',reg='s',err-tip='标题 - 不可输入特殊字符或为空',ng-model='articleData.title')
           dl.clearfix.col-md-12
+            dt 主图:
+            dd.form-group
+              uploadimg(limit='8',type='add')
+          dl.clearfix.col-md-12
+            dt 正文:
+            dd.form-group
+              editormd
+          dl.clearfix.col-md-12
             dt 标签:
             dd.tag-group.form-group
               ul
@@ -17,10 +25,6 @@ block content
                   | {{item}}
                   span(ng-click='delTag($index)') x
               input#tag.form-control(type='text',placeholder='请输入标签,回车添加标签')
-          dl.clearfix.col-md-12
-            dt 正文:
-            dd.form-group
-              iframe.form-control(src='/editor/index.html')
           dl.clearfix.col-md-6
             dt 置顶:
             dd.form-group.checkbox
@@ -85,6 +89,7 @@ block content
           top      : false
         }
       }
+      $scope.uploadList = {};
       $scope.changeType = function(type){
         $scope.articleData.info.callType = parseInt(type);
       }
@@ -93,9 +98,10 @@ block content
           $(this).trigger('focus').trigger('blur');
         })
         if ($('#add .reg-success').size() === 1) {
-          if(db.get('newAdd').replace(/\s/g,'').length >= 20){
-            $scope.articleData.content = db.get('newAdd');
+          if($scope.editor.getMarkdown().replace(/\s/g,'').length >= 20){
+            $scope.articleData.content = $scope.editor.getMarkdown();
             $scope.articleData.tag = $scope.tag.join(',');
+            $scope.articleData.imgList = $scope.uploadList;
             $.post('/#{pageInfo.adminDomain}/articlesManage/addArticle',$scope.articleData,function(data){
               var status = data.status.split('::')[0],
               msg = data.status.split('::')[1];
