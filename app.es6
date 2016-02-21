@@ -56,22 +56,22 @@ app.use(session({
 app.name = S.NAME;
 //设置cookies相关key
 app.keys = [S.COOKIE_NAME, S.ENCRYPT_KEY];
-//404
+//404&500
 app.use(function *(next){
   try {
     yield next;
   } catch (err) {
-    err.status = err.status || 500
+    err.status = err.status || 500;
     this.status = err.status;
     if(this.request.method === 'GET'){
       yield render('error',{
         debug: S.DEBUG,
-        title: '系统故障',
+        title: '系统发生错误',
         error: err
       },this);
     }else{
       this.body = {
-        status : 'FAIL::系统故障',
+        status : 'FAIL::系统发生错误',
         err : err
       }
     }

@@ -19,7 +19,7 @@ R.get('/', checkingAccess('adminManage-view'), function*(next) {
   let count = yield usersModel.count({});
   let userFetch = yield usersModel.findAdmin();
   let groupFetch = yield userGroupModel.fetch();
-  yield render('adminManage', {
+  yield render('adminManage', {  
     title: '系统用户管理',
     desc: '',
     page: JSON.stringify(getPageCount(count)),

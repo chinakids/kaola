@@ -12,7 +12,7 @@ import initDir from '../utils/initDir'
  * Get port from environment and store.
  */
 
-let port = normalizePort(process.env.PORT || '3030');
+let port = normalizePort(process.env.PORT || '80');
 // app.set('port', port);
 
 /**
@@ -50,7 +50,6 @@ function normalizePort(val) {
  */
 
 function onError(error) {
-  console.log(error)
   if (error.syscall !== 'listen') {
     throw error;
   };

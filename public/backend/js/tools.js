@@ -482,7 +482,6 @@ angular.module('Kaola.tools',[])
     template : '<div id="editormd"><textarea style="display:none;"></textarea></div>',
     replace : true,
     link:function(scope,element,attrs){
-      console.log(3)
       scope.editor = editormd('editormd', {
         path : '/lib/editor.md/lib/', // Autoload modules mode, codemirror, marked... dependents libs path
         height : 300,
@@ -492,7 +491,6 @@ angular.module('Kaola.tools',[])
           return ['undo', 'redo', '|', 'bold', 'del', 'italic', 'quote', 'ucwords', 'uppercase', 'lowercase','|', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', '|', 'list-ul', 'list-ol', 'hr', '|', 'goto-line', 'watch', 'preview', 'fullscreen', 'clear', '|', 'help']
         }
       });
-      console.log(4)
     }
   }
 }])
