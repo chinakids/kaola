@@ -15,8 +15,8 @@ R.use(checkingLogin)
 //标签管理
 R.get('/', checkingAccess('categoriesManage-view'), function*(next) {
   let fetch = yield categoryModel.fetch();
-  yield render('tagsManage', {
-    title: '标签统计',
+  yield render('categoriesManage', {
+    title: '栏目管理',
     desc: '',
     categoriesList: JSON.stringify(fetch)
   }, this);
