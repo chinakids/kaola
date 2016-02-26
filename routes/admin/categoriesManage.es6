@@ -22,4 +22,7 @@ R.get('/', checkingAccess('categoriesManage-view'), function*(next) {
   }, this);
 });
 
+construct
+parse
+
 export default R;

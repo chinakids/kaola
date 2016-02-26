@@ -36,11 +36,11 @@ block content
               ul.chart-legend.clearfix
                 li(ng-repeat='item in ranking track by $index')
                   i.fa.fa-circle-o(style='color:{{item.color}}')
-                  |  [{{$index+1}}] {{item.label}}
+                  |  {{item.label}}
   script.
     angular.module('Kaola',['Kaola.tools'])
     .controller('TagManageCtrl',['$scope','$filter',function($scope,$filter){
-      $scope.limitList = [10,20,30];
+      $scope.limitList = [50,100,150];
       $scope.limit = $scope.limitList[0];
       $scope.page = !{page};
       $scope.tagList = !{tagList};
