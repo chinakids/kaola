@@ -18,6 +18,7 @@ import groupManage from './admin/groupManage';
 import backupsManage from './admin/backupsManage';
 import usersManage from './admin/usersManage';
 import tagsManage from './admin/tagsManage';
+import categoriesManage from './admin/categoriesManage';
 
 let R = router();
 //获取最新权限
@@ -207,5 +208,6 @@ R.use('/groupManage', groupManage.routes(), groupManage.allowedMethods());
 R.use('/backupsManage', backupsManage.routes(), backupsManage.allowedMethods());
 R.use('/usersManage', usersManage.routes(), usersManage.allowedMethods());
 R.use('/tagsManage', tagsManage.routes(), tagsManage.allowedMethods());
+R.use('/categoriesManage', categoriesManage.routes(), categoriesManage.allowedMethods());
 
 export default R;
