@@ -5,9 +5,10 @@ import mongoose from 'mongoose';
 let CategoriesSchema = new mongoose.Schema({
   name       : String,//名称
   level      : Number,//排序
+  alias      : String,//别名
   parent     : {
     type     : String,
-    default  : 0 //默认顶层栏目
+    default  : 'root' //默认顶层栏目,存储别名
   },
   meta       : {
     createAt : {
