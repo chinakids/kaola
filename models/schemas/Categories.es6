@@ -1,43 +1,43 @@
 import mongoose from 'mongoose';
 /*
-*   Tag的shcema
-*/
+ *   Tag的shcema
+ */
 let CategoriesSchema = new mongoose.Schema({
-  name       : String,//名称
-  level      : Number,//排序
-  alias      : String,//别名
-  parent     : {
-    type     : String,
-    default  : 'root' //默认顶层栏目,存储别名
+  name: String, //名称
+  level: Number, //排序
+  alias: String, //别名
+  parent: {
+    type: String,
+    default: 'root' //默认顶层栏目,存储别名
   },
-  meta       : {
-    createAt : {
-      type      : Date,
-      default   : Date.now()
+  meta: {
+    createAt: {
+      type: Date,
+      default: Date.now()
     },
-    updateAt : {
-      type      : Date,
-      default   : Date.now()
+    updateAt: {
+      type: Date,
+      default: Date.now()
     }
   }
 });
 /*
-*   给save方法添加预处理
-*/
-CategoriesSchema.pre('save', function(next){
+ *   给save方法添加预处理
+ */
+CategoriesSchema.pre('save', function(next) {
   //记录更新时间
-  if(this.isNew){
+  if (this.isNew) {
     this.meta.createAt = this.meta.updateAt = Date.now();
-  }else{
+  } else {
     this.meta.updateAt = Date.now();
   }
   next();
 })
 /*
-* 添加实例方法
-*/
-CategoriesSchema.method('add',function() {
-  let p = new Promise((resolve,reject) => {
+ * 添加实例方法
+ */
+CategoriesSchema.method('add', function() {
+  let p = new Promise((resolve, reject) => {
     this.save((error, data) => {
       if (error) {
         reject(error);
@@ -48,8 +48,8 @@ CategoriesSchema.method('add',function() {
   });
   return p;
 });
-CategoriesSchema.method('del',function() {
-  let p = new Promise((resolve,reject) => {
+CategoriesSchema.method('del', function() {
+  let p = new Promise((resolve, reject) => {
     this.remove((error, data) => {
       if (error) {
         reject(error);
@@ -62,36 +62,26 @@ CategoriesSchema.method('del',function() {
 });
 
 /*
-*   绑定静态方法
-*   thistype {Object}
-*/
+ *   绑定静态方法
+ *   thistype {Object}
+ */
 CategoriesSchema.statics = {
-  fetch(cb){
-    return this.find({},{
-        __v:0,
-        meta:0,
-        _id:0
-      })
-      .sort('meta.updateAt')
-      .exec()
-  },
-  findByName(name){
-    return this.find({
-        name:name
-      })
-      .sort('meta.updateAt')
-      .exec()
-  },
-  ranking(limit){
-    return this.find({},{
-        __v:0,
-        meta:0,
-        _id:0
-      })
-      .sort('-count')
-      .limit(limit)
-      .exec()
-  }
+  fetch(cb) {
+      return this.find({}, {
+          __v: 0,
+          meta: 0,
+          _id: 0
+        })
+        .sort('meta.updateAt')
+        .exec()
+    },
+    findByAlias(name) {
+      return this.find({
+          name: name
+        })
+        .sort('meta.updateAt')
+        .exec()
+    }
 }
 
 export default CategoriesSchema;

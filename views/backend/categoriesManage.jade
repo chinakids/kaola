@@ -3,14 +3,84 @@ extends ./layout/layout
 block content
   include ./layout/breadcrumbNav
   section.content(ng-controller='categoriesManageCtrl')
-    div.col-md-12
+    div.col-md-4
       div.box.box-default
         div.box-header.with-border
-          h5.box-title #{title}
+          h5.box-title 添加栏目
+        div.box-body.table-responsive.no-padding.clearfx
+          br
+          dic.col-md-12
+            .form-group.has-feedback
+              input.form-control(type='text',ng-model='name',placeholder='栏目名称',reg='*',err-tip='不可为空')
+              span.fa.fa-folder-o.form-control-feedback
+            .form-group.has-feedback
+              input.form-control(type='text',ng-model='alias',placeholder='别称(拼音or英文)',reg='*',err-tip='不可为空')
+              span.fa.fa-rss.form-control-feedback
+            .form-group.has-feedback
+              select.form-control(ng-options='item.item.alias as item.item.name for item in list',ng-model='parent')
+                option(value='') 一级类目
+            .form-group.has-feedback
+              button.btn.btn-primary.btn-block.btn-flat(type='button',ng-click='add()') 添 加
+    div.col-md-8
+      div.box.box-default
+        div.box-header.with-border
+          h5.box-title 目录结构
+            small  拖动可调整顺序
         div.box-body.table-responsive.no-padding
+          div.col-md-12(ng-nestable,ng-model='list') 
+            i.fa.fa-book
+            |  {{$item.name}}
+            span.pull-right 别名:{{$item.alias}}
+        div.box-footer
+          div.col-md-12
+            button.btn.btn-primary.btn-flat.pull-right(type='button',ng-click='submit()') 保 存
           
   script.
     angular.module('Kaola',['Kaola.tools'])
     .controller('categoriesManageCtrl',['$scope','$filter',function($scope,$filter){
+      $scope.list = [];
 
+      $scope.name = '';
+      $scope.alias = '';
+      $scope.parent = '';
+
+      function check(key,obj){
+        for(var i=0,len=obj.length;i<len;i++){
+          if(obj[i].item.alias === key) return false;
+          if(obj[i].children && obj[i].children.length > 0){
+            check(key,obj[i].children);
+          }
+        }
+        return true;
+      }
+      $scope.add = function(){
+        if(!check($scope.alias,$scope.list)){
+          alert('存在相同别名的类目');
+          return false;
+        }
+        if(!$scope.parent){
+          $scope.list.push({
+            item: {
+              name: $scope.name,
+              alias: $scope.alias
+            },
+            children: []
+          })
+        }else{
+          for(var i=0,len=$scope.list.length;i<len;i++){
+            if($scope.list[i].item.alias === $scope.parent){
+              $scope.list[i].children = [];
+              $scope.list[i].children.push({
+                item: {
+                  name: $scope.name,
+                  alias: $scope.alias
+                }
+              })
+            }
+          }
+        }
+        $scope.name = '';
+        $scope.alias = '';
+        $scope.parent = '';
+      }
     }])
