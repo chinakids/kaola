@@ -67,21 +67,21 @@ CategoriesSchema.method('del', function() {
  */
 CategoriesSchema.statics = {
   fetch(cb) {
-      return this.find({}, {
-          __v: 0,
-          meta: 0,
-          _id: 0
-        })
-        .sort('meta.updateAt')
-        .exec()
-    },
-    findByAlias(name) {
-      return this.find({
-          name: name
-        })
-        .sort('meta.updateAt')
-        .exec()
-    }
+    return this.find({}, {
+        __v: 0,
+        meta: 0,
+        _id: 0
+      })
+      .sort('meta.updateAt')
+      .exec()
+  },
+  findByAlias(name) {
+    return this.find({
+        name: name
+      })
+      .sort('meta.updateAt')
+      .exec()
+  }
 }
 
 export default CategoriesSchema;

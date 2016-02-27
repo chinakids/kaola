@@ -7,7 +7,26 @@ let categoryFactory = {
 	construct(obj){
 		let arr = [];
 		//目前只做深度2的解析
-    //要做个排序函数明天写
+    for(var i=0,len=obj.length;i<len;i++){
+      if(obj[i].parent && obj[i].parent !== 'root'){
+      	//因为小数排序好了，直接填充进arr末位的children就行了
+      	arr[arr.length - 1].children.push({
+      		item:{
+	      		name:obj[i].name,
+	      		alias:obj[i].alias,
+	      	}
+      	})
+      }else{
+      	arr.push({
+	      	item:{
+	      		name:obj[i].name,
+	      		alias:obj[i].alias,
+	      	}
+	      	children:[]
+	      })
+      }
+    }
+    return arr;
 	},
 	//解析成可以递归save的数组
 	parse(obj){
@@ -16,7 +35,7 @@ let categoryFactory = {
     for(var i=0,len=obj.length;i<len;i++){
       arr.push({
       	name:obj[i].item.name,
-      	levels:i,
+      	level:i,
       	alias:obj[i].item.alias,
       	parent:'root'
       })
@@ -24,7 +43,7 @@ let categoryFactory = {
       	for(var o=0,len=obj[i].children.length;o<len;o++){
 	      	arr.push({
 		      	name:obj[i].children[o].item.name,
-		      	levels:0,
+		      	level:parseFloat(`${i}.${o}`), //小数保存方便查询时直接排序
 		      	alias:obj[i].children[o].item.alias,
 		      	parent:obj[i].item.alias
 		      })
@@ -36,4 +55,4 @@ let categoryFactory = {
 
 }
 
-export default copyImage;
+export default categoryFactory;
