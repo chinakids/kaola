@@ -38,7 +38,7 @@ block content
   script.
     angular.module('Kaola',['Kaola.tools'])
     .controller('categoriesManageCtrl',['$scope','$filter',function($scope,$filter){
-      $scope.list = [];
+      $scope.list = !{categoriesList};
 
       $scope.name = '';
       $scope.alias = '';

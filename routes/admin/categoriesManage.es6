@@ -4,6 +4,7 @@ import _ from 'underscore';
 import crypto from 'crypto';
 import categoryModel from './../../models/Categories';
 import { checkingAccess , checkingLogin } from './../../controller/getAccess';
+import cf from './../../controller/categoryFactory';
 
 let R = router();
 
@@ -20,6 +21,37 @@ R.get('/', checkingAccess('categoriesManage-view'), function*(next) {
     desc: '',
     categoriesList: JSON.stringify(fetch)
   }, this);
+});
+
+R.post('/updateCategory', checkingAccess('categoriesManage-update'), function*(next) {
+	let parm = this.request.body;
+	let arr = cf.parse(parm.data);
+	for (let i = 0,len = arr.length; i < len; i++) {
+		let category = yield categoryModel.findByAlias(arr[i].alias);
+	  if (category.length <= 0) {
+	    //新增
+	    let user = new categoryModel({
+	      name: arr[i].name,
+	      alias: arr[i].alias,
+	      parent: arr[i].parent,
+	      level: arr[i].level
+	    })
+	    yield user.add()
+	  } else {
+	  	//修改
+      let _category = _.extend(category[0], arr[i]);
+      yield _category.save()
+  	}
+	};
+	this.body = {
+    status: 'SUCCESS::成功更新类目信息'
+  }
+  // let fetch = yield categoryModel.fetch();
+  // yield render('categoriesManage', {
+  //   title: '栏目管理',
+  //   desc: '',
+  //   categoriesList: JSON.stringify(fetch)
+  // }, this);
 });
 
 

@@ -72,14 +72,14 @@ CategoriesSchema.statics = {
         meta: 0,
         _id: 0
       })
-      .sort('meta.updateAt')
+      .sort('level')
       .exec()
   },
-  findByAlias(name) {
+  findByAlias(alias) {
     return this.find({
-        name: name
+        alias: alias
       })
-      .sort('meta.updateAt')
+      .sort('level')
       .exec()
   }
 }
