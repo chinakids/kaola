@@ -21,7 +21,7 @@ let categoryFactory = {
 	      	item:{
 	      		name:obj[i].name,
 	      		alias:obj[i].alias,
-	      	}
+	      	},
 	      	children:[]
 	      })
       }
