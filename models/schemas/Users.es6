@@ -110,12 +110,16 @@ UserSchema.statics = {
         .exec()
     },
     findAdminById(id) {
-      return this.find({
-          _id: id
-        })
-        .populate('group')
-        .sort('meta.updateAt')
-        .exec()
+      if(id){
+        return this.find({
+            _id: id
+          })
+          .populate('group')
+          .sort('meta.updateAt')
+          .exec()
+      }else{
+        return []
+      }
     },
     findAdminByEmail(email) {
       return this.find({
@@ -126,11 +130,15 @@ UserSchema.statics = {
         .exec()
     },
     findUserById(id) {
-      return this.find({
-          _id: id
-        })
-        .sort('meta.updateAt')
-        .exec()
+      if(id){
+        return this.find({
+            _id: id
+          })
+          .sort('meta.updateAt')
+          .exec()
+      }else{
+        return []
+      }
     },
     findUserByEmail(email) {
       return this.find({

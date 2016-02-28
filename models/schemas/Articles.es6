@@ -97,19 +97,23 @@ ArticleSchema.method('del', function() {
  */
 ArticleSchema.statics = {
   fetch() {
-      return this.find({})
-        .populate('author')
-        .sort('meta.updateAt')
-        .exec()
-    },
-    findById(id) {
+    return this.find({})
+      .populate('author')
+      .sort('meta.updateAt')
+      .exec()
+  },
+  findById(id) {
+    if(id){
       return this.find({
           _id: id
         })
         .populate('author')
         .sort('meta.updateAt')
         .exec()
+    }else{
+      return []
     }
+  }
 }
 
 export default ArticleSchema;

@@ -38,6 +38,7 @@ R.post('/updateCategory', checkingAccess('categoriesManage-update'), function*(n
 	    })
 	    yield user.add()
 	  } else {
+	  	
 	  	//修改
       let _category = _.extend(category[0], arr[i]);
       yield _category.save()

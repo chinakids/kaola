@@ -82,11 +82,16 @@ CategoriesSchema.statics = {
       .exec()
   },
   findById(id) {
-    return this.find({
-        _id: id
-      })
-      .sort('level')
-      .exec()
+    if(id){
+      return this.find({
+          _id: id
+        })
+        .sort('level')
+        .exec()
+    }else{
+      return []
+    }
+    
   }
 }
 

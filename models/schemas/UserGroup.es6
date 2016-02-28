@@ -80,11 +80,15 @@ UserGroupSchema.statics = {
       .exec()
   },
   findById(id){
-    return this.find({
-        _id:id
-      })
-      .sort('meta.updateAt')
-      .exec()
+    if(id){
+      return this.find({
+          _id:id
+        })
+        .sort('meta.updateAt')
+        .exec()
+    }else{
+      return []
+    }
   }
 }
 export default UserGroupSchema;
