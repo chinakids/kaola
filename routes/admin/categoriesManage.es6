@@ -19,7 +19,7 @@ R.get('/', checkingAccess('categoriesManage-view'), function*(next) {
   yield render('categoriesManage', {
     title: '栏目管理',
     desc: '',
-    categoriesList: JSON.stringify(fetch)
+    categoriesList: JSON.stringify(cf.construct(fetch))
   }, this);
 });
 
