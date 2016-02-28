@@ -69,8 +69,7 @@ CategoriesSchema.statics = {
   fetch(cb) {
     return this.find({}, {
         __v: 0,
-        meta: 0,
-        _id: 0
+        meta: 0
       })
       .sort('level')
       .exec()
@@ -78,6 +77,13 @@ CategoriesSchema.statics = {
   findByAlias(alias) {
     return this.find({
         alias: alias
+      })
+      .sort('level')
+      .exec()
+  },
+  findById(id) {
+    return this.find({
+        _id: id
       })
       .sort('level')
       .exec()

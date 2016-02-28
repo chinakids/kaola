@@ -26,9 +26,8 @@ R.get('/', checkingAccess('categoriesManage-view'), function*(next) {
 R.post('/updateCategory', checkingAccess('categoriesManage-update'), function*(next) {
 	let parm = this.request.body;
 	let arr = cf.parse(parm.data);
-	console.log(arr)
 	for (let i = 0,len = arr.length; i < len; i++) {
-		let category = yield categoryModel.findByAlias(arr[i].alias);
+		let category = yield categoryModel.findById(arr[i]._id);
 	  if (category.length <= 0) {
 	    //新增
 	    let user = new categoryModel({

@@ -14,7 +14,7 @@ block content
               input.form-control(type='text',ng-model='name',placeholder='栏目名称',reg='*',err-tip='不可为空')
               span.fa.fa-folder-o.form-control-feedback
             .form-group.has-feedback
-              input.form-control(type='text',ng-model='alias',placeholder='别称(拼音or英文)',reg='*',err-tip='不可为空')
+              input.form-control(type='text',ng-model='alias',placeholder='别称(拼音or英文)',reg='c',err-tip='只可为拼音or英文且不可为空')
               span.fa.fa-rss.form-control-feedback
             .form-group.has-feedback
               select.form-control(ng-options='item.item.alias as item.item.name for item in list',ng-model='parent')

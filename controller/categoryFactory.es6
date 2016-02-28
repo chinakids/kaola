@@ -14,6 +14,7 @@ let categoryFactory = {
       		item:{
 	      		name:obj[i].name,
 	      		alias:obj[i].alias,
+	      		_id:obj[i]._id
 	      	}
       	})
       }else{
@@ -21,6 +22,7 @@ let categoryFactory = {
 	      	item:{
 	      		name:obj[i].name,
 	      		alias:obj[i].alias,
+	      		_id:obj[i]._id
 	      	},
 	      	children:[]
 	      })
@@ -34,6 +36,7 @@ let categoryFactory = {
 		//目前只做深度2的解析
     for(let i=0,len=obj.length;i<len;i++){
       arr.push({
+      	_id:obj[i].item._id || '',
       	name:obj[i].item.name,
       	level:i,
       	alias:obj[i].item.alias,
@@ -43,6 +46,7 @@ let categoryFactory = {
       	//
       	for(let o=0,len=obj[i].children.length;o<len;o++){
 	      	arr.push({
+	      		_id: obj[i].children[o].item._id || '',
 		      	name:obj[i].children[o].item.name,
 		      	level:parseFloat(`${i}.${o+1}`), //小数保存方便查询时直接排序，小数从1记序
 		      	alias:obj[i].children[o].item.alias,
