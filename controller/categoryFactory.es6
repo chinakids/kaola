@@ -40,11 +40,11 @@ let categoryFactory = {
       	parent:'root'
       })
       if(obj[i].children && obj[i].children.length>0){
-      	//小数从1记序
-      	for(let o=1,len=obj[i].children.length;o<len-1;o++){
+      	//
+      	for(let o=0,len=obj[i].children.length;o<len;o++){
 	      	arr.push({
 		      	name:obj[i].children[o].item.name,
-		      	level:parseFloat(`${i}.${o}`), //小数保存方便查询时直接排序
+		      	level:parseFloat(`${i}.${o+1}`), //小数保存方便查询时直接排序，小数从1记序
 		      	alias:obj[i].children[o].item.alias,
 		      	parent:obj[i].item.alias
 		      })
