@@ -7,7 +7,7 @@ let categoryFactory = {
 	construct(obj){
 		let arr = [];
 		//目前只做深度2的解析
-    for(var i=0,len=obj.length;i<len;i++){
+    for(let i=0,len=obj.length;i<len;i++){
       if(obj[i].parent && obj[i].parent !== 'root'){
       	//因为小数排序好了，直接填充进arr末位的children就行了
       	arr[arr.length - 1].children.push({
@@ -30,9 +30,10 @@ let categoryFactory = {
 	},
 	//解析成可以递归save的数组
 	parse(obj){
+		console.log(obj)
 		let arr = [];
 		//目前只做深度2的解析
-    for(var i=0,len=obj.length;i<len;i++){
+    for(let i=0,len=obj.length;i<len;i++){
       arr.push({
       	name:obj[i].item.name,
       	level:i,
@@ -40,7 +41,7 @@ let categoryFactory = {
       	parent:'root'
       })
       if(obj[i].children && obj[i].children.length>0){
-      	for(var o=0,len=obj[i].children.length;o<len;o++){
+      	for(let o=0,len=obj[i].children.length;o<len;o++){
 	      	arr.push({
 		      	name:obj[i].children[o].item.name,
 		      	level:parseFloat(`${i}.${o}`), //小数保存方便查询时直接排序
@@ -52,7 +53,6 @@ let categoryFactory = {
     }
     return arr;
 	}
-
 }
 
 export default categoryFactory;
