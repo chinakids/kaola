@@ -30,7 +30,6 @@ let categoryFactory = {
 	},
 	//解析成可以递归save的数组
 	parse(obj){
-		console.log(obj)
 		let arr = [];
 		//目前只做深度2的解析
     for(let i=0,len=obj.length;i<len;i++){
@@ -41,7 +40,8 @@ let categoryFactory = {
       	parent:'root'
       })
       if(obj[i].children && obj[i].children.length>0){
-      	for(let o=0,len=obj[i].children.length;o<len;o++){
+      	//小数从1记序
+      	for(let o=1,len=obj[i].children.length;o<len-1;o++){
 	      	arr.push({
 		      	name:obj[i].children[o].item.name,
 		      	level:parseFloat(`${i}.${o}`), //小数保存方便查询时直接排序

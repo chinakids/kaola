@@ -26,6 +26,7 @@ R.get('/', checkingAccess('categoriesManage-view'), function*(next) {
 R.post('/updateCategory', checkingAccess('categoriesManage-update'), function*(next) {
 	let parm = this.request.body;
 	let arr = cf.parse(parm.data);
+	console.log(arr)
 	for (let i = 0,len = arr.length; i < len; i++) {
 		let category = yield categoryModel.findByAlias(arr[i].alias);
 	  if (category.length <= 0) {
@@ -46,12 +47,6 @@ R.post('/updateCategory', checkingAccess('categoriesManage-update'), function*(n
 	this.body = {
     status: 'SUCCESS::成功更新类目信息'
   }
-  // let fetch = yield categoryModel.fetch();
-  // yield render('categoriesManage', {
-  //   title: '栏目管理',
-  //   desc: '',
-  //   categoriesList: JSON.stringify(fetch)
-  // }, this);
 });
 
 
