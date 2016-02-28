@@ -83,4 +83,16 @@ block content
         $scope.alias = '';
         $scope.parent = '';
       }
+      $scope.submit = function(){ //updateCategory
+        $.post('/#{pageInfo.adminDomain}/categoriesManage/updateCategory',{data:$scope.list},function(data){
+          var status = data.status.split('::')[0],
+          msg = data.status.split('::')[1];
+          if(status === 'SUCCESS'){
+            alert(msg);
+            window.location.reload()
+          }else{
+            alert(msg);
+          }
+        })
+      }
     }])
