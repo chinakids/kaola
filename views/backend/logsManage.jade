@@ -11,14 +11,17 @@ block content
           table.table.table-hover
             tbody
               tr
-                th 权重
                 th 类型
                 th.col-md-3 记录时间
                 th 详情
                 th 操作人
               tr.datalist(ng-repeat='item in logsList')
-                td {{item.level}}
-                td {{item.type}}
+                td(ng-switch,on='item.level')
+                  i.fa.fa-circle-o.text-green(ng-switch-when='4')
+                  i.fa.fa-circle-o.text-aqua(ng-switch-when='3')
+                  i.fa.fa-circle-o.text-yellow(ng-switch-when='2')
+                  i.fa.fa-circle-o.text-red(ng-switch-when='1')
+                  |  {{item.type}}
                 td {{item.meta.createAt | date:' yyyy/MM/dd HH:mm:ss'}}
                 td {{item.content}}
                 td {{item.user.nickName}}
