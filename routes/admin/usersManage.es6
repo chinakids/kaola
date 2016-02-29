@@ -6,6 +6,7 @@ import usersModel from './../../models/Users';
 import userGroupModel from './../../models/UserGroup';
 import getPageCount from './../../controller/getPageCount';
 import { checkingAccess , checkingLogin } from './../../controller/getAccess';
+import setLog from './../../controller/setLog';
 
 let R = router();
 
@@ -16,6 +17,8 @@ R.use(checkingLogin)
  */
 //会员管理
 R.get('/', checkingAccess('usersManage-view'), function*(next) {
+  //日志记录
+  setLog('查看','查看系统用户列表',this);
   let count = yield usersModel.count({});
   let userFetch = yield usersModel.findUser();
   yield render('usersManage', {
@@ -44,6 +47,8 @@ R.post('/addUser', checkingAccess('usersManage-add'), function*(next) {
       group: 'activated' //从后台添加的默认为激活账户
     })
     yield user.add()
+    //日志记录
+    setLog('新增',`新增用户(email:${parm.email})成功`,this);
     this.body = {
       status: 'SUCCESS::成功增加会员账号'
     }
@@ -75,6 +80,8 @@ R.post('/editUser', checkingAccess('usersManage-edit'), function*(next) {
       //合并
       let _user = _.extend(user[0], parm);
       yield _user.save()
+      //日志记录
+      setLog('修改',`修改用户(email:${_user.email})成功`,this);
       this.body = {
         status: 'SUCCESS::成功修改会员账号'
       }
@@ -96,6 +103,8 @@ R.post('/delUser', checkingAccess('usersManage-del'), function*(next) {
       }
     } else {
       yield user[0].del()
+      //日志记录
+      setLog('删除',`删除用户(email:${user[0].email})成功`,this);
       this.body = {
         status: 'SUCCESS::成功删除会员账号'
       }

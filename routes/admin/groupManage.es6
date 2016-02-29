@@ -5,6 +5,7 @@ import crypto from 'crypto';
 import userGroupModel from './../../models/UserGroup';
 import getPageCount from './../../controller/getPageCount';
 import { checkingAccess , checkingLogin } from './../../controller/getAccess';
+import setLog from './../../controller/setLog';
 
 let R = router();
 
@@ -16,6 +17,8 @@ R.use(checkingLogin)
 
 //权限组管理
 R.get('/', checkingAccess('groupManage-view'), function*(next) {
+  //日志记录
+  setLog('查看','查看系统权限组',this);
   let count = yield userGroupModel.count({});
   let fetch = yield userGroupModel.fetch();
   yield render('groupManage', {
@@ -40,6 +43,8 @@ R.post('/addGroup', checkingAccess('groupManage-add'), function*(next) {
       power: parm.power
     })
     yield userGroup.add()
+    //日志记录
+    setLog('新增',`新增系统权限组(name:${parm.name})成功`,this);
     this.body = {
       status: 'SUCCESS::成功增加权限组'
     }
@@ -62,6 +67,8 @@ R.post('/editGroup',checkingAccess('groupManage-edit'), function*(next) {
     } else {
       let _group = _.extend(group[0], parm);
       yield _group.save()
+      //日志记录
+      setLog('修改',`修改系统权限组(name:${_group.name})成功`,this);
       this.body = {
         status: 'SUCCESS::成功修改权限组'
       }
@@ -83,6 +90,8 @@ R.post('/delGroup', checkingAccess('groupManage-del'), function*(next) {
       }
     } else {
       yield group[0].del()
+      //日志记录
+      setLog('删除',`删除系统权限组(name:${group[0].name})成功`,this);
       this.body = {
         status: 'SUCCESS::成功删除权限组'
       }

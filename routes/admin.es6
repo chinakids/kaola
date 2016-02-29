@@ -4,6 +4,7 @@ import ccap from 'ccap';
 import _ from 'underscore';
 import crypto from 'crypto';
 import getPageCount from './../controller/getPageCount';
+import setLog from './../controller/setLog';
 import S from './../conf/setting';
 //model
 import userGroupModel from './../models/UserGroup';
@@ -19,11 +20,14 @@ import backupsManage from './admin/backupsManage';
 import usersManage from './admin/usersManage';
 import tagsManage from './admin/tagsManage';
 import categoriesManage from './admin/categoriesManage';
+import logsManage from './admin/logsManage';
 
 let R = router();
 //获取最新权限
 
 R.get('/', function*(next) {
+  //日志记录
+  setLog('查看','查看控制面板',this);
   let goodsCount = yield goodsModel.count({});
   let articlesCount = yield articlesModel.count({});
   let usersCount = yield usersModel.count({});
@@ -142,6 +146,8 @@ R.post('/login', function*(next) {
       this.session.login = true;
       this.session.locked = false;
       this.session.ccap = '';
+      //日志记录
+      setLog('登陆',`${parm.email}登陆成功`,this);
       this.body = {
         status: 'SUCCESS::登陆成功'
       }
@@ -154,6 +160,8 @@ R.post('/login', function*(next) {
 });
 //登出
 R.all('/logout', function*(next) {
+  //日志记录
+  setLog('登出','账户登出',this);
   if (this.request.method === 'GET') {
     this.session.login = false;
     this.session.userInfo = null;
@@ -173,6 +181,8 @@ R.all('/logout', function*(next) {
 //锁定
 R.get('/lock', function*(next) {
   this.session.locked = true;
+  //日志记录
+  setLog('锁定','账户锁定',this);
   yield render('lock', {
     title: '账号已被锁定'
   }, this);
@@ -187,8 +197,9 @@ R.post('/unlock', function*(next) {
       status: 'FAIL::用户不存在'
     }
   } else {
-    console.log(parm.ticket.toUpperCase() === result[0].password.toUpperCase())
     if (parm.ticket.toUpperCase() === result[0].password.toUpperCase()) {
+      //日志记录
+      setLog('解锁','账户解锁',this);
       this.session.locked = false;
       this.body = {
         status: 'SUCCESS::成功解锁'
@@ -208,6 +219,7 @@ R.use('/groupManage', groupManage.routes(), groupManage.allowedMethods());
 R.use('/backupsManage', backupsManage.routes(), backupsManage.allowedMethods());
 R.use('/usersManage', usersManage.routes(), usersManage.allowedMethods());
 R.use('/tagsManage', tagsManage.routes(), tagsManage.allowedMethods());
+R.use('/logsManage', logsManage.routes(), logsManage.allowedMethods());
 R.use('/categoriesManage', categoriesManage.routes(), categoriesManage.allowedMethods());
 
 export default R;

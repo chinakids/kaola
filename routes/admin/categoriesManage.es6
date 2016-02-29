@@ -5,6 +5,7 @@ import crypto from 'crypto';
 import categoryModel from './../../models/Categories';
 import { checkingAccess , checkingLogin } from './../../controller/getAccess';
 import cf from './../../controller/categoryFactory';
+import setLog from './../../controller/setLog';
 
 let R = router();
 
@@ -15,6 +16,8 @@ R.use(checkingLogin)
 
 //标签管理
 R.get('/', checkingAccess('categoriesManage-view'), function*(next) {
+  //日志记录
+  setLog('查看','查看栏目管理',this);
   let fetch = yield categoryModel.fetch();
   yield render('categoriesManage', {
     title: '栏目管理',
@@ -44,6 +47,8 @@ R.post('/updateCategory', checkingAccess('categoriesManage-update'), function*(n
       yield _category.save()
   	}
 	};
+	//日志记录
+  setLog('更新','更新栏目列表成功',this);
 	this.body = {
     status: 'SUCCESS::成功更新类目信息'
   }

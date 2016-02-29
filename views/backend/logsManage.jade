@@ -1,0 +1,37 @@
+extends ./layout/layout
+
+block content
+  include ./layout/breadcrumbNav
+  section.content(ng-controller='logsManageCtrl')
+    div.col-md-12
+      div.box.box-default
+        div.box-header.with-border
+          h5.box-title #{title}
+        div.box-body.table-responsive.no-padding
+          table.table.table-hover
+            tbody
+              tr
+                th 权重
+                th 类型
+                th.col-md-3 记录时间
+                th 详情
+                th 操作人
+              tr.datalist(ng-repeat='item in logsList')
+                td {{item.level}}
+                td {{item.type}}
+                td {{item.meta.createAt | date:' yyyy/MM/dd HH:mm:ss'}}
+                td {{item.content}}
+                td {{item.user.nickName}}
+                  
+        include ./layout/listFooter
+        #dataLoading.overlay.hide
+          i.fa.fa-refresh.fa-spin
+
+  script.
+    angular.module('Kaola',['Kaola.tools'])
+    .controller('logsManageCtrl',['$scope','$filter',function($scope,$filter){
+      $scope.limitList = [10,20,30];
+      $scope.limit = $scope.limitList[0];
+      $scope.page = !{page};
+      $scope.logsList = !{logsList};
+    }])

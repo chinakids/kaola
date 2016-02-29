@@ -8,6 +8,7 @@ import setTag from './../../controller/setTag';
 import copyImage from './../../controller/copyImage';
 import { checkingAccess , checkingLogin } from './../../controller/getAccess';
 import cf from './../../controller/categoryFactory';
+import setLog from './../../controller/setLog';
 
 let R = router();
 
@@ -18,6 +19,8 @@ R.use(checkingLogin)
 
 //商品管理
 R.get('/', checkingAccess('goodsManage-view'), function*(next) {
+  //日志记录
+  setLog('查看','查看商品列表',this);
   let count = yield goodsModel.count({});
   let goodFetch = yield goodsModel.fetch();
   yield render('goodsManage', {
@@ -43,6 +46,8 @@ R.post('/addGood', checkingAccess('goodsManage-add'), setTag, function*(next) {
   parm.imgList = copyImage(parm.imgList,'goods');
   let good = new goodsModel(parm)
   yield good.add()
+  //日志记录
+  setLog('新增',`新增商品<<${parm.title}>>成功`,this);
   this.body = {
     status: 'SUCCESS::成功发布商品'
   }
@@ -77,6 +82,8 @@ R.post('/editGood', checkingAccess('goodsManage-edit'), setTag, function*(next) 
     //合并
     let _good = _.extend(good[0], parm);
     yield _good.save();
+    //日志记录
+    setLog('修改',`修改商品<<${_good.title}>>成功`,this);
     this.body = {
       status: 'SUCCESS::成功修改修改商品信息'
     }
@@ -94,6 +101,8 @@ R.post('/editGoodTop', checkingAccess('goodsManage-edit'), function*(next) {
     //合并
     good[0].state.top = !good[0].state.top;
     yield good[0].save();
+    //日志记录
+    setLog('置顶',`置顶商品<<${good[0].title}>>成功`,this);
     this.body = {
       status: 'SUCCESS::'+(good[0].state.top?'成功置顶':'取消置顶')
     }
@@ -111,6 +120,8 @@ R.post('/editGoodSell', checkingAccess('goodsManage-edit'), function*(next) {
     //合并
     good[0].state.sell = !good[0].state.sell;
     yield good[0].save();
+    //日志记录
+    setLog((article[0].state.sell?'下架':'上架'),`${(article[0].state.sell?'下架':'上架')}商品<<${article[0].title}>>成功`,this);
     this.body = {
       status: 'SUCCESS::'+(good[0].state.sell?'下架成功':'上架成功')
     }
@@ -128,6 +139,8 @@ R.post('/editGoodDisplay', checkingAccess('goodsManage-edit'), function*(next) {
     //合并
     good[0].state.display = !good[0].state.display;
     yield good[0].save();
+    //日志记录
+    setLog((article[0].state.display?'显示':'隐藏'),`${(article[0].state.display?'显示':'隐藏')}商品<<${article[0].title}>>成功`,this);
     this.body = {
       status: 'SUCCESS::'+(good[0].state.display?'开启显示':'取消显示')
     }
@@ -143,6 +156,8 @@ R.post('/delGood', checkingAccess('goodsManage-del'), function*(next) {
     }
   } else {
     yield good[0].del();
+    //日志记录
+    setLog('删除',`删除商品<<${article[0].title}>>成功`,this);
     this.body = {
       status: 'SUCCESS::成功删除商品'
     }

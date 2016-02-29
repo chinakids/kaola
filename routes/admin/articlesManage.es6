@@ -8,6 +8,7 @@ import setTag from './../../controller/setTag';
 import copyImage from './../../controller/copyImage';
 import { checkingAccess , checkingLogin } from './../../controller/getAccess';
 import cf from './../../controller/categoryFactory';
+import setLog from './../../controller/setLog';
 
 let R = router();
 
@@ -18,6 +19,8 @@ R.use(checkingLogin)
 
 //文章管理
 R.get('/', checkingAccess('articlesManage-view'), function*(next) {
+  //日志记录
+  setLog('查看','查看文章列表',this);
   let count = yield articlesModel.count({});
   let articleFetch = yield articlesModel.fetch();
   yield render('articlesManage', {
@@ -43,6 +46,8 @@ R.post('/addArticle', checkingAccess('articlesManage-add'), setTag, function*(ne
   parm.imgList = copyImage(parm.imgList,'articles');
   let article = new articlesModel(parm)
   yield article.add()
+  //日志记录
+  setLog('新增',`新增文章<<${parm.title}>>成功`,this);
   this.body = {
     status: 'SUCCESS::成功发布文章'
   }
@@ -77,6 +82,8 @@ R.post('/editArticle', checkingAccess('articlesManage-edit'), setTag, function*(
     //合并
     let _article = _.extend(article[0], parm);
     yield _article.save();
+    //日志记录
+    setLog('修改',`修改文章<<${_article.title}>>成功`,this);
     this.body = {
       status: 'SUCCESS::成功修改修改文章信息'
     }
@@ -94,6 +101,8 @@ R.post('/editArticleTop', checkingAccess('articlesManage-edit'), function*(next)
     //合并
     article[0].state.top = !article[0].state.top;
     yield article[0].save();
+    //日志记录
+    setLog('置顶',`置顶文章<<${article[0].title}>>成功`,this);
     this.body = {
       status: 'SUCCESS::'+(article[0].state.top?'成功置顶':'取消置顶')
     }
@@ -111,6 +120,8 @@ R.post('/editArticleDisplay', checkingAccess('articlesManage-edit'), function*(n
     //合并
     article[0].state.display = !article[0].state.display;
     yield article[0].save();
+    //日志记录
+    setLog((article[0].state.display?'显示':'隐藏'),`${(article[0].state.display?'显示':'隐藏')}文章<<${article[0].title}>>成功`,this);
     this.body = {
       status: 'SUCCESS::'+(article[0].state.display?'开启显示':'取消显示')
     }
@@ -126,6 +137,8 @@ R.post('/delArticle', checkingAccess('articlesManage-del'), function*(next) {
     }
   } else {
     yield article[0].del();
+    //日志记录
+    setLog('删除',`删除文章<<${article[0].title}>>成功`,this);
     this.body = {
       status: 'SUCCESS::成功删除文章'
     }

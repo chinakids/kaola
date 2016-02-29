@@ -6,6 +6,7 @@ import usersModel from './../../models/Users';
 import userGroupModel from './../../models/UserGroup';
 import getPageCount from './../../controller/getPageCount';
 import { checkingAccess , checkingLogin } from './../../controller/getAccess';
+import setLog from './../../controller/setLog';
 
 let R = router();
 
@@ -16,6 +17,8 @@ R.use(checkingLogin)
  */
 //管理员管理
 R.get('/', checkingAccess('adminManage-view'), function*(next) {
+  //日志记录
+  setLog('查看','查看系统用户列表',this);
   let count = yield usersModel.count({});
   let userFetch = yield usersModel.findAdmin();
   let groupFetch = yield userGroupModel.fetch();
@@ -46,6 +49,8 @@ R.post('/addAdmin', checkingAccess('adminManage-add'), function*(next) {
       group: parm.group
     })
     yield user.add()
+    //日志记录
+    setLog('新增',`新增系统管理员(email:${parm.email})成功`,this);
     this.body = {
       status: 'SUCCESS::成功增加管理员账号'
     }
@@ -73,6 +78,8 @@ R.post('/editAdmin', checkingAccess('adminManage-edit'), function*(next) {
       //合并
       let _admin = _.extend(admin[0], parm);
       yield _admin.save()
+      //日志记录
+      setLog('修改',`修改系统管理员(email:${parm.email})成功`,this);
       this.body = {
         status: 'SUCCESS::成功修改管理员账号'
       }
@@ -94,6 +101,8 @@ R.post('/delAdmin', checkingAccess('adminManage-del'), function*(next) {
       }
     } else {
       yield admin[0].del()
+      //日志记录
+      setLog('删除',`删除系统管理员(email:${admin[0].email})成功`,this);
       this.body = {
         status: 'SUCCESS::成功删除管理员账号'
       }

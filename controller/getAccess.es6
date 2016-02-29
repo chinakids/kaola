@@ -1,13 +1,17 @@
 /**
  * [getAccess 验证权限]
  */
-
+import setLog from './setLog';
 
 let checkingAccess = function(power){
   return function*(next){
     if(this.session.userInfo.group.power === 'root' || JSON.parse(this.session.userInfo.group.power)[power]){
+      //日志记录
+      setLog('权限',`验证通过${power}权限`,this);
       yield next;
     }else{
+      //日志记录
+      setLog('权限',`系统拒绝${power}权限`,this);
       if(this.request.method === 'GET'){
         this.redirect('./disAllow')
       }else{
