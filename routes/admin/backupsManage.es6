@@ -29,7 +29,6 @@ R.get('/', checkingAccess('backupsManage-view'), function*(next) {
   yield render('backupsManage', {
     title: '数据备份管理',
     desc: '只取前十条记录',
-    page: JSON.stringify(getPageCount(backupsList.length)),
     backupsList: JSON.stringify(backupsList.sort(sortNumber).reverse().slice(0,10)) //TODO 后期需要改,这里写死了先做排序/倒序处理
   }, this);
 });

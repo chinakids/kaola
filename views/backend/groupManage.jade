@@ -37,7 +37,6 @@ block content
                     button.btn.btn-default.btn-xs(ng-click='del(item.name,item._id)')
                       span.fa.fa-fw.fa-trash-o
                       | 删除
-        include ./layout/listFooter
         #dataLoading.overlay.hide
           i.fa.fa-refresh.fa-spin
     div#myModal.modal(ng-class='{in:modal,fade:!modal}')
@@ -61,9 +60,6 @@ block content
   script.
     angular.module('Kaola',['Kaola.tools'])
     .controller('GroupManageCtrl',['$scope','$filter',function($scope,$filter){
-      $scope.limitList = [10,20,30];
-      $scope.limit = $scope.limitList[0];
-      $scope.page = !{page};
       $scope.groupList = !{groupList};
       $scope.modal = false;
       $scope.type = 'add';

@@ -15,6 +15,7 @@ block content
       div.box.box-default
         div.box-header.with-border
           h5.box-title #{title}
+            small  共 #{page.count} 条记录
         div.box-body.table-responsive.no-padding
           ul.tag-list.col-md-12
             li.btn.btn-primary.btn-sm(ng-repeat='item in tagList track by $index')
@@ -40,9 +41,6 @@ block content
   script.
     angular.module('Kaola',['Kaola.tools'])
     .controller('TagManageCtrl',['$scope','$filter',function($scope,$filter){
-      $scope.limitList = [50,100,150];
-      $scope.limit = $scope.limitList[0];
-      $scope.page = !{page};
       $scope.tagList = !{tagList};
       var ranking = !{ranking};
       $scope.del = function(name,id){

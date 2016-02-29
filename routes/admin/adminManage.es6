@@ -17,13 +17,14 @@ R.use(checkingLogin)
  */
 //管理员管理
 R.get('/', checkingAccess('adminManage-view'), function*(next) {
+  let query = this.request.query;
   let count = yield usersModel.count({});
-  let userFetch = yield usersModel.findAdmin();
+  let userFetch = yield usersModel.findAdmin(query.page,query.limit);
   let groupFetch = yield userGroupModel.fetch();
   yield render('adminManage', {  
     title: '系统用户管理',
     desc: '',
-    page: JSON.stringify(getPageCount(count)),
+    page: getPageCount(count,query.page,query.limit),
     adminList: JSON.stringify(userFetch),
     groupList: JSON.stringify(groupFetch)
   }, this);

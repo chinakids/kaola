@@ -6,4 +6,7 @@ div.box-footer
         select(ng-options='item for item in limitList',ng-model='limit')
         |  条，共 #{page.count} 条记录 ，共 #{page.totalPage} 页
     div.col-xs-12
-      div.pull-right(ng-pagination,size='sm',aside='4',pagesize='#{page.limit}',total-pages='#{page.totalPage}',current-page='#{page.index}',hide-input='true',hide-pagesize='false')
+      if title !== '标签统计'
+        div.pull-right(ng-pagination,size='sm',aside='4',pagesize='#{page.limit}',total-pages='#{page.totalPage}',current-page='#{page.index}',hide-input='true',hide-pagesize='false')
+      else
+        div.pull-right(ng-pagination,size='sm',aside='4',pagesize='#{page.limit * 10}',total-pages='#{page.totalPage}',current-page='#{page.index}',hide-input='true',hide-pagesize='false')

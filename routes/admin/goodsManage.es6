@@ -19,12 +19,13 @@ R.use(checkingLogin)
 
 //商品管理
 R.get('/', checkingAccess('goodsManage-view'), function*(next) {
+  let query = this.request.query;
   let count = yield goodsModel.count({});
-  let goodFetch = yield goodsModel.fetch();
+  let goodFetch = yield goodsModel.fetch(query.page,query.limit);
   yield render('goodsManage', {
     title: '商品管理',
     desc: '',
-    page: JSON.stringify(getPageCount(count)),
+    page: getPageCount(count,query.page,query.limit),
     goodList: JSON.stringify(goodFetch)
   }, this);
 });

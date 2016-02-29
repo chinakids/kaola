@@ -32,15 +32,11 @@ block content
                     button.btn.btn-danger.btn-xs(ng-click='del(item)')
                       span.fa.fa-fw.fa-trash-o
                       | 删除
-        include ./layout/listFooter
         #dataLoading.overlay.hide
           i.fa.fa-refresh.fa-spin
   script.
     angular.module('Kaola',['Kaola.tools'])
     .controller('backupsManageCtrl',['$scope','$filter',function($scope,$filter){
-      $scope.limitList = [10,20,30];
-      $scope.limit = $scope.limitList[0];
-      $scope.page = !{page};
       $scope.backupsList = !{backupsList};
       $scope.backup = function(){
         $.post('/#{pageInfo.adminDomain}/backupsManage/addBackup',function(data){

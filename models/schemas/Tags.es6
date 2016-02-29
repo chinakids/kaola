@@ -64,13 +64,15 @@ TagsSchema.method('del',function() {
 *   thistype {Object}
 */
 TagsSchema.statics = {
-  fetch(cb){
+  fetch(page = 1,limit = 100){
     return this.find({},{
         __v:0,
         meta:0,
         _id:0
       })
-      .sort('meta.updateAt')
+      .sort('-meta.updateAt')
+      .skip((page - 1) * limit)
+      .limit(limit)
       .exec()
   },
   findByName(name){

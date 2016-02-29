@@ -109,11 +109,13 @@ GoodSchema.method('del', function() {
  *   thistype {Object}
  */
 GoodSchema.statics = {
-  fetch() {
+  fetch(page = 1,limit = 10) {
     return this.find({})
       .populate('author')
       .populate('category')
-      .sort('meta.updateAt')
+      .sort('-meta.createAt')
+      .skip((page - 1) * limit)
+      .limit(limit)
       .exec()
   },
   findById(id) {

@@ -73,90 +73,94 @@ UserSchema.method('del', function() {
  */
 UserSchema.statics = {
   fetch() {
-      return this.find({}, {
-          password: 0 //获取info时过滤掉password
+    return this.find({}, {
+        password: 0 //获取info时过滤掉password
+      })
+      .populate('group')
+      .sort('-meta.createAt')
+      .exec()
+  },
+  findAdmin(page = 1,limit = 10) {
+    return this.find({
+        admin: true
+      }, {
+        password: 0 //获取info时过滤掉password
+      })
+      .populate('group')
+      .sort('-meta.createAt')
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .exec()
+  },
+  findUser(page = 1,limit = 10) {
+    return this.find({
+        admin: false
+      }, {
+        password: 0 //获取info时过滤掉password
+      })
+      .sort('-meta.createAt')
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .exec()
+  },
+  getNewUsers(limit) {
+    return this.find({
+        admin: false
+      }, {
+        password: 0 //获取info时过滤掉password
+      })
+      .sort('-meta.createAt')
+      .limit(limit)
+      .exec()
+  },
+  findAdminById(id) {
+    if(id){
+      return this.find({
+          _id: id
         })
         .populate('group')
         .sort('meta.updateAt')
         .exec()
-    },
-    findAdmin() {
-      return this.find({
-          admin: true
-        }, {
-          password: 0 //获取info时过滤掉password
-        })
-        .populate('group')
-        .sort('meta.updateAt')
-        .exec()
-    },
-    findUser() {
-      return this.find({
-          admin: false
-        }, {
-          password: 0 //获取info时过滤掉password
-        })
-        .sort('meta.updateAt')
-        .exec()
-    },
-    getNewUsers(limit) {
-      return this.find({
-          admin: false
-        }, {
-          password: 0 //获取info时过滤掉password
-        })
-        .sort('-meta.createAt')
-        .limit(limit)
-        .exec()
-    },
-    findAdminById(id) {
-      if(id){
-        return this.find({
-            _id: id
-          })
-          .populate('group')
-          .sort('meta.updateAt')
-          .exec()
-      }else{
-        return []
-      }
-    },
-    findAdminByEmail(email) {
-      return this.find({
-          email: email
-        })
-        .populate('group')
-        .sort('meta.updateAt')
-        .exec()
-    },
-    findUserById(id) {
-      if(id){
-        return this.find({
-            _id: id
-          })
-          .sort('meta.updateAt')
-          .exec()
-      }else{
-        return []
-      }
-    },
-    findUserByEmail(email) {
-      return this.find({
-          email: email
-        })
-        .sort('meta.updateAt')
-        .exec()
-    },
-    getInfoByEmail(email) {
-      return this.find({
-          email: email
-        }, {
-          password: 0 //获取info时过滤掉password
-        })
-        .populate('group')
-        .sort('meta.updateAt')
-        .exec()
+    }else{
+      return []
     }
+  },
+  findAdminByEmail(email) {
+    return this.find({
+        email: email
+      })
+      .populate('group')
+      .sort('meta.updateAt')
+      .exec()
+  },
+  findUserById(id) {
+    if(id){
+      return this.find({
+          _id: id
+        })
+        .sort('meta.updateAt')
+        .exec()
+    }else{
+      return []
+    }
+  },
+  findUserByEmail(email) {
+    return this.find({
+        email: email
+      })
+      .sort('meta.updateAt')
+      .exec()
+  },
+  getInfoByEmail(email) {
+    return this.find({
+        email: email
+      }, {
+        password: 0 //获取info时过滤掉password
+      })
+      .populate('group')
+      .sort('meta.updateAt')
+      .exec()
+  }
 }
 
 export default UserSchema;

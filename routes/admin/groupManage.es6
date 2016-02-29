@@ -22,7 +22,6 @@ R.get('/', checkingAccess('groupManage-view'), function*(next) {
   yield render('groupManage', {
     title: '权限组管理',
     desc: '',
-    page: JSON.stringify(getPageCount(count)),
     groupList: JSON.stringify(fetch)
   }, this);
 });

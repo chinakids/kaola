@@ -69,7 +69,7 @@ UserGroupSchema.statics = {
     return this.find({
         power:{'$ne':'root'}
       })
-      .sort('meta.updateAt')
+      .sort('-meta.createAt')
       .exec()
   },
   findByName(name){

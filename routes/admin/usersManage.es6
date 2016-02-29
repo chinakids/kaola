@@ -17,12 +17,13 @@ R.use(checkingLogin)
  */
 //会员管理
 R.get('/', checkingAccess('usersManage-view'), function*(next) {
+  let query = this.request.query;
   let count = yield usersModel.count({});
-  let userFetch = yield usersModel.findUser();
+  let userFetch = yield usersModel.findUser(query.page,query.limit);
   yield render('usersManage', {
     title: '会员管理',
     desc: '',
-    page: JSON.stringify(getPageCount(count)),
+    page: getPageCount(count,query.page,query.limit),
     userList: JSON.stringify(userFetch)
   }, this);
 });

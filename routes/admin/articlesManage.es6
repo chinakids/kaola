@@ -19,12 +19,13 @@ R.use(checkingLogin)
 
 //文章管理
 R.get('/', checkingAccess('articlesManage-view'), function*(next) {
+  let query = this.request.query;
   let count = yield articlesModel.count({});
-  let articleFetch = yield articlesModel.fetch();
+  let articleFetch = yield articlesModel.fetch(query.page,query.limit);
   yield render('articlesManage', {
     title: '文章管理',
     desc: '',
-    page: JSON.stringify(getPageCount(count)),
+    page: getPageCount(count,query.page,query.limit),
     articleList: JSON.stringify(articleFetch)
   }, this);
 });

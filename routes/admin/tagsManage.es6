@@ -17,13 +17,14 @@ R.use(checkingLogin)
 
 //标签管理
 R.get('/', checkingAccess('tagManage-view'), function*(next) {
+  let query = this.request.query;
   let count = yield tagModel.count({});
-  let fetch = yield tagModel.fetch();
+  let fetch = yield tagModel.fetch(query.page,query.limit);
   let ranking = yield tagModel.ranking(5);
   yield render('tagsManage', {
     title: '标签统计',
     desc: '',
-    page: JSON.stringify(getPageCount(count)),
+    page: getPageCount(count,query.page,query.limit),
     tagList: JSON.stringify(fetch),
     ranking: JSON.stringify(ranking)
   }, this);

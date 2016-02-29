@@ -19,6 +19,7 @@ block content
       div.box.box-default
         div.box-header.with-border
           h5.box-title #{title}
+            small  共 #{page.count} 条记录
         div.box-body.table-responsive.no-padding
           table.table.table-hover
             tbody
@@ -76,9 +77,6 @@ block content
   script.
     angular.module('Kaola',['Kaola.tools'])
     .controller('GoodsManageCtrl',['$scope',function($scope){
-      $scope.limitList = [10,20,30];
-      $scope.limit = $scope.limitList[0];
-      $scope.page = !{page};
       $scope.goodList = !{goodList};
       $scope.changeTop = function(index,id){
         $.post('/#{pageInfo.adminDomain}/goodsManage/editGoodTop',{id:id},function(data){
