@@ -8,7 +8,15 @@ block content
           dl.clearfix.col-md-12
             dt 标题:
             dd.form-group
-              input.form-control(type='text',placeholder='请输入标题',reg='s',err-tip='标题 - 不可输入特殊字符或为空',ng-model='articleData.title')
+              div.input-group
+                div.input-group-btn
+                  button.btn.btn-default.dropdown-toggle(type='button',data-toggle='dropdown',aria-haspopup='true',aria-expanded='false')
+                    | {{categoryText | category}}&nbsp;
+                    span.caret
+                  ul.dropdown-menu
+                    li(ng-repeat='item in categoriesList track by $index') 
+                      a(href='javascript:;',ng-click='changeCategory(item._id)') {{item.name}}
+                input.form-control(type='text',placeholder='请输入标题',reg='s',err-tip='标题 - 不可输入特殊字符或为空',ng-model='articleData.title')
           dl.clearfix.col-md-12
             dt 主图:
             dd.form-group
@@ -45,7 +53,17 @@ block content
   script.
     angular.module('Kaola', ['Kaola.tools'])
     .controller('ArticlesEditCtrl', ['$scope','db', function ($scope,db) {
-      
+      $scope.categoriesList = !{categoriesList};
+      $scope.categoryText = '请选择文章类目';
+      var categoryId = '';
+      $scope.changeCategory = function(id){
+        categoryId = id;
+        for(var i =0,len =$scope.categoriesList.length;i<len;i++){
+          if($scope.categoriesList[i]._id === id){
+            $scope.categoryText = $scope.categoriesList[i].name;
+          }
+        }
+      }
       var onlyTag = function(key){
         var status = true;
         for(var i= 0,len=$scope.tag.length;i<len;i++){
@@ -79,6 +97,7 @@ block content
         setTimeout(function(){$('#tag').css({paddingLeft:$('#tag').siblings('ul').width()})},100)
       }
       $scope.articleData = !{articleData};
+      if($scope.articleData.category && $scope.articleData.category._id) $scope.changeCategory($scope.articleData.category._id);
       $scope.tag = $scope.articleData.tag.split(',');
 
       setTimeout(function(){$('#tag').css({paddingLeft:$('#tag').siblings('ul').width()})},100);
@@ -94,10 +113,18 @@ block content
           $(this).trigger('focus').trigger('blur');
         })
         if ($('#add .reg-success').size() === 1) {
+          if(categoryId === ''){
+            $('#tip').append('<div class=\'callout callout-danger\'><p>请选择文章类目</p></div>');
+            setTimeout(function(){
+              $('#tip').html('');
+            },2000)
+            return false
+          }
           if($scope.editor.getMarkdown().replace(/\s/g,'').length >= 20){
             $scope.articleData.content = $scope.editor.getMarkdown();
             $scope.articleData.tag = $scope.tag.join(',');
             $scope.articleData.imgList = $scope.uploadList;
+            $scope.articleData.category = categoryId;
             $.post('/#{pageInfo.adminDomain}/articlesManage/editArticle',$scope.articleData,function(data){
               var status = data.status.split('::')[0],
               msg = data.status.split('::')[1];

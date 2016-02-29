@@ -51,6 +51,7 @@ R.post('/addArticle', checkingAccess('articlesManage-add'), setTag, function*(ne
 R.get('/editArticle', checkingAccess('articlesManage-edit'), function*(next) {
   let parm = this.request.query;
   let article = yield articlesModel.findById(parm.id);
+  let categoriesList = yield categoryModel.fetch();
   if (article.length <= 0) {
     this.body = {
       status: 'FAIL::该文章不存在'
@@ -59,7 +60,8 @@ R.get('/editArticle', checkingAccess('articlesManage-edit'), function*(next) {
     yield render('articlesEdit', {
       title: '修改文章',
       desc: '',
-      articleData:JSON.stringify(article[0])
+      articleData:JSON.stringify(article[0]),
+      categoriesList:JSON.stringify(cf.tree(categoriesList))
     }, this);
   }
 });

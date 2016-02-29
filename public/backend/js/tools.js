@@ -151,6 +151,36 @@ angular.module('Kaola.tools', [])
       pId: 'tagsManage',
       name: '查看'
     }, {
+      id: 'categoriesManage',
+      pId: 0,
+      name: '分类管理',
+      open: true
+    }, {
+      id: 'categoriesManage-view',
+      pId: 'categoriesManage',
+      name: '更新'
+    },{
+      id: 'usersManage',
+      pId: 0,
+      name: '用户管理',
+      open: true
+    }, {
+      id: 'usersManage-add',
+      pId: 'usersManage',
+      name: '新增'
+    }, {
+      id: 'usersManage-view',
+      pId: 'usersManage',
+      name: '查看'
+    }, {
+      id: 'usersManage-edit',
+      pId: 'usersManage',
+      name: '修改'
+    }, {
+      id: 'usersManage-del',
+      pId: 'usersManage',
+      name: '删除'
+    }, {
       id: 'systemManage',
       pId: 0,
       name: '系统管理',
@@ -158,7 +188,7 @@ angular.module('Kaola.tools', [])
     }, {
       id: 'adminManage',
       pId: 'systemManage',
-      name: '用户管理',
+      name: '系统用户管理',
       open: true
     }, {
       id: 'adminManage-add',

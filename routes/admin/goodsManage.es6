@@ -51,6 +51,7 @@ R.post('/addGood', checkingAccess('goodsManage-add'), setTag, function*(next) {
 R.get('/editGood', checkingAccess('goodsManage-edit'), function*(next) {
   let parm = this.request.query;
   let good = yield goodsModel.findById(parm.id);
+  let categoriesList = yield categoryModel.fetch();
   if (good.length <= 0) {
     this.body = {
       status: 'FAIL::该商品不存在'
@@ -59,7 +60,8 @@ R.get('/editGood', checkingAccess('goodsManage-edit'), function*(next) {
     yield render('goodsEdit', {
       title: '修改商品',
       desc: '',
-      goodData:JSON.stringify(good[0])
+      goodData:JSON.stringify(good[0]),
+      categoriesList:JSON.stringify(cf.tree(categoriesList))
     }, this);
   }
 });

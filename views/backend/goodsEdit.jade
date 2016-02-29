@@ -9,7 +9,15 @@ block content
           dl.clearfix.col-md-12
             dt 标题:
             dd.form-group
-              input.form-control(type='text',placeholder='请输入标题',reg='s',err-tip='标题 - 不可输入特殊字符或为空',ng-model='goodData.title')
+              div.input-group
+                div.input-group-btn
+                  button.btn.btn-default.dropdown-toggle(type='button',data-toggle='dropdown',aria-haspopup='true',aria-expanded='false')
+                    | {{categoryText | category}}&nbsp;
+                    span.caret
+                  ul.dropdown-menu
+                    li(ng-repeat='item in categoriesList track by $index') 
+                      a(href='javascript:;',ng-click='changeCategory(item._id)') {{item.name}}
+                input.form-control(type='text',placeholder='请输入标题',reg='s',err-tip='标题 - 不可输入特殊字符或为空',ng-model='goodData.title')
           dl.clearfix.col-md-4
             dt 价格:
             dd.form-group
@@ -73,7 +81,17 @@ block content
   script.
     angular.module('Kaola', ['Kaola.tools'])
     .controller('GoodsEditCtrl', ['$scope','db', function ($scope,db) {
-      
+      $scope.categoriesList = !{categoriesList};
+      $scope.categoryText = '请选择文章类目';
+      var categoryId = '';
+      $scope.changeCategory = function(id){
+        categoryId = id;
+        for(var i =0,len =$scope.categoriesList.length;i<len;i++){
+          if($scope.categoriesList[i]._id === id){
+            $scope.categoryText = $scope.categoriesList[i].name;
+          }
+        }
+      }
       var onlyTag = function(key){
         var status = true;
         for(var i= 0,len=$scope.tag.length;i<len;i++){
@@ -107,8 +125,9 @@ block content
         setTimeout(function(){$('#tag').css({paddingLeft:$('#tag').siblings('ul').width()})},100)
       }
       $scope.goodData = !{goodData};
-
+      if($scope.goodData.category && $scope.goodData.category._id) $scope.changeCategory($scope.goodData.category._id);
       $scope.tag = $scope.goodData.tag.split(',');
+      
       setTimeout(function(){$('#tag').css({paddingLeft:$('#tag').siblings('ul').width()})},100);
       $scope.uploadList = $.parseJSON($scope.goodData.imgList || '{}');
       //延时填充数据
@@ -122,10 +141,18 @@ block content
           $(this).trigger('focus').trigger('blur');
         })
         if ($('#add .reg-success').size() === 4) {
+          if(categoryId === ''){
+            $('#tip').append('<div class=\'callout callout-danger\'><p>请选择文章类目</p></div>');
+            setTimeout(function(){
+              $('#tip').html('');
+            },2000)
+            return false
+          }
           if($scope.editor.getMarkdown().replace(/\s/g,'').length >= 20){
             $scope.goodData.content = $scope.editor.getMarkdown();
             $scope.goodData.tag = $scope.tag.join(',');
             $scope.goodData.imgList = $scope.uploadList;
+            $scope.goodData.category = categoryId;
             $.post('/#{pageInfo.adminDomain}/goodsManage/editGood',$scope.goodData,function(data){
               var status = data.status.split('::')[0],
               msg = data.status.split('::')[1];

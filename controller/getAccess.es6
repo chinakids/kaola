@@ -18,6 +18,7 @@ let checkingAccess = function(power){
     }
   }
 };
+
 let checkingLogin = function * (next){
   if(this.session.login  && !this.session.locked){
     yield next;
