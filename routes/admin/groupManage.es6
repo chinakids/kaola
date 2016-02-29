@@ -17,8 +17,6 @@ R.use(checkingLogin)
 
 //权限组管理
 R.get('/', checkingAccess('groupManage-view'), function*(next) {
-  //日志记录
-  setLog('查看','查看系统权限组',this);
   let count = yield userGroupModel.count({});
   let fetch = yield userGroupModel.fetch();
   yield render('groupManage', {

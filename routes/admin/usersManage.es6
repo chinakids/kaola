@@ -17,8 +17,6 @@ R.use(checkingLogin)
  */
 //会员管理
 R.get('/', checkingAccess('usersManage-view'), function*(next) {
-  //日志记录
-  setLog('查看','查看系统用户列表',this);
   let count = yield usersModel.count({});
   let userFetch = yield usersModel.findUser();
   yield render('usersManage', {

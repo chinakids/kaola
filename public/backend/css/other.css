@@ -371,3 +371,36 @@ textarea{
 .has-feedback .fa{
   top:10px;
 }
+.ng-pagination .pagination {
+    margin: 0;
+    display: inline-block;
+}
+
+.ng-pagination .pagination li {
+    cursor: pointer;
+}
+
+.ng-pagination-input {
+    margin: 0;
+    padding: 0;
+    margin-left: 20px;
+    color: #999;
+    display: inline-block;
+}
+
+.ng-pagination-input input.form-control {
+    width: 55px;
+    display: inline-block;
+    color: #333;
+    text-align: center;
+}
+
+.ng-pagination .form-inline {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.ng-pagination .pagesize {
+    width: 55px;
+    text-align: center;
+}

@@ -19,8 +19,6 @@ R.use(checkingLogin)
 
 //商品管理
 R.get('/', checkingAccess('goodsManage-view'), function*(next) {
-  //日志记录
-  setLog('查看','查看商品列表',this);
   let count = yield goodsModel.count({});
   let goodFetch = yield goodsModel.fetch();
   yield render('goodsManage', {

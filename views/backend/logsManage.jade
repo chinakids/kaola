@@ -7,6 +7,7 @@ block content
       div.box.box-default
         div.box-header.with-border
           h5.box-title #{title}
+            small  共 #{page.count} 条记录
         div.box-body.table-responsive.no-padding
           table.table.table-hover
             tbody
@@ -22,9 +23,9 @@ block content
                   i.fa.fa-circle-o.text-yellow(ng-switch-when='2')
                   i.fa.fa-circle-o.text-red(ng-switch-when='1')
                   |  {{item.type}}
-                td {{item.meta.createAt | date:' yyyy/MM/dd HH:mm:ss'}}
+                td {{item.meta.createAt | date:'yy/MM/dd HH:mm:ss'}}
                 td {{item.content}}
-                td {{item.user.nickName}}
+                td(title='{{item.user.email}}') {{item.user.nickName}}
                   
         include ./layout/listFooter
         #dataLoading.overlay.hide
@@ -35,6 +36,6 @@ block content
     .controller('logsManageCtrl',['$scope','$filter',function($scope,$filter){
       $scope.limitList = [10,20,30];
       $scope.limit = $scope.limitList[0];
-      $scope.page = !{page};
+      //- $scope.page = !{page};
       $scope.logsList = !{logsList};
     }])

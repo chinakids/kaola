@@ -19,8 +19,6 @@ R.use(checkingLogin)
 
 //文章管理
 R.get('/', checkingAccess('articlesManage-view'), function*(next) {
-  //日志记录
-  setLog('查看','查看文章列表',this);
   let count = yield articlesModel.count({});
   let articleFetch = yield articlesModel.fetch();
   yield render('articlesManage', {

@@ -16,8 +16,6 @@ R.use(checkingLogin)
 
 //标签管理
 R.get('/', checkingAccess('categoriesManage-view'), function*(next) {
-  //日志记录
-  setLog('查看','查看栏目管理',this);
   let fetch = yield categoryModel.fetch();
   yield render('categoriesManage', {
     title: '栏目管理',

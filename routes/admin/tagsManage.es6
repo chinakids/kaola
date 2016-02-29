@@ -17,8 +17,6 @@ R.use(checkingLogin)
 
 //标签管理
 R.get('/', checkingAccess('tagManage-view'), function*(next) {
-  //日志记录
-  setLog('查看','查看标签统计数据',this);
   let count = yield tagModel.count({});
   let fetch = yield tagModel.fetch();
   let ranking = yield tagModel.ranking(5);

@@ -16,8 +16,6 @@ R.use(checkingLogin)
  */
 //数据库管理 - 查看
 R.get('/', checkingAccess('backupsManage-view'), function*(next) {
-  //日志记录
-  setLog('查看','查看数据库备份列表',this);
   let dirList = fs.readdirSync(process.cwd()+'/bak');
   let backupsList = [];
   dirList.forEach((item) => {

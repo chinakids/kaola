@@ -70,11 +70,13 @@ LogSchema.method('del', function() {
 *   thistype {Object}
 */
 LogSchema.statics = {
-  fetch(cb){
+  fetch(page = 1,limit = 10){
     return this.find({})
       .populate('user')
       .sort('-meta.updateAt')
-      .exec(cb)
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .exec()
   }
 }
 

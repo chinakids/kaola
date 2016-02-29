@@ -20,7 +20,7 @@ block content
                 th 备份时间
                 th.col-md-3 操作
               tr.datalist(ng-repeat='item in backupsList')
-                td {{item | date:' yyyy/MM/dd HH:mm:ss'}}
+                td {{item | date:' yy/MM/dd HH:mm:ss'}}
                 td
                   div.btn-group
                     button.btn.btn-default.btn-xs(ng-click='restore(item,"true")',title='将删除备份后新增内容')

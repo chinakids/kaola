@@ -17,8 +17,6 @@ R.use(checkingLogin)
  */
 //管理员管理
 R.get('/', checkingAccess('adminManage-view'), function*(next) {
-  //日志记录
-  setLog('查看','查看系统用户列表',this);
   let count = yield usersModel.count({});
   let userFetch = yield usersModel.findAdmin();
   let groupFetch = yield userGroupModel.fetch();

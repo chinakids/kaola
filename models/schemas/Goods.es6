@@ -69,17 +69,17 @@ let GoodSchema = new mongoose.Schema({
  *   给save方法添加预处理
  */
 GoodSchema.pre('save', function(next) {
-    //记录更新时间
-    if (this.isNew) {
-      this.meta.createAt = this.meta.updateAt = Date.now();
-    } else {
-      this.meta.updateAt = Date.now();
-    }
-    next();
-  })
-  /*
-   * 添加实例方法
-   */
+  //记录更新时间
+  if (this.isNew) {
+    this.meta.createAt = this.meta.updateAt = Date.now();
+  } else {
+    this.meta.updateAt = Date.now();
+  }
+  next();
+})
+/*
+ * 添加实例方法
+ */
 GoodSchema.method('add', function() {
   let p = new Promise((resolve, reject) => {
     this.save((error, data) => {

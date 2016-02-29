@@ -16,14 +16,13 @@ R.use(checkingLogin);
 
 //日志管理
 R.get('/', checkingAccess('logsManage-view'), function*(next) {
-  //日志记录
-  setLog('查看','查看系统日志',this);
+  let query = this.request.query;
   let count = yield logModel.count({});
-  let fetch = yield logModel.fetch();
+  let fetch = yield logModel.fetch(query.page,query.limit);
   yield render('logsManage', {
     title: '日志查询',
     desc: '',
-    page: JSON.stringify(getPageCount(count)),
+    page: getPageCount(count,query.page,query.limit),
     logsList: JSON.stringify(fetch)
   }, this);
 });
