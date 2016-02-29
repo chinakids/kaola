@@ -17,10 +17,10 @@ let GoodSchema = new mongoose.Schema({
     callWay: String //联系数据
   },
   imgList: String, //图片
-  //category: {
-  //    type     : String,
-  //    ref      : 'Category'
-  //}, //文章类别
+  category: {
+   type     : String,
+   ref      : 'Categories'
+  }, //文章类别
   tag: String, //标签
   author: {
     type: String,
@@ -112,6 +112,7 @@ GoodSchema.statics = {
   fetch() {
     return this.find({})
       .populate('author')
+      .populate('category')
       .sort('meta.updateAt')
       .exec()
   },
@@ -121,6 +122,7 @@ GoodSchema.statics = {
           _id: id
         })
         .populate('author')
+        .populate('category')
         .sort('meta.updateAt')
         .exec()
     }else{

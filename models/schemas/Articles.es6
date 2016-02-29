@@ -8,10 +8,10 @@ let ArticleSchema = new mongoose.Schema({
   title: String, //标题
   content: String, //内容markdown格式
   imgList: String, //图片
-  //category: {
-  //    type     : String,
-  //    ref      : 'Category'
-  //}, //文章类别
+  category: {
+   type     : String,
+   ref      : 'Categories'
+  }, //文章类别
   tag: String, //标签
   author: {
     type: String,
@@ -99,6 +99,7 @@ ArticleSchema.statics = {
   fetch() {
     return this.find({})
       .populate('author')
+      .populate('category')
       .sort('meta.updateAt')
       .exec()
   },
@@ -108,6 +109,7 @@ ArticleSchema.statics = {
           _id: id
         })
         .populate('author')
+        .populate('category')
         .sort('meta.updateAt')
         .exec()
     }else{

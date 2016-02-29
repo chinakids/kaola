@@ -2,10 +2,12 @@ import router from 'koa-router';
 import render from './../../utils/render';
 import _ from 'underscore';
 import goodsModel from './../../models/Goods';
+import categoryModel from './../../models/Categories';
 import getPageCount from './../../controller/getPageCount';
 import setTag from './../../controller/setTag';
 import copyImage from './../../controller/copyImage';
 import { checkingAccess , checkingLogin } from './../../controller/getAccess';
+import cf from './../../controller/categoryFactory';
 
 let R = router();
 
@@ -27,9 +29,11 @@ R.get('/', checkingAccess('goodsManage-view'), function*(next) {
 });
 //添加商品
 R.get('/addGood', checkingAccess('goodsManage-add'), function*(next) {
+  let categoriesList = yield categoryModel.fetch();
   yield render('goodsAdd', {
     title: '添加商品',
-    desc: ''
+    desc: '',
+    categoriesList:JSON.stringify(cf.tree(categoriesList))
   }, this);
 });
 

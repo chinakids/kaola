@@ -56,6 +56,18 @@ let categoryFactory = {
       }
     }
     return arr;
+	},
+	//转成平级树,下拉列表使用
+	tree(obj){
+		let arr = [];
+		//目前只做深度2的解析
+    for(let i=0,len=obj.length;i<len;i++){
+      arr.push({
+      	_id:obj[i]._id || '',
+      	name:(obj[i].parent === 'root' ? '' : '└─ ') + obj[i].name
+      })
+    }
+    return arr;
 	}
 }
 

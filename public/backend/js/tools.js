@@ -354,6 +354,12 @@ angular.module('Kaola.tools', [])
       }
     }
   })
+  .filter('category', function() {
+    return function(str) {
+      console.log(str)
+      return str.split(' ')[str.split(' ').length - 1];
+    }
+  })
   .directive('uploadimg', ['$rootScope', function($rootscope) {
     return {
       restrict: 'ECAM',
