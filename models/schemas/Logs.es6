@@ -73,7 +73,7 @@ LogSchema.statics = {
   fetch(cb){
     return this.find({})
       .populate('user')
-      .sort('meta.updateAt')
+      .sort('-meta.updateAt')
       .exec(cb)
   }
 }
