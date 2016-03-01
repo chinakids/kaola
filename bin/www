@@ -11,6 +11,8 @@ import initDir from '../utils/initDir'
 /**
  * Get port from environment and store.
  */
+//初始化目录
+initDir();
 
 let port = normalizePort(process.env.PORT || '80');
 // app.set('port', port);
@@ -76,8 +78,6 @@ function onError(error) {
  */
 
 function onListening() {
-  //初始化目录
-  initDir();
   //连接数据库
   connect();
   let addr = server.address();
