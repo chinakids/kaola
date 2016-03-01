@@ -1,4 +1,4 @@
-sudo: false
+sudo: true
 language: node_js
 python:
   - '2.7'
@@ -9,14 +9,22 @@ node_js:
   - '0.12'
   - '4.1'
   - '4.2'
+env:
+  - CXX=g++-4.8
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8
 services:
   - mongodb
   - redis
 before_script:
   - python --version
-  - npm install -g node-gyp
-  - npm install -g babel
-  - npm install -g pm2
+  - sudo npm install -g node-gyp
+  - sudo npm install -g babel
+  - sudo npm install -g pm2
   - npm install
 script:
   - npm start
