@@ -76,7 +76,6 @@ block content
                 .form-group.has-feedback
                   input.form-control(type='password',name='repassword',placeholder='再次输入密码',regto='password',err-tip='两次密码输入不一致',autocomplete='off')
                   span.glyphicon.glyphicon-lock.form-control-feedback
-                .form-group.has-feedback#tip
                 .form-group.has-feedback
                   button.btn.btn-primary.btn-block.btn-flat(type='button',ng-click='submit()') 确 定
   script.
@@ -131,73 +130,59 @@ block content
         var status = data.status.split('::')[0],
         msg = data.status.split('::')[1];
         if(status === 'SUCCESS'){
-          $('#tip').append('<div class=\'callout callout-success\'><p>'+msg+'</p></div>');
-          setTimeout(function(){
-            window.location.reload()
-          },2000)
+          toastr.success(msg)
+          setTimeout(function(){window.location.reload()},2000)
         }else{
-          $('#tip').append('<div class=\'callout callout-danger\'><p>'+msg+'</p></div>');
-          setTimeout(function(){
-            $('#tip').html('');
-          },2000)
+          toastr.error(msg)
         }
       }
       $scope.submit = function(){
-          if($scope.type === 'add'){
+        if($scope.type === 'add'){
+          $('#add input').each(function(){
+            $(this).trigger('focus').trigger('blur');
+          })
+          if($('#add .reg-success').size() === 5 && $scope.adminData.group){
+            //新增
+            $.post('/#{pageInfo.adminDomain}/adminManage/addAdmin',$scope.adminData,ajaxCb)
+          }else{
+            toastr.error('填写信息不完整')
+          }
+        }else if($scope.type === 'edit'){
+          if($scope.adminData.password === ''){
+            $('#add input[type="email"],#add input[type="text"]').each(function(){
+              $(this).trigger('focus').trigger('blur');
+            })
+            if($('#add .reg-success').size() === 3 && $scope.adminData.group){
+              //修改
+              $.post('/#{pageInfo.adminDomain}/adminManage/editAdmin',{
+                '_id'        : $scope.editId,
+                'email'      : $scope.adminData.email,//邮箱
+                'nickName'   : $scope.adminData.nickName,//昵称
+                'phoneNum'   : $scope.adminData.phoneNum,//电话
+                'group'      : $scope.adminData.group
+              },ajaxCb)
+            }else{
+              toastr.error('填写信息不完整')
+            }
+          }else{
             $('#add input').each(function(){
               $(this).trigger('focus').trigger('blur');
             })
             if($('#add .reg-success').size() === 5 && $scope.adminData.group){
-              //新增
-              $.post('/#{pageInfo.adminDomain}/adminManage/addAdmin',$scope.adminData,ajaxCb)
+              //修改
+              $.post('/#{pageInfo.adminDomain}/adminManage/editAdmin',{
+                '_id'        : $scope.editId,
+                'email'      : $scope.adminData.email,//邮箱
+                'nickName'   : $scope.adminData.nickName,//昵称
+                'password'   : $scope.adminData.password,//密码
+                'phoneNum'   : $scope.adminData.phoneNum,//电话
+                'group'      : $scope.adminData.group
+              },ajaxCb)
             }else{
-              $('#tip').append('<div class=\'callout callout-danger\'><p>填写信息不完整</p></div>');
-              setTimeout(function(){
-                $('#tip').html('');
-              },2000)
+              toastr.error('填写信息不完整')
             }
-          }else if($scope.type === 'edit'){
-            if($scope.adminData.password === ''){
-              $('#add input[type="email"],#add input[type="text"]').each(function(){
-                $(this).trigger('focus').trigger('blur');
-              })
-              if($('#add .reg-success').size() === 3 && $scope.adminData.group){
-                //修改
-                $.post('/#{pageInfo.adminDomain}/adminManage/editAdmin',{
-                  '_id'        : $scope.editId,
-                  'email'      : $scope.adminData.email,//邮箱
-                  'nickName'   : $scope.adminData.nickName,//昵称
-                  'phoneNum'   : $scope.adminData.phoneNum,//电话
-                  'group'      : $scope.adminData.group
-                },ajaxCb)
-              }else{
-                $('#tip').append('<div class=\'callout callout-danger\'><p>填写信息不完整</p></div>');
-                setTimeout(function(){
-                  $('#tip').html('');
-                },2000)
-              }
-            }else{
-              $('#add input').each(function(){
-                $(this).trigger('focus').trigger('blur');
-              })
-              if($('#add .reg-success').size() === 5 && $scope.adminData.group){
-                //修改
-                $.post('/#{pageInfo.adminDomain}/adminManage/editAdmin',{
-                  '_id'        : $scope.editId,
-                  'email'      : $scope.adminData.email,//邮箱
-                  'nickName'   : $scope.adminData.nickName,//昵称
-                  'password'   : $scope.adminData.password,//密码
-                  'phoneNum'   : $scope.adminData.phoneNum,//电话
-                  'group'      : $scope.adminData.group
-                },ajaxCb)
-              }else{
-                $('#tip').append('<div class=\'callout callout-danger\'><p>填写信息不完整</p></div>');
-                setTimeout(function(){
-                  $('#tip').html('');
-                },2000)
-              }
-            }
-          }  
+          }
+        }  
         
       }
       $scope.del = function(name,id){
@@ -207,10 +192,10 @@ block content
             var status = data.status.split('::')[0],
             msg = data.status.split('::')[1];
             if(status === 'SUCCESS'){
-              alert(msg)
-              window.location.reload()
+              toastr.success(msg)
+              setTimeout(function(){window.location.reload()},2000)
             }else{
-              alert(msg)
+              toastr.error('填写信息不完整')
             }
           })
         }

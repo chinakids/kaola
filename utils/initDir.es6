@@ -7,6 +7,9 @@ let initDir = () => {
 	if(!fs.existsSync(path.join(process.cwd(), '.tmp'))){
 	  fs.mkdirSync(path.join(process.cwd(), '.tmp'));
 	};
+	if(!fs.existsSync(path.join(process.cwd(), '.bak'))){
+	  fs.mkdirSync(path.join(process.cwd(), '.bak'));
+	};
 	if(!fs.existsSync(path.join(process.cwd(), 'public/upload'))){
 	  fs.mkdirSync(path.join(process.cwd(), 'public/upload'));
 	  fs.mkdirSync(path.join(process.cwd(), 'public/upload/goods'));

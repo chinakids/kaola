@@ -1,3 +1,22 @@
+//全局toast配置
+toastr.options = {
+  'closeButton': true,
+  'debug': false,
+  'newestOnTop': true,
+  'progressBar': true,
+  'positionClass': 'toast-top-right',
+  'preventDuplicates': false,
+  'onclick': null,
+  'showDuration': '300',
+  'hideDuration': '1000',
+  'timeOut': '1500',
+  'extendedTimeOut': '1000',
+  'showEasing': 'swing',
+  'hideEasing': 'linear',
+  'showMethod': 'fadeIn',
+  'hideMethod': 'fadeOut'
+}
+//angular-tools模块
 angular.module('Kaola.tools', [])
   .filter('md5', function() {
     return function(str) {

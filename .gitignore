@@ -14,3 +14,4 @@ public/upload
 *.bak
 bak/
 .tmp
+.bak

@@ -87,7 +87,7 @@ block content
               $scope.goodList[index].state.top = !$scope.goodList[index].state.top;
             })
           }else{
-            console.log(msg);
+            toastr.error(msg);
           }
         })
       }
@@ -100,7 +100,7 @@ block content
               $scope.goodList[index].state.sell = !$scope.goodList[index].state.sell;
             })
           }else{
-            console.log(msg);
+            toastr.error(msg);
           }
         })
       }
@@ -113,7 +113,7 @@ block content
               $scope.goodList[index].state.display = !$scope.goodList[index].state.display;
             })
           }else{
-            console.log(msg);
+            toastr.error(msg);
           }
         })
       }
@@ -123,10 +123,10 @@ block content
             var status = data.status.split('::')[0],
             msg = data.status.split('::')[1];
             if(status === 'SUCCESS'){
-              alert(msg)
-              window.location.reload()
+              toastr.success(msg)
+              setTimeout(function(){window.location.reload()},2000)
             }else{
-              alert(msg);
+              toastr.error(msg);
             }
           })
         }

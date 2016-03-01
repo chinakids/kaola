@@ -56,7 +56,7 @@ block content
       }
       $scope.add = function(){
         if(!check($scope.alias,$scope.list)){
-          alert('存在相同别名的类目');
+          toastr.error('存在相同别名的类目');
           return false;
         }
         if(!$scope.parent){
@@ -89,10 +89,10 @@ block content
           var status = data.status.split('::')[0],
           msg = data.status.split('::')[1];
           if(status === 'SUCCESS'){
-            alert(msg);
-            window.location.reload()
+            toastr.success(msg)
+            setTimeout(function(){window.location.reload()},2000)
           }else{
-            alert(msg);
+            toastr.error(msg)
           }
         })
       }

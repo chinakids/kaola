@@ -16,10 +16,10 @@ R.use(check.login())
  */
 //数据库管理 - 查看
 R.get('/', check.access('backupsManage-view'), function*(next) {
-  let dirList = fs.readdirSync(process.cwd()+'/bak');
+  let dirList = fs.readdirSync(process.cwd()+'/.bak');
   let backupsList = [];
   dirList.forEach((item) => {
-    if(fs.statSync(process.cwd()+'/bak/'+ item).isDirectory()){
+    if(fs.statSync(process.cwd()+'/.bak/'+ item).isDirectory()){
       backupsList.push(item);
     }
   })
@@ -37,9 +37,9 @@ R.post('/addBackup', check.access('backupsManage-add'), function*(next) {
   //日志记录
   setLog('新增','新增数据库备份',this);
   let time = Date.parse(new Date());
-  if(!fs.existsSync(process.cwd()+'/bak/'+time)){
+  if(!fs.existsSync(process.cwd()+'/.bak/'+time)){
     //创建备份
-    cp.execSync(`mongodump -h ${S.DB_HOST}:${S.DB_PORT} -d ${S.DB_NAME} -o ${process.cwd()}/bak/${time}`);
+    cp.execSync(`mongodump -h ${S.DB_HOST}:${S.DB_PORT} -d ${S.DB_NAME} -o ${process.cwd()}/.bak/${time}`);
     this.body = {
       status: 'SUCCESS::备份成功'
     }
@@ -52,9 +52,9 @@ R.post('/delBackup', check.access('backupsManage-del'), function*(next) {
   if(fs.existsSync(process.cwd()+'/bak/'+parm.time)){
     //删除备份
     if(process.platform === 'win32'){
-      cp.execSync(`del /f /s /q ${process.cwd()}/bak/${parm.time}`);
+      cp.execSync(`del /f /s /q ${process.cwd()}/.bak/${parm.time}`);
     }else{
-      cp.execSync(`rm -R ${process.cwd()}/bak/${parm.time}`);
+      cp.execSync(`rm -R ${process.cwd()}/.bak/${parm.time}`);
     }
     //日志记录
     setLog('删除',`删除数据库备份(time:${parm.time})成功`,this);
@@ -76,11 +76,11 @@ R.post('/restore', check.access('backupsManage-re'), function*(next) {
     //删除备份
     if(S.DB_USERNAME === '' && S.DB_PASSWORD === ''){
       if(parm.drop == 'true'){
-        cp.execSync(`mongorestore -h ${S.DB_HOST}:${S.DB_PORT} -d ${S.DB_NAME} ${process.cwd()}/bak/${parm.time}/${S.DB_NAME} --drop`);
+        cp.execSync(`mongorestore -h ${S.DB_HOST}:${S.DB_PORT} -d ${S.DB_NAME} ${process.cwd()}/.bak/${parm.time}/${S.DB_NAME} --drop`);
         //日志记录
         setLog('恢复',`全量恢复数据库备份(time:${parm.time})成功`,this);
       }else{
-        cp.execSync(`mongorestore -h ${S.DB_HOST}:${S.DB_PORT} -d ${S.DB_NAME} ${process.cwd()}/bak/${parm.time}/${S.DB_NAME}`);
+        cp.execSync(`mongorestore -h ${S.DB_HOST}:${S.DB_PORT} -d ${S.DB_NAME} ${process.cwd()}/.bak/${parm.time}/${S.DB_NAME}`);
         //日志记录
         setLog('恢复',`增量恢复数据库备份(time:${parm.time})成功`,this);
       }
@@ -89,11 +89,11 @@ R.post('/restore', check.access('backupsManage-re'), function*(next) {
       }
     }else{
       if(parm.drop == 'true'){
-        cp.execSync(`mongorestore -h ${S.DB_HOST}:${S.DB_PORT} -d ${S.DB_NAME} -u ${S.DB_USERNAME} -p ${S.DB_PASSWORD} ${process.cwd()}/bak/${parm.time}/${S.DB_NAME} --drop`);
+        cp.execSync(`mongorestore -h ${S.DB_HOST}:${S.DB_PORT} -d ${S.DB_NAME} -u ${S.DB_USERNAME} -p ${S.DB_PASSWORD} ${process.cwd()}/.bak/${parm.time}/${S.DB_NAME} --drop`);
         //日志记录
         setLog('恢复',`全量恢复数据库备份(time:${parm.time})成功`,this);
       }else{
-        cp.execSync(`mongorestore -h ${S.DB_HOST}:${S.DB_PORT} -d ${S.DB_NAME} -u ${S.DB_USERNAME} -p ${S.DB_PASSWORD} ${process.cwd()}/bak/${parm.time}/${S.DB_NAME}`);
+        cp.execSync(`mongorestore -h ${S.DB_HOST}:${S.DB_PORT} -d ${S.DB_NAME} -u ${S.DB_USERNAME} -p ${S.DB_PASSWORD} ${process.cwd()}/.bak/${parm.time}/${S.DB_NAME}`);
         //日志记录
         setLog('恢复',`增量恢复数据库备份(time:${parm.time})成功`,this);
       }

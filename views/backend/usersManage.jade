@@ -123,15 +123,10 @@ block content
         var status = data.status.split('::')[0],
         msg = data.status.split('::')[1];
         if(status === 'SUCCESS'){
-          $('#tip').append('<div class=\'callout callout-success\'><p>'+msg+'</p></div>');
-          setTimeout(function(){
-            window.location.reload()
-          },2000)
+          toastr.success(msg);
+          setTimeout(function(){window.location.reload()},2000)
         }else{
-          $('#tip').append('<div class=\'callout callout-danger\'><p>'+msg+'</p></div>');
-          setTimeout(function(){
-            $('#tip').html('');
-          },2000)
+          toastr.error(msg);
         }
       }
       $scope.submit = function(){
@@ -143,10 +138,7 @@ block content
             //新增
             $.post('/#{pageInfo.adminDomain}/usersManage/addUser',$scope.userData,ajaxCb)
           }else{
-            $('#tip').append('<div class=\'callout callout-danger\'><p>填写信息不完整</p></div>');
-            setTimeout(function(){
-              $('#tip').html('');
-            },2000)
+            toastr.error('填写信息不完整');
           }
         }else if($scope.type === 'edit'){
           if($scope.userData.password === ''){
@@ -161,10 +153,7 @@ block content
                 'phoneNum'   : $scope.userData.phoneNum
               },ajaxCb)
             }else{
-              $('#tip').append('<div class=\'callout callout-danger\'><p>填写信息不完整</p></div>');
-              setTimeout(function(){
-                $('#tip').html('');
-              },2000)
+              toastr.error('填写信息不完整');
             }  
           }else{
             $('#add input').each(function(){
@@ -179,10 +168,7 @@ block content
                 'phoneNum'   : $scope.userData.phoneNum
               },ajaxCb)
             }else{
-              $('#tip').append('<div class=\'callout callout-danger\'><p>填写信息不完整</p></div>');
-              setTimeout(function(){
-                $('#tip').html('');
-              },2000)
+              toastr.error('填写信息不完整');
             }  
           }     
         }
@@ -194,10 +180,10 @@ block content
             var status = data.status.split('::')[0],
             msg = data.status.split('::')[1];
             if(status === 'SUCCESS'){
-              alert(msg)
-              window.location.reload()
+              toastr.success(msg)
+              setTimeout(function(){window.location.reload()},2000)
             }else{
-              alert(msg)
+              toastr.error(msg)
             }
           })
         }

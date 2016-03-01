@@ -76,7 +76,6 @@ block content
               button.btn.btn-primary.pull-right(type='button',ng-click='submit()')
                 i.fa.fa-paper-plane-o
                 |  发布
-              div#tip.pull-right
 
   script.
     angular.module('Kaola', ['Kaola.tools'])
@@ -110,7 +109,7 @@ block content
             })
             $(this).val('').css({paddingLeft:$(this).siblings('ul').width()})
           }else{
-            alert('标签已存在或不可为空')
+            toastr.error('标签已存在或不可为空')
           }
         }
       })
@@ -142,10 +141,7 @@ block content
         })
         if ($('#add .reg-success').size() === 4) {
           if(categoryId === ''){
-            $('#tip').append('<div class=\'callout callout-danger\'><p>请选择文章类目</p></div>');
-            setTimeout(function(){
-              $('#tip').html('');
-            },2000)
+            toastr.error('请选择文章类目')
             return false
           }
           if($scope.editor.getMarkdown().replace(/\s/g,'').length >= 20){
@@ -157,28 +153,17 @@ block content
               var status = data.status.split('::')[0],
               msg = data.status.split('::')[1];
               if(status === 'SUCCESS'){
-                $('#tip').append('<div class=\'callout callout-success\'><p>'+msg+'</p></div>');
-                setTimeout(function(){
-                  window.location.href = './'
-                },2000)
+                toastr.success(msg);
+                setTimeout(function(){window.location.href = './'},2000)
               }else{
-                $('#tip').append('<div class=\'callout callout-danger\'><p>'+msg+'</p></div>');
-                setTimeout(function(){
-                  $('#tip').html('');
-                },2000)
+                toastr.error(msg)
               }
             })
           }else{
-            $('#tip').append('<div class=\'callout callout-danger\'><p>内容不可少于20字</p></div>');
-            setTimeout(function(){
-              $('#tip').html('');
-            },2000)
+            toastr.error('内容不可少于20字')
           }
         }else{
-          $('#tip').append('<div class=\'callout callout-danger\'><p>填写信息不完整</p></div>');
-          setTimeout(function(){
-            $('#tip').html('');
-          },2000)
+          toastr.error('填写信息不完整')
         }
       }
     }])

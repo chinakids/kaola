@@ -50,10 +50,10 @@ block content
             var status = data.status.split('::')[0],
             msg = data.status.split('::')[1];
             if(status === 'SUCCESS'){
-              alert(msg)
-              window.location.reload()
+              toastr.success(msg)
+              setTimeout(function(){window.location.reload()},2000)
             }else{
-              alert(msg)
+              toastr.error(msg)
             }
           })
         }

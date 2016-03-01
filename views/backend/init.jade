@@ -42,27 +42,18 @@ block layout
           $(this).trigger('focus').trigger('blur');
         })
         if($('#init .reg-success').size() === 5){
-          console.log($scope.initData)
           $.post('/#{pageInfo.adminDomain}/init',$scope.initData,function(data){
             var status = data.status.split('::')[0],
             msg = data.status.split('::')[1];
             if(status === 'SUCCESS'){
-              $('#tip').append('<div class=\'callout callout-success\'><p>'+msg+'</p></div>');
-              setTimeout(function(){
-                window.location.href = './'
-              },2000)
+              toastr.success(msg);
+              setTimeout(function(){window.location.href = './'},2000)
             }else{
-              $('#tip').append('<div class=\'callout callout-danger\'><p>'+msg+'</p></div>');
-              setTimeout(function(){
-                $('#tip').html('');
-              },2000)
+              toastr.error(msg);
             }
           })
         }else{
-          $('#tip').append('<div class=\'callout callout-danger\'><p>初始化信息不完整</p></div>');
-          setTimeout(function(){
-            $('#tip').html('');
-          },2000)
+          toastr.error('初始化信息不完整')
         }
       }
     }])

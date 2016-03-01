@@ -38,10 +38,10 @@ block layout
           var status = data.status.split('::')[0],
           msg = data.status.split('::')[1];
           if(status !== 'SUCCESS'){
-            alert(msg)
+            toastr.success(msg)
           }else{
-          	alert(msg)
-          	window.location.href = '/#{pageInfo.adminDomain}/';
+          	toastr.error(msg)
+          	setTimeout(function(){window.location.href = '/#{pageInfo.adminDomain}/'},2000);
           }
         })
       }
