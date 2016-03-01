@@ -5,19 +5,19 @@ import categoryModel from './../../models/Categories';
 import getPageCount from './../../controller/getPageCount';
 import setTag from './../../controller/setTag';
 import copyImage from './../../controller/copyImage';
-import { checkingAccess , checkingLogin } from './../../controller/getAccess';
+import check from './../../controller/getAccess';
 import cf from './../../controller/categoryFactory';
 import setLog from './../../controller/setLog';
 
 let R = router();
 
-R.use(checkingLogin())
+R.use(check.login())
 /**
  * 文章管理相关
  */
 
 //文章管理
-R.get('/', checkingAccess('articlesManage-view'), function*(next) {
+R.get('/', check.access('articlesManage-view'), function*(next) {
   let query = this.request.query;
   let count = yield articlesModel.count({});
   let articleFetch = yield articlesModel.fetch(query.page,query.limit);
@@ -29,7 +29,7 @@ R.get('/', checkingAccess('articlesManage-view'), function*(next) {
   }, this);
 });
 //添加文章
-R.get('/addArticle', checkingAccess('articlesManage-add'), function*(next) {
+R.get('/addArticle', check.access('articlesManage-add'), function*(next) {
   let categoriesList = yield categoryModel.fetch();
   yield render('articlesAdd', {
     title: '添加文章',
@@ -38,7 +38,7 @@ R.get('/addArticle', checkingAccess('articlesManage-add'), function*(next) {
   }, this);
 });
 
-R.post('/addArticle', checkingAccess('articlesManage-add'), setTag, function*(next) {
+R.post('/addArticle', check.access('articlesManage-add'), setTag, function*(next) {
   let parm = this.request.body;
   parm.author = this.session.userInfo._id;
   parm.imgList = copyImage(parm.imgList,'articles');
@@ -51,7 +51,7 @@ R.post('/addArticle', checkingAccess('articlesManage-add'), setTag, function*(ne
   }
 });
 //修改文章
-R.get('/editArticle', checkingAccess('articlesManage-edit'), function*(next) {
+R.get('/editArticle', check.access('articlesManage-edit'), function*(next) {
   let parm = this.request.query;
   let article = yield articlesModel.findById(parm.id);
   let categoriesList = yield categoryModel.fetch();
@@ -68,7 +68,7 @@ R.get('/editArticle', checkingAccess('articlesManage-edit'), function*(next) {
     }, this);
   }
 });
-R.post('/editArticle', checkingAccess('articlesManage-edit'), setTag, function*(next) {
+R.post('/editArticle', check.access('articlesManage-edit'), setTag, function*(next) {
   let parm = this.request.body;
   let article = yield articlesModel.findById(parm._id);
   if (article.length <= 0) {
@@ -88,7 +88,7 @@ R.post('/editArticle', checkingAccess('articlesManage-edit'), setTag, function*(
   }
 });
 //修改文章 - 置顶
-R.post('/editArticleTop', checkingAccess('articlesManage-edit'), function*(next) {
+R.post('/editArticleTop', check.access('articlesManage-edit'), function*(next) {
   let parm = this.request.body;
   let article = yield articlesModel.findById(parm.id);
   if (article.length <= 0) {
@@ -107,7 +107,7 @@ R.post('/editArticleTop', checkingAccess('articlesManage-edit'), function*(next)
   }
 });
 //修改文章 - 显示
-R.post('/editArticleDisplay', checkingAccess('articlesManage-edit'), function*(next) {
+R.post('/editArticleDisplay', check.access('articlesManage-edit'), function*(next) {
   let parm = this.request.body;
   let article = yield articlesModel.findById(parm.id);
   if (article.length <= 0) {
@@ -126,7 +126,7 @@ R.post('/editArticleDisplay', checkingAccess('articlesManage-edit'), function*(n
   }
 });
 //删除文章
-R.post('/delArticle', checkingAccess('articlesManage-del'), function*(next) {
+R.post('/delArticle', check.access('articlesManage-del'), function*(next) {
   let parm = this.request.body;
   let article = yield articlesModel.findById(parm.id);
   if (article.length <= 0) {

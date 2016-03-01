@@ -3,7 +3,7 @@ import path from 'path';
 /**
  * [initDir 初始化目录]
  */
-function initDir(){
+let initDir = () => {
 	if(!fs.existsSync(path.join(process.cwd(), '.tmp'))){
 	  fs.mkdirSync(path.join(process.cwd(), '.tmp'));
 	};

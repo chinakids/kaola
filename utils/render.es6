@@ -13,7 +13,7 @@ import S from './../conf/setting';
  * 1.  rander('index',{...},this);
  * 2.  rander.call(this,'index',{...});
  */
-function * render(name, source ,ctx){
+export default function * render(name, source ,ctx){
   let self = ctx || this;
   let group = 'fontend';
   let data = source;
@@ -53,5 +53,3 @@ function * render(name, source ,ctx){
     self.body = templateJS(jadeRuntime,data);
   }
 }
-
-export default render;

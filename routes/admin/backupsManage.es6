@@ -4,18 +4,18 @@ import fs from 'fs';
 import cp from 'child_process';
 import getPageCount from './../../controller/getPageCount';
 import S from './../../conf/setting';
-import { checkingAccess , checkingLogin } from './../../controller/getAccess';
+import check from './../../controller/getAccess';
 import setLog from './../../controller/setLog';
 
 let R = router();
 
-R.use(checkingLogin())
+R.use(check.login())
 
 /**
  * 数据库管理相关
  */
 //数据库管理 - 查看
-R.get('/', checkingAccess('backupsManage-view'), function*(next) {
+R.get('/', check.access('backupsManage-view'), function*(next) {
   let dirList = fs.readdirSync(process.cwd()+'/bak');
   let backupsList = [];
   dirList.forEach((item) => {
@@ -33,7 +33,7 @@ R.get('/', checkingAccess('backupsManage-view'), function*(next) {
   }, this);
 });
 //数据库管理 - 新增
-R.post('/addBackup', checkingAccess('backupsManage-add'), function*(next) {
+R.post('/addBackup', check.access('backupsManage-add'), function*(next) {
   //日志记录
   setLog('新增','新增数据库备份',this);
   let time = Date.parse(new Date());
@@ -46,7 +46,7 @@ R.post('/addBackup', checkingAccess('backupsManage-add'), function*(next) {
   }
 });
 //数据库管理 - 删除
-R.post('/delBackup', checkingAccess('backupsManage-del'), function*(next) {
+R.post('/delBackup', check.access('backupsManage-del'), function*(next) {
   let parm = this.request.body;
   //日志记录
   if(fs.existsSync(process.cwd()+'/bak/'+parm.time)){
@@ -68,7 +68,7 @@ R.post('/delBackup', checkingAccess('backupsManage-del'), function*(next) {
   }
 });
 //数据库管理 - 恢复 TODO 还要加带密码版本的
-R.post('/restore', checkingAccess('backupsManage-re'), function*(next) {
+R.post('/restore', check.access('backupsManage-re'), function*(next) {
   let parm = this.request.body;
   //日志记录
   setLog('恢复',`尝试恢复数据库备份(time:${parm.time})`,this);

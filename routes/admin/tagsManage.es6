@@ -2,19 +2,19 @@ import router from 'koa-router';
 import render from './../../utils/render';
 import tagModel from './../../models/Tags';
 import getPageCount from './../../controller/getPageCount';
-import { checkingAccess , checkingLogin } from './../../controller/getAccess';
+import check from './../../controller/getAccess';
 import setLog from './../../controller/setLog';
 
 let R = router();
 
-R.use(checkingLogin())
+R.use(check.login())
 /**
  * 3.商品管理相关
  */
 
 
 //标签管理
-R.get('/', checkingAccess('tagManage-view'), function*(next) {
+R.get('/', check.access('tagManage-view'), function*(next) {
   let query = this.request.query;
   let count = yield tagModel.count({});
   let fetch = yield tagModel.fetch(query.page,query.limit);

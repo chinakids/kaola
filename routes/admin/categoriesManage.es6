@@ -1,19 +1,19 @@
 import router from 'koa-router';
 import render from './../../utils/render';
 import categoryModel from './../../models/Categories';
-import { checkingAccess , checkingLogin } from './../../controller/getAccess';
+import check from './../../controller/getAccess';
 import cf from './../../controller/categoryFactory';
 import setLog from './../../controller/setLog';
 
 let R = router();
 
-R.use(checkingLogin())
+R.use(check.login())
 /**
  * 3.栏目管理相关
  */
 
 //标签管理
-R.get('/', checkingAccess('categoriesManage-view'), function*(next) {
+R.get('/', check.access('categoriesManage-view'), function*(next) {
   let fetch = yield categoryModel.fetch();
   yield render('categoriesManage', {
     title: '栏目管理',
@@ -22,7 +22,7 @@ R.get('/', checkingAccess('categoriesManage-view'), function*(next) {
   }, this);
 });
 
-R.post('/updateCategory', checkingAccess('categoriesManage-update'), function*(next) {
+R.post('/updateCategory', check.access('categoriesManage-update'), function*(next) {
 	let parm = this.request.body;
 	let arr = cf.parse(parm.data);
 	for (let i = 0,len = arr.length; i < len; i++) {

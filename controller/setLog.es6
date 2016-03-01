@@ -4,7 +4,7 @@
 import logModel from '../models/Logs';
 import logger from './../utils/logger';
 
-function setLog(type,msg,ctx,level = 4){
+let setLog = (type,msg,ctx,level = 4) => {
   let ip = ctx.req.headers['x-forwarded-for'] || ctx.req.connection.remoteAddress || ctx.req.socket.remoteAddress || ctx.req.connection.socket.remoteAddress;
   let log = new logModel({
     type      : type,

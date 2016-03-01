@@ -12,38 +12,16 @@ let pages = {
   fontend:{}
 };
 
-function templateCache(){
-  //递归后台模板
-  let backendViews = path.join(__dirname, './../views/backend');
-  fs.readdirSync(backendViews).forEach((item) => {
-    if(!fs.statSync(backendViews + '/' + item).isDirectory()){
-      if(item.indexOf('.jade') !== -1){
-        pages['backend'][item.split('.')[0]] = item;
-      };
-    };
-  });
-  //递归前台模板
-  let fontendViews = path.join(__dirname, './../views/fontend');
-  fs.readdirSync(fontendViews).forEach((item) => {
-    if(!fs.statSync(fontendViews + '/' + item).isDirectory()){
-      if(item.indexOf('.jade') !== -1){
-        pages['fontend'][item.split('.')[0]] = item;
-      };
-    };
-  });
-  compileRenderService();
-};
-
-function compileRenderService(){
+let compileRenderService = () => {
   for(let name in pages.backend){
     preCompile(path.join(__dirname,'./../views/backend/'+pages['backend'][name]), name, 'backend');
   };
   for(let name in pages.fontend){
     preCompile(path.join(__dirname,'./../views/fontend/'+pages['fontend'][name]), name, 'fontend');
   };
-};
+}
 
-function preCompile(filePath, pageName, group){
+let preCompile = (filePath, pageName, group) => {
   //文件储存缓存
   fs.writeFile(path.join(__dirname,`./../views/.cache/${group}/${pageName}.cache`),jade.compileFileClient(filePath))
   //数据库存入副本
@@ -81,6 +59,28 @@ function preCompile(filePath, pageName, group){
       };
     };
   });
-};
+}
+
+let templateCache = () => {
+  //递归后台模板
+  let backendViews = path.join(__dirname, './../views/backend');
+  fs.readdirSync(backendViews).forEach((item) => {
+    if(!fs.statSync(backendViews + '/' + item).isDirectory()){
+      if(item.indexOf('.jade') !== -1){
+        pages['backend'][item.split('.')[0]] = item;
+      };
+    };
+  });
+  //递归前台模板
+  let fontendViews = path.join(__dirname, './../views/fontend');
+  fs.readdirSync(fontendViews).forEach((item) => {
+    if(!fs.statSync(fontendViews + '/' + item).isDirectory()){
+      if(item.indexOf('.jade') !== -1){
+        pages['fontend'][item.split('.')[0]] = item;
+      };
+    };
+  });
+  compileRenderService();
+}
 
 export default templateCache;

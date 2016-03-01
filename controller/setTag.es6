@@ -4,7 +4,7 @@
 
 import tagModel from './../models/Tags';
 
-function * setTag(next){
+export default function * setTag(next){
   yield next;
   let parm = this.request.body;
   let tagList = parm.tag.split(',');
@@ -21,5 +21,3 @@ function * setTag(next){
     }
   };
 }
-
-export default setTag;

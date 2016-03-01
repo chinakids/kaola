@@ -5,19 +5,19 @@ import categoryModel from './../../models/Categories';
 import getPageCount from './../../controller/getPageCount';
 import setTag from './../../controller/setTag';
 import copyImage from './../../controller/copyImage';
-import { checkingAccess , checkingLogin } from './../../controller/getAccess';
+import check from './../../controller/getAccess';
 import cf from './../../controller/categoryFactory';
 import setLog from './../../controller/setLog';
 
 let R = router();
 
-R.use(checkingLogin())
+R.use(check.login())
 /**
  * 商品管理相关
  */
 
 //商品管理
-R.get('/', checkingAccess('goodsManage-view'), function*(next) {
+R.get('/', check.access('goodsManage-view'), function*(next) {
   let query = this.request.query;
   let count = yield goodsModel.count({});
   let goodFetch = yield goodsModel.fetch(query.page,query.limit);
@@ -29,7 +29,7 @@ R.get('/', checkingAccess('goodsManage-view'), function*(next) {
   }, this);
 });
 //添加商品
-R.get('/addGood', checkingAccess('goodsManage-add'), function*(next) {
+R.get('/addGood', check.access('goodsManage-add'), function*(next) {
   let categoriesList = yield categoryModel.fetch();
   yield render('goodsAdd', {
     title: '添加商品',
@@ -38,7 +38,7 @@ R.get('/addGood', checkingAccess('goodsManage-add'), function*(next) {
   }, this);
 });
 
-R.post('/addGood', checkingAccess('goodsManage-add'), setTag, function*(next) {
+R.post('/addGood', check.access('goodsManage-add'), setTag, function*(next) {
   let parm = this.request.body;
   parm.author = this.session.userInfo._id;
   parm.imgList = copyImage(parm.imgList,'goods');
@@ -51,7 +51,7 @@ R.post('/addGood', checkingAccess('goodsManage-add'), setTag, function*(next) {
   }
 });
 //修改商品
-R.get('/editGood', checkingAccess('goodsManage-edit'), function*(next) {
+R.get('/editGood', check.access('goodsManage-edit'), function*(next) {
   let parm = this.request.query;
   let good = yield goodsModel.findById(parm.id);
   let categoriesList = yield categoryModel.fetch();
@@ -68,7 +68,7 @@ R.get('/editGood', checkingAccess('goodsManage-edit'), function*(next) {
     }, this);
   }
 });
-R.post('/editGood', checkingAccess('goodsManage-edit'), setTag, function*(next) {
+R.post('/editGood', check.access('goodsManage-edit'), setTag, function*(next) {
   let parm = this.request.body;
   let good = yield goodsModel.findById(parm._id);
   if (good.length <= 0) {
@@ -88,7 +88,7 @@ R.post('/editGood', checkingAccess('goodsManage-edit'), setTag, function*(next) 
   }
 });
 //修改商品 - 置顶
-R.post('/editGoodTop', checkingAccess('goodsManage-edit'), function*(next) {
+R.post('/editGoodTop', check.access('goodsManage-edit'), function*(next) {
   let parm = this.request.body;
   let good = yield goodsModel.findById(parm.id);
   if (good.length <= 0) {
@@ -107,7 +107,7 @@ R.post('/editGoodTop', checkingAccess('goodsManage-edit'), function*(next) {
   }
 });
 //修改商品 - 销售状态
-R.post('/editGoodSell', checkingAccess('goodsManage-edit'), function*(next) {
+R.post('/editGoodSell', check.access('goodsManage-edit'), function*(next) {
   let parm = this.request.body;
   let good = yield goodsModel.findById(parm.id);
   if (good.length <= 0) {
@@ -126,7 +126,7 @@ R.post('/editGoodSell', checkingAccess('goodsManage-edit'), function*(next) {
   }
 });
 //修改商品 - 显示
-R.post('/editGoodDisplay', checkingAccess('goodsManage-edit'), function*(next) {
+R.post('/editGoodDisplay', check.access('goodsManage-edit'), function*(next) {
   let parm = this.request.body;
   let good = yield goodsModel.findById(parm.id);
   if (good.length <= 0) {
@@ -145,7 +145,7 @@ R.post('/editGoodDisplay', checkingAccess('goodsManage-edit'), function*(next) {
   }
 });
 //删除商品
-R.post('/delGood', checkingAccess('goodsManage-del'), function*(next) {
+R.post('/delGood', check.access('goodsManage-del'), function*(next) {
   let parm = this.request.body;
   let good = yield goodsModel.findById(parm.id);
   if (good.length <= 0) {

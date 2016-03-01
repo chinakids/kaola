@@ -3,7 +3,7 @@
  */
 import usersModel from '../models/Users';
 
-function * userInfo(next){
+export default function * userInfo(next){
   if(this.session.login){
     let data = yield usersModel.getInfoByEmail(this.session.email);
     if(data.length <= 0){
@@ -18,6 +18,3 @@ function * userInfo(next){
     yield next;
   }
 }
-
-
-export default userInfo;

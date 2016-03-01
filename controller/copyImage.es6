@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-function copyImage(oldList,type){
+let copyImage = (oldList,type) => {
 	let newList = {};
 	if(typeof oldList === 'string') oldList = JSON.parse(oldList);
 	for(let item in oldList){

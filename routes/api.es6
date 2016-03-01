@@ -4,7 +4,7 @@ import ccap from 'ccap';
 import path from 'path';
 import fs from 'fs';
 import parse from 'co-busboy';
-import { checkingAccess , checkingLogin } from './../controller/getAccess';
+import check from './../controller/getAccess';
 
 let securityCode = ccap({
   'width':214,
@@ -23,7 +23,7 @@ R.get('/securityCode',function *(next) {
 });
 
 //上传图片,目前只做单张上传
-R.post('/uploadImg', checkingLogin(), function *(next) {
+R.post('/uploadImg', check.login(), function *(next) {
   // multipart upload
   let parts = parse(this, {
     autoFields:true
@@ -50,7 +50,7 @@ R.post('/uploadImg', checkingLogin(), function *(next) {
   }
 });
 //删除缓存
-R.post('/delImgTmp', checkingLogin(), function *(next) {
+R.post('/delImgTmp', check.login(), function *(next) {
   let query = this.request.query;
   if(fs.existsSync(path.join(process.cwd() + '/.tmp', query.url))) fs.unlinkSync(path.join(process.cwd() + '/.tmp', query.url));
   this.body = {

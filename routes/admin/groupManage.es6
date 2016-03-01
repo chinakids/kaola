@@ -3,19 +3,19 @@ import render from './../../utils/render';
 import crypto from 'crypto';
 import userGroupModel from './../../models/UserGroup';
 import getPageCount from './../../controller/getPageCount';
-import { checkingAccess , checkingLogin } from './../../controller/getAccess';
+import check from './../../controller/getAccess';
 import setLog from './../../controller/setLog';
 
 let R = router();
 
-R.use(checkingLogin())
+R.use(check.login())
 /**
  * 3.商品管理相关
  */
 
 
 //权限组管理
-R.get('/', checkingAccess('groupManage-view'), function*(next) {
+R.get('/', check.access('groupManage-view'), function*(next) {
   let count = yield userGroupModel.count({});
   let fetch = yield userGroupModel.fetch();
   yield render('groupManage', {
@@ -25,7 +25,7 @@ R.get('/', checkingAccess('groupManage-view'), function*(next) {
   }, this);
 });
 //管理员管理 - 增加
-R.post('/addGroup', checkingAccess('groupManage-add'), function*(next) {
+R.post('/addGroup', check.access('groupManage-add'), function*(next) {
   //存入
   let parm = this.request.body;
   let checking = yield userGroupModel.findByName(parm.name);
@@ -47,7 +47,7 @@ R.post('/addGroup', checkingAccess('groupManage-add'), function*(next) {
   }
 });
 //管理员管理 - 修改
-R.post('/editGroup',checkingAccess('groupManage-edit'), function*(next) {
+R.post('/editGroup',check.access('groupManage-edit'), function*(next) {
   let parm = this.request.body;
   let group = yield userGroupModel.findById(parm._id);
   if (group.length <= 0) {
@@ -72,7 +72,7 @@ R.post('/editGroup',checkingAccess('groupManage-edit'), function*(next) {
   }
 });
 //管理员管理 - 删除
-R.post('/delGroup', checkingAccess('groupManage-del'), function*(next) {
+R.post('/delGroup', check.access('groupManage-del'), function*(next) {
   let parm = this.request.body;
   let group = yield userGroupModel.findById(parm._id);
   if (group.length <= 0) {

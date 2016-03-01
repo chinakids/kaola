@@ -4,18 +4,18 @@ import crypto from 'crypto';
 import usersModel from './../../models/Users';
 import userGroupModel from './../../models/UserGroup';
 import getPageCount from './../../controller/getPageCount';
-import { checkingAccess , checkingLogin } from './../../controller/getAccess';
+import check from './../../controller/getAccess';
 import setLog from './../../controller/setLog';
 
 let R = router();
 
-R.use(checkingLogin())
+R.use(check.login())
 
 /**
  * 会员管理相关
  */
 //会员管理
-R.get('/', checkingAccess('usersManage-view'), function*(next) {
+R.get('/', check.access('usersManage-view'), function*(next) {
   let query = this.request.query;
   let count = yield usersModel.count({});
   let userFetch = yield usersModel.findUser(query.page,query.limit);
@@ -27,7 +27,7 @@ R.get('/', checkingAccess('usersManage-view'), function*(next) {
   }, this);
 });
 //会员管理 - 增加
-R.post('/addUser', checkingAccess('usersManage-add'), function*(next) {
+R.post('/addUser', check.access('usersManage-add'), function*(next) {
   let parm = this.request.body;
   let md5 = crypto.createHash('md5');
   let checking = yield usersModel.findUserByEmail(parm.email);
@@ -53,7 +53,7 @@ R.post('/addUser', checkingAccess('usersManage-add'), function*(next) {
   }
 });
 //会员管理 - 修改
-R.post('/editUser', checkingAccess('usersManage-edit'), function*(next) {
+R.post('/editUser', check.access('usersManage-edit'), function*(next) {
   let parm = this.request.body;
   let md5 = crypto.createHash('md5');
   let user = yield usersModel.findUserById(parm._id);
@@ -87,7 +87,7 @@ R.post('/editUser', checkingAccess('usersManage-edit'), function*(next) {
   }
 });
 //会员管理 - 删除
-R.post('/delUser', checkingAccess('usersManage-del'), function*(next) {
+R.post('/delUser', check.access('usersManage-del'), function*(next) {
   let parm = this.request.body;
   let user = yield usersModel.findUserById(parm._id);
   if (user.length <= 0) {
