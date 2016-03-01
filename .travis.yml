@@ -1,7 +1,12 @@
 sudo: false
 language: node_js
+compiler:
+  - gcc
+python:
+  - '2.7'
 os:
   - linux
+  - osx
 node_js:
   - '0.12'
   - '4.1'

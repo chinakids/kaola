@@ -10,17 +10,17 @@ const globalSetting =  {
   //应用信息
   NAME: baseInfo.name, //应用名称
   VERSION: 'v'+baseInfo.version, //应用版本
-  AUTHOR: '', //作者
+  AUTHOR: 'chinakids', //作者
   ALLOW_DOMAIN: ['127.0.0.1'], //域名白名单,只允许名单内的域名访问,false为不开启
   ADMIN_DOMAIN: 'admin', //进入管理后台的url，‘http://{{ALLOW_DOMAIN}}/{{ADMIN_DOMAIN}}’
 
-  //debug 为 true 时，用于本地调试
-  DEBUG: true,
+  //debug 为 true 时,用于本地调试,
+  DEBUG: true, //开启时,模板将不会使用预编译
   SERVICE: 'pm2',  //进程维护工具
-  NEED_INIT: true, //是否需要初始化管理员账户，设置为true访问 ‘http://{{ALLOW_DOMAIN}}/{{ADMIN_DOMAIN}}/init’设置管理员账户,设置完毕记得关掉
+  NEED_INIT: false, //是否需要初始化管理员账户，设置为true访问 ‘http://{{ALLOW_DOMAIN}}/{{ADMIN_DOMAIN}}/init’设置管理员账户,设置完毕记得关掉
 
   //日志记录
-  LOG_DIR:process.cwd() + '/log', //日志目录
+  LOG_DIR:process.cwd() + '/.log', //日志目录
   LOG_CATEGORIES:['router','model','template'], //日志类型 logger(name,...)中的name
 
   //seeion&cookie相关
