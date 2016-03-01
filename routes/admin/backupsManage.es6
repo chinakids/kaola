@@ -49,7 +49,7 @@ R.post('/addBackup', check.access('backupsManage-add'), function*(next) {
 R.post('/delBackup', check.access('backupsManage-del'), function*(next) {
   let parm = this.request.body;
   //日志记录
-  if(fs.existsSync(process.cwd()+'/bak/'+parm.time)){
+  if(fs.existsSync(process.cwd()+'/.bak/'+parm.time)){
     //删除备份
     if(process.platform === 'win32'){
       cp.execSync(`del /f /s /q ${process.cwd()}/.bak/${parm.time}`);
@@ -72,7 +72,7 @@ R.post('/restore', check.access('backupsManage-re'), function*(next) {
   let parm = this.request.body;
   //日志记录
   setLog('恢复',`尝试恢复数据库备份(time:${parm.time})`,this);
-  if(fs.existsSync(process.cwd()+'/bak/'+parm.time)){
+  if(fs.existsSync(process.cwd()+'/.bak/'+parm.time)){
     //删除备份
     if(S.DB_USERNAME === '' && S.DB_PASSWORD === ''){
       if(parm.drop == 'true'){
