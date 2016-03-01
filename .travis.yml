@@ -22,9 +22,9 @@ services:
   - redis
 before_script:
   - python --version
-  - sudo npm install -g node-gyp
-  - sudo npm install -g babel
-  - sudo npm install -g pm2
+  - npm install -g node-gyp
+  - npm install -g babel
+  - npm install -g pm2
   - npm install
 script:
   - npm start
