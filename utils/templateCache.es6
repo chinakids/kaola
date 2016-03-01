@@ -1,5 +1,4 @@
 import fs from 'fs';
-import _ from 'underscore';
 import path from 'path';
 import jade from 'jade';
 import logger from './logger';
@@ -70,7 +69,7 @@ function preCompile(filePath, pageName, group){
         let _template = {
           content : jade.compileFileClient(filePath)
         };
-        let newTemplate = _.extend(templates[0],_template);
+        let newTemplate = Object.assign(templates[0],_template);
         newTemplate.compiled = newTemplate.compiled + 1;
         newTemplate.save((err,template) => {
           if(err){
