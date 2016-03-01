@@ -9,7 +9,7 @@ import setLog from './../../controller/setLog';
 
 let R = router();
 
-R.use(checkingLogin)
+R.use(checkingLogin())
 
 /**
  * 数据库管理相关

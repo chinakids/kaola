@@ -1,6 +1,5 @@
 import router from 'koa-router';
 import render from './../../utils/render';
-import _ from 'underscore';
 import crypto from 'crypto';
 import userGroupModel from './../../models/UserGroup';
 import getPageCount from './../../controller/getPageCount';
@@ -9,7 +8,7 @@ import setLog from './../../controller/setLog';
 
 let R = router();
 
-R.use(checkingLogin)
+R.use(checkingLogin())
 /**
  * 3.商品管理相关
  */
@@ -62,7 +61,7 @@ R.post('/editGroup',checkingAccess('groupManage-edit'), function*(next) {
         status: 'FAIL::Root权限无法修改'
       }
     } else {
-      let _group = _.extend(group[0], parm);
+      let _group = Object.assign(group[0], parm);
       yield _group.save()
       //日志记录
       setLog('修改',`修改系统权限组(name:${_group.name})成功`,this);

@@ -27,7 +27,6 @@
     "koa-static": "^1.5.2",
     "koa-views": "^3.1.0",
     "mini-logger": "^1.1.0",
-    "mongoose": "^4.3.4",
-    "underscore": "^1.8.3"
+    "mongoose": "^4.3.4"
   }
 }

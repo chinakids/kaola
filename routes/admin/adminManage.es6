@@ -1,6 +1,5 @@
 import router from 'koa-router';
 import render from './../../utils/render';
-import _ from 'underscore';
 import crypto from 'crypto';
 import usersModel from './../../models/Users';
 import userGroupModel from './../../models/UserGroup';
@@ -10,7 +9,7 @@ import setLog from './../../controller/setLog';
 
 let R = router();
 
-R.use(checkingLogin)
+R.use(checkingLogin())
 
 /**
  * 系统管理相关
@@ -75,7 +74,7 @@ R.post('/editAdmin', checkingAccess('adminManage-edit'), function*(next) {
         parm.password = md5.update(parm.password).digest('hex')
       }
       //合并
-      let _admin = _.extend(admin[0], parm);
+      let _admin = Object.assign(admin[0], parm);
       yield _admin.save()
       //日志记录
       setLog('修改',`修改系统管理员(email:${parm.email})成功`,this);

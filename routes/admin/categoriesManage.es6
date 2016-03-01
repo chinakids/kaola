@@ -1,7 +1,5 @@
 import router from 'koa-router';
 import render from './../../utils/render';
-import _ from 'underscore';
-import crypto from 'crypto';
 import categoryModel from './../../models/Categories';
 import { checkingAccess , checkingLogin } from './../../controller/getAccess';
 import cf from './../../controller/categoryFactory';
@@ -9,7 +7,7 @@ import setLog from './../../controller/setLog';
 
 let R = router();
 
-R.use(checkingLogin)
+R.use(checkingLogin())
 /**
  * 3.栏目管理相关
  */
@@ -41,7 +39,7 @@ R.post('/updateCategory', checkingAccess('categoriesManage-update'), function*(n
 	  } else {
 	  	
 	  	//修改
-      let _category = _.extend(category[0], arr[i]);
+      let _category = Object.assign(category[0], arr[i]);
       yield _category.save()
   	}
 	};

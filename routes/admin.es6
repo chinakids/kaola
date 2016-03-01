@@ -1,7 +1,6 @@
 import router from 'koa-router';
 import render from './../utils/render';
 import ccap from 'ccap';
-import _ from 'underscore';
 import crypto from 'crypto';
 import getPageCount from './../controller/getPageCount';
 import setLog from './../controller/setLog';

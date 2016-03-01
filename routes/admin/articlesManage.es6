@@ -1,6 +1,5 @@
 import router from 'koa-router';
 import render from './../../utils/render';
-import _ from 'underscore';
 import articlesModel from './../../models/Articles';
 import categoryModel from './../../models/Categories';
 import getPageCount from './../../controller/getPageCount';
@@ -12,7 +11,7 @@ import setLog from './../../controller/setLog';
 
 let R = router();
 
-R.use(checkingLogin)
+R.use(checkingLogin())
 /**
  * 文章管理相关
  */
@@ -79,7 +78,7 @@ R.post('/editArticle', checkingAccess('articlesManage-edit'), setTag, function*(
   } else {
     parm.imgList = copyImage(parm.imgList,'articles');
     //合并
-    let _article = _.extend(article[0], parm);
+    let _article = Object.assign(article[0], parm);
     yield _article.save();
     //日志记录
     setLog('修改',`修改文章<<${_article.title}>>成功`,this);

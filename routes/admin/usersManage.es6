@@ -1,6 +1,5 @@
 import router from 'koa-router';
 import render from './../../utils/render';
-import _ from 'underscore';
 import crypto from 'crypto';
 import usersModel from './../../models/Users';
 import userGroupModel from './../../models/UserGroup';
@@ -10,7 +9,7 @@ import setLog from './../../controller/setLog';
 
 let R = router();
 
-R.use(checkingLogin)
+R.use(checkingLogin())
 
 /**
  * 会员管理相关
@@ -77,7 +76,7 @@ R.post('/editUser', checkingAccess('usersManage-edit'), function*(next) {
         delete parm.email;
       }
       //合并
-      let _user = _.extend(user[0], parm);
+      let _user = Object.assign(user[0], parm);
       yield _user.save()
       //日志记录
       setLog('修改',`修改用户(email:${_user.email})成功`,this);

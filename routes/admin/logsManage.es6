@@ -1,7 +1,5 @@
 import router from 'koa-router';
 import render from './../../utils/render';
-import _ from 'underscore';
-import crypto from 'crypto';
 import logModel from './../../models/Logs';
 import getPageCount from './../../controller/getPageCount';
 import { checkingAccess , checkingLogin } from './../../controller/getAccess';
@@ -9,7 +7,7 @@ import setLog from './../../controller/setLog';
 
 let R = router();
 
-R.use(checkingLogin);
+R.use(checkingLogin());
 /**
  * 日志管理相关
  */

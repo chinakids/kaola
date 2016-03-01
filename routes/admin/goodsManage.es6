@@ -1,6 +1,5 @@
 import router from 'koa-router';
 import render from './../../utils/render';
-import _ from 'underscore';
 import goodsModel from './../../models/Goods';
 import categoryModel from './../../models/Categories';
 import getPageCount from './../../controller/getPageCount';
@@ -12,7 +11,7 @@ import setLog from './../../controller/setLog';
 
 let R = router();
 
-R.use(checkingLogin)
+R.use(checkingLogin())
 /**
  * 商品管理相关
  */
@@ -79,7 +78,7 @@ R.post('/editGood', checkingAccess('goodsManage-edit'), setTag, function*(next) 
   } else {
     parm.imgList = copyImage(parm.imgList,'goods');
     //合并
-    let _good = _.extend(good[0], parm);
+    let _good = Object.assign(good[0], parm);
     yield _good.save();
     //日志记录
     setLog('修改',`修改商品<<${_good.title}>>成功`,this);
