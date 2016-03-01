@@ -7,7 +7,7 @@ sftp-config.json
 .cache
 .DS_Store
 .git
-log/
+.log
 public/lib
 public/upload
 .idea
