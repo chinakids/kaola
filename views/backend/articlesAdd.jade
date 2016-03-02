@@ -56,6 +56,10 @@ block content
       $scope.categoriesList = !{categoriesList};
       $scope.categoryText = '请选择文章类目';
       var categoryId = '';
+      if($scope.categoriesList.length <= 0){
+        toastr.success('请先前往`分类管理添加分类`')
+        setTimeout(function(){window.location.href = '/#{pageInfo.adminDomain}/categoriesManage/'},2000)
+      }
       $scope.changeCategory = function(id){
         categoryId = id;
         for(var i =0,len =$scope.categoriesList.length;i<len;i++){
