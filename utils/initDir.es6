@@ -1,13 +1,10 @@
 import fs from 'fs';
 import path from 'path';
-import S from './../conf/setting';
 /**
  * [initDir 初始化目录]
  */
-let initDir = () => {
-	if(!fs.existsSync(S.LOG_DIR)){
-	 fs.mkdirSync(S.LOG_DIR);
-	};
+let initDir = (cb) => {
+	
 	if(!fs.existsSync(path.join(process.cwd(), '.tmp'))){
 	  fs.mkdirSync(path.join(process.cwd(), '.tmp'));
 	};
@@ -39,7 +36,7 @@ let initDir = () => {
 	if(!fs.existsSync(path.join(process.cwd(), 'views/.cache/backend'))){
 	  fs.mkdirSync(path.join(process.cwd(), 'views/.cache/backend'));
 	};
-
+	if(cb) cb();
 }
 
 export default initDir;
