@@ -210,7 +210,11 @@ R.post('/unlock', function*(next) {
     }
   }
 });
-
+R.get('/disallow', function*(next) {
+  yield render('disAllow', {
+    title: '没有访问权限'
+  }, this);
+});
 R.use('/goodsManage', goodsManage.routes(), goodsManage.allowedMethods());
 R.use('/adminManage', adminManage.routes(), adminManage.allowedMethods());
 R.use('/articlesManage', articlesManage.routes(), articlesManage.allowedMethods());
