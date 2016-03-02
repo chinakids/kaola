@@ -37,15 +37,12 @@ block layout
         },function(data){
           var status = data.status.split('::')[0],
           msg = data.status.split('::')[1];
-          if(status !== 'SUCCESS'){
+          if(status === 'SUCCESS'){
             toastr.success(msg)
+              setTimeout(function(){window.location.href = '/#{pageInfo.adminDomain}/'},2000);
           }else{
           	toastr.error(msg)
-          	setTimeout(function(){window.location.href = '/#{pageInfo.adminDomain}/'},2000);
           }
         })
       }
-      $('#password').keyup(function(e){
-      	if(e.keyCode === 13) $scope.submit();
-      })
     }])
