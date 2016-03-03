@@ -13,11 +13,11 @@ block content
             li(ng-class='{"active":type == "goods"}')
               a(href='?type=goods')
                 i.fa.fa-photo
-                |  商品图片
+                |  商品资源
             li(ng-class='{"active":type == "articles"}')
               a(href='?type=articles')
                 i.fa.fa-photo
-                |  文章图片
+                |  文章资源
       a.btn.btn-primary.btn-block.margin-bottom(href='javascript:;',title='慎点,尽量在没有用户上传时使用',ng-click='clearTmp($event)') 清空上传缓存(#{cacheSize}Mb)
     div.col-md-9
       div.box.box-primary
