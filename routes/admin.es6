@@ -27,7 +27,6 @@ let R = router();
 
 R.get('/', function*(next) {
   //日志记录
-  setLog('查看','查看控制面板',this);
   let goodsCount = yield goodsModel.count({});
   let articlesCount = yield articlesModel.count({});
   let usersCount = yield usersModel.count({});

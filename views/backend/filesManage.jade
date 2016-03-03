@@ -7,7 +7,8 @@ block content
       //- a.btn.btn-primary.btn-block.margin-bottom 上传图片
       div.box.box-solid
         div.box-header.with-border
-          h3.box-title 分类
+          h3.box-title 资源分类
+            small  共查询到#{page.count}条记录
         div.box-body.no-padding
           ul.nav.nav-pills.nav-stacked
             li(ng-class='{"active":type == "goods"}')
@@ -23,7 +24,6 @@ block content
       div.box.box-primary
         div.box-header.with-border
           h3.box-title {{type == 'goods' ? '商品' : '文章'}}资源列表
-            small  共查询到#{page.count}条记录
         div.box-body
           ul.mailbox-attachments.clearfix
             li(ng-repeat='item in filesList track by $index')
