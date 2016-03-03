@@ -5,8 +5,9 @@ import mongoose from 'mongoose';
  */
 let UploadFileSchema = new mongoose.Schema({
   name: String, //名称
-  url: String, //对应资源位置
-  mimeType: String,
+  url: String, //对应资源地址
+  mimeType: String, //种类
+  type: String, //位置
   meta: {
     createAt: {
       type: Date,
