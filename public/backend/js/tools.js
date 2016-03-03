@@ -40,6 +40,12 @@ angular.module('Kaola.tools', [])
       return '[' + arr.join('],[') + ']';
     }
   })
+  //字符串长度限制
+  .filter('subStr', function() {
+    return function(str,len) {
+      return str.substring(0,len)+'···';
+    }
+  })
   //input正则验证，除预置验证外，也可自己传入正则
   .directive('reg', ['$rootScope', function($rootscope) {
     return {

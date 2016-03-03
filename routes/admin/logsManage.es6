@@ -3,7 +3,6 @@ import render from './../../utils/render';
 import logModel from './../../models/Logs';
 import getPageCount from './../../controller/getPageCount';
 import check from './../../controller/getAccess';
-import setLog from './../../controller/setLog';
 
 let R = router();
 

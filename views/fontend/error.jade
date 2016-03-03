@@ -1,9 +1,25 @@
 extends ./layout/layout
 
 block content
-  if debug
-    h2 #{error.status} - #{title}
-    if error.status != 404
-      pre #{error.stack}
-  else
-    h2 #{title}
+  section.content
+    div.error-page
+      h2.headline.text-yellow #{error.status}
+      div.error-content
+        h3
+          i.fa.fa-warning.text-yellow
+          |  抱歉！#{title}!
+        p
+          | 我们无法找到您请求的页面，您可以尝试
+          a(href='#{referer}')  返回之前的页面 
+          | 或者尝试搜索您需要的其他内容。
+        form.search-form
+          div.input-group
+            input.form-control(type='text',name='search',placeholder='搜索')
+            div.input-group-btn
+              button.btn.btn-warning.btn-flat(type='submit',name='submit')
+               i.fa.fa-search
+      br
+      div.error-footer(style='width: 150%;margin-left: -25%;')
+        if error.status != 404
+          if debug || userInfo.admin
+            pre #{error.stack}

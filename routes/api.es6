@@ -57,6 +57,30 @@ R.post('/delImgTmp', check.login(), function *(next) {
   	status: 'SUCCESS::删除成功'
   }
 });
+//清空缓存
+R.post('/clearImgTmp', check.login(), function *(next) {
+  //递归删除非今天的缓存
+  let dir = process.cwd()+'/.tmp';
+  let date = new Date();
+  let time = Date.parse(new Date(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`))
+  fs.readdirSync(dir).forEach((item) => {
+    if(!fs.statSync(dir + '/' + item).isDirectory()){
+      if(parseInt(item.split('.')[0])/10 < time){
+        fs.unlinkSync(dir + '/' + item);
+      }
+    };
+  });
+  this.body = {
+    status: 'SUCCESS::清空缓存成功'
+  }
+});
+//下载文件
+R.get('/download',function *(next) {
+  let query = this.request.query;
+  let buffer = fs.readFileSync(process.cwd()+'/public'+query.url, ['utf-8']);
+  this.attachment(query.url.split('/').pop())
+  this.body = buffer;
+});
 
 
 export default R;

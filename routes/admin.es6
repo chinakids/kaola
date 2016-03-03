@@ -20,6 +20,7 @@ import usersManage from './admin/usersManage';
 import tagsManage from './admin/tagsManage';
 import categoriesManage from './admin/categoriesManage';
 import logsManage from './admin/logsManage';
+import filesManage from './admin/filesManage';
 
 let R = router();
 //获取最新权限
@@ -223,6 +224,7 @@ R.use('/backupsManage', backupsManage.routes(), backupsManage.allowedMethods());
 R.use('/usersManage', usersManage.routes(), usersManage.allowedMethods());
 R.use('/tagsManage', tagsManage.routes(), tagsManage.allowedMethods());
 R.use('/logsManage', logsManage.routes(), logsManage.allowedMethods());
+R.use('/filesManage', filesManage.routes(), filesManage.allowedMethods());
 R.use('/categoriesManage', categoriesManage.routes(), categoriesManage.allowedMethods());
 
 export default R;

@@ -67,6 +67,7 @@ app.use(function *(next){
       yield render('error',{
         debug: S.DEBUG,
         title: '系统发生错误',
+        referer:this.request.header.referer,
         error: err
       },this);
     }else{
@@ -76,11 +77,12 @@ app.use(function *(next){
       }
     }
   }
-  if (this.status !== 404) return;
+  if (this.status !== 404) return false;
   this.status = 404;
   yield render('error',{
     debug: S.DEBUG,
     title: '页面未找到',
+    referer: this.request.header.referer,
     error: {
       status : 404
     }

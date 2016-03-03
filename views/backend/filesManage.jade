@@ -1,0 +1,59 @@
+extends ./layout/layout
+
+block content
+  include ./layout/breadcrumbNav
+  section.content(ng-controller='filesManageCtrl')
+    div.col-md-3
+      //- a.btn.btn-primary.btn-block.margin-bottom 上传图片
+      div.box.box-solid
+        div.box-header.with-border
+          h3.box-title 分类
+        div.box-body.no-padding
+          ul.nav.nav-pills.nav-stacked
+            li(ng-class='{"active":type == "goods"}')
+              a(href='?type=goods')
+                i.fa.fa-photo
+                |  商品图片
+            li(ng-class='{"active":type == "articles"}')
+              a(href='?type=articles')
+                i.fa.fa-photo
+                |  文章图片
+      a.btn.btn-primary.btn-block.margin-bottom(href='javascript:;',title='慎点,尽量在没有用户上传时使用',ng-click='clearTmp($event)') 清空上传缓存(#{cacheSize}Mb)
+    div.col-md-9
+      div.box.box-primary
+        div.box-header.with-border
+          h3.box-title {{type == 'goods' ? '商品' : '文章'}}资源列表
+        div.box-body
+          ul.mailbox-attachments.clearfix
+            li(ng-repeat='item in filesList track by $index')
+              span.mailbox-attachment-icon.has-img
+                img(ng-src='{{item.url}}',alt='{{item.name}}')
+              div.mailbox-attachment-info
+                a.mailbox-attachment-name(ng-href='{{item.url}}',target='_blank',title='查看大图')
+                  i.fa.fa-camera
+                  |  {{item.name | subStr:18}}
+                span.mailbox-attachment-size
+                  |  {{item.mimeType}}
+                  a.btn.btn-default.btn-xs.pull-right(ng-href='/api/download/?url={{item.url}}',target='_blank',title='下载')
+                    i.fa.fa-cloud-download
+        div.box-footer
+          include ./layout/listFooter
+  script.
+    angular.module('Kaola',['Kaola.tools'])
+    .controller('filesManageCtrl',['$scope','$filter',function($scope,$filter){
+      $scope.type = '#{type}';
+      $scope.filesList = !{filesList};
+      $scope.clearTmp = function(e){
+        
+        $.post('/api/clearImgTmp',function(data){
+          var status = data.status.split('::')[0],
+          msg = data.status.split('::')[1];
+          if(status === 'SUCCESS'){
+            toastr.success(msg);
+            $(e.target).text('清空上传缓存(0.00Mb)');
+          }else{
+            toastr.error(msg)
+          }
+        })
+      }
+    }])

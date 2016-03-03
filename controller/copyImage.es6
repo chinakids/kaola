@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import uploadFileModel from './../models/UploadFiles';
 
 let copyImage = (oldList,type) => {
 	let newList = {};
@@ -13,6 +14,14 @@ let copyImage = (oldList,type) => {
 			fs.renameSync(oldPath,newPath);
 			newList[key].id = key;
 			newList[key].url = path.join('/upload/'+type, oldList[item].tmp);
+			//存入数据库
+			let uploadFile = new uploadFileModel({
+				name:key,
+				url:newList[key].url,
+				type:type,
+				mimeType:'image/*'
+			})
+			uploadFile.add();
 		}
 	}
 	return JSON.stringify(newList);
