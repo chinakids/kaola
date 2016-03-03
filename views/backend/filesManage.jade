@@ -12,17 +12,18 @@ block content
           ul.nav.nav-pills.nav-stacked
             li(ng-class='{"active":type == "goods"}')
               a(href='?type=goods')
-                i.fa.fa-photo
+                i.fa.fa-cubes
                 |  商品资源
             li(ng-class='{"active":type == "articles"}')
               a(href='?type=articles')
-                i.fa.fa-photo
+                i.fa.fa-cubes
                 |  文章资源
       a.btn.btn-primary.btn-block.margin-bottom(href='javascript:;',title='慎点,尽量在没有用户上传时使用',ng-click='clearTmp($event)') 清空上传缓存(#{cacheSize}Mb)
     div.col-md-9
       div.box.box-primary
         div.box-header.with-border
           h3.box-title {{type == 'goods' ? '商品' : '文章'}}资源列表
+            small  共查询到#{page.count}条记录
         div.box-body
           ul.mailbox-attachments.clearfix
             li(ng-repeat='item in filesList track by $index')
