@@ -18,7 +18,11 @@ R.use(check.login())
 R.get('/', check.access('usersManage-view'), function*(next) {
   let query = this.request.query;
   let count = yield usersModel.count({});
-  let userFetch = yield usersModel.findUser(query.page,query.limit);
+  //查询条件
+  let regex = new RegExp(query.search,'i');
+  let search = query.search ? {$or:[{nickName:{$regex:regex}},{email:{$regex:regex}},{phone:{$regex:regex}}]} : {};
+
+  let userFetch = yield usersModel.findUser(query.page,query.limit,search);
   yield render('usersManage', {
     title: '会员管理',
     desc: '',

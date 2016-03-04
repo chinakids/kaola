@@ -80,9 +80,10 @@ UserSchema.statics = {
       .sort('-meta.createAt')
       .exec()
   },
-  findAdmin(page = 1,limit = 10) {
+  findAdmin(page = 1,limit = 10, query = {}) {
     return this.find({
-        admin: true
+        admin: true,
+        ...query
       }, {
         password: 0 //获取info时过滤掉password
       })
@@ -92,9 +93,10 @@ UserSchema.statics = {
       .limit(limit)
       .exec()
   },
-  findUser(page = 1,limit = 10) {
+  findUser(page = 1,limit = 10,query = {}) {
     return this.find({
-        admin: false
+        admin: false,
+        ...query
       }, {
         password: 0 //获取info时过滤掉password
       })
