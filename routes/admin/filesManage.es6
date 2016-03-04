@@ -17,7 +17,9 @@ R.use(check.login());
 R.get('/', check.access('filesManage-view'), function*(next) {
   let query = this.request.query;
   let count = yield uploadFileModel.count({});
-  let filesFetch = yield uploadFileModel.fetch(query.page,query.limit,{type:query.type});
+  //查询条件
+  let search = query.type ? {type:query.type} : {};
+  let filesFetch = yield uploadFileModel.fetch(query.page,query.limit,search);
   let dir = process.cwd()+'/.tmp';
   let cacheSize = 0;
   fs.readdirSync(dir).forEach((item) => {
