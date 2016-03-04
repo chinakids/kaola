@@ -96,8 +96,10 @@ ArticleSchema.method('del', function() {
  *   thistype {Object}
  */
 ArticleSchema.statics = {
-  fetch(page = 1,limit = 10) {
-    return this.find({})
+  fetch(page = 1,limit = 10, query = {}) {
+    return this.find({
+        ...query  
+      })
       .populate('author')
       .populate('category')
       .sort('-meta.createAt')

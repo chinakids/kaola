@@ -20,7 +20,11 @@ R.use(check.login())
 R.get('/', check.access('goodsManage-view'), function*(next) {
   let query = this.request.query;
   let count = yield goodsModel.count({});
-  let goodFetch = yield goodsModel.fetch(query.page,query.limit);
+  //查询条件
+  let regex = new RegExp(query.search,'i');
+  let search = query.search ? {$or:[{title:{$regex:regex}},{'info.callWay':{$regex:regex}}]} : {};
+
+  let goodFetch = yield goodsModel.fetch(query.page,query.limit,seach);
   yield render('goodsManage', {
     title: '商品管理',
     desc: '',

@@ -17,7 +17,11 @@ R.use(check.login())
 R.get('/', check.access('tagManage-view'), function*(next) {
   let query = this.request.query;
   let count = yield tagModel.count({});
-  let fetch = yield tagModel.fetch(query.page,query.limit);
+  //查询条件
+  let regex = new RegExp(query.search,'i');
+  let search = query.search ? {$or:[{name:{$regex:regex}}]} : {};
+
+  let fetch = yield tagModel.fetch(query.page,query.limit,search);
   let ranking = yield tagModel.ranking(5);
   yield render('tagsManage', {
     title: '标签统计',
