@@ -32,17 +32,17 @@ let UserSchema = new mongoose.Schema({
  *   给save方法添加预处理
  */
 UserSchema.pre('save', function(next) {
-    //记录更新时间
-    if (this.isNew) {
-      this.meta.createAt = this.meta.updateAt = Date.now();
-    } else {
-      this.meta.updateAt = Date.now();
-    }
-    next();
-  })
-  /*
-   * 添加实例方法
-   */
+  //记录更新时间
+  if (this.isNew) {
+    this.meta.createAt = this.meta.updateAt = Date.now();
+  } else {
+    this.meta.updateAt = Date.now();
+  }
+  next();
+})
+/*
+ * 添加实例方法
+ */
 UserSchema.method('add', function() {
   let p = new Promise((resolve, reject) => {
     this.save((error, data) => {
