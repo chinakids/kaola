@@ -5,16 +5,16 @@ import path from 'path';
  */
 let initDir = (cb) => {
 	const dir = [
-		'.tmp',
-		'.bak',
-		'public/upload',
-		'public/upload/goods',
-		'public/upload/articles',
-		'public/upload/avatar',
-		'views/.cache',
-		'views/.cache/fontend',
-		'views/.cache/backend'
-	]
+		'.tmp', //文件缓存目录
+		'.bak', //数据库备份目录
+		'public/upload', //上传目录
+		'public/upload/goods', //商品上传目录
+		'public/upload/articles', //文章上传目录
+		'public/upload/avatar', //头像上传目录
+		'views/.cache', //模板缓存目录
+		'views/.cache/fontend', //前端模板缓存目录
+		'views/.cache/backend' //后端模板缓存目录
+	];
 
 	for(let i = 0,len = dir.length;i<len;i++){
 		if(!fs.existsSync(path.join(process.cwd(), dir[i]))){
