@@ -51,6 +51,12 @@ const globalSetting =  {
   REDIS_SOCKET: null, //redis socket
   REDIS_PASSWORD: '', //redis密码
   REDIS_DB: 0, //redis数据库
+
+  //邮件相关配置,链接类型为SMTP
+  MAIL_HOST:'',
+  MAIL_PORT:'',
+  MAIL_USERNAME:'',
+  MAIL_PASSWORD:'',
 }
 
 export default globalSetting;
