@@ -1,23 +1,30 @@
 import nodemailer from 'nodemailer'
 import S from './../conf/setting'
-
+/**
+ * [sendMail 邮件发送相关]
+ * @param  {Object} data [发送相关参数]
+ *   - @param  {Array} to [接收人]
+ *   - @param  {String} subject [标题]
+ *   - @param  {String} html [内容]
+ * @return {Promise}     [Promise对象]
+ */
 let sendMail = (data) => {
   // 开启一个 SMTP 连接池
   let smtpTransport = nodemailer.createTransport('SMTP',{
-    host: '', // 主机
-    secureConnection: true, // 使用 SSL
-    port: 465, // SMTP 端口
+    host: S.MAIL_HOST, // 主机
+    secureConnection: S.MAIL_SSL, // 使用 SSL
+    port: S.MAIL_PORT, // SMTP 端口
     auth: {
-      user: '', // 账号
-      pass: '' // 密码
+      user: S.MAIL_USERNAME, // 账号
+      pass: S.MAIL_PASSWORD // 密码
     }
   });
   // 设置邮件内容
   let mailOptions = {
-    from: 'Fred Foo <xxxxxxxx@xx.com>', // 发件地址
-    to: '', // 收件列表
-    subject: 'Hello world', // 标题
-    html: '<b>thanks a for visiting!</b> 世界，你好！' // html 内容
+    from: `${S.MAIL_NICKNAME} <${S.MAIL_USERNAME}>`, // 发件地址
+    to: data.to.join(','), // 收件列表
+    subject: data.subject, // 标题
+    html: data.html // html 内容
   }
   // 发送邮件
   let p = new Promise((resolve, reject) => {

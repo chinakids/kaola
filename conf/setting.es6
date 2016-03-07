@@ -53,10 +53,12 @@ const globalSetting =  {
   REDIS_DB: 0, //redis数据库
 
   //邮件相关配置,链接类型为SMTP
-  MAIL_HOST:'',
-  MAIL_PORT:'',
-  MAIL_USERNAME:'',
-  MAIL_PASSWORD:'',
+  MAIL_HOST:'',//SMTP地址
+  MAIL_PORT: 465,//SMTP端口
+  MAIL_SSL: true,//是否使用ssl
+  MAIL_NICKNAME:'',//发送人昵称
+  MAIL_USERNAME:'',//发送账户名
+  MAIL_PASSWORD:'',//发送账户密码
 }
 
 export default globalSetting;
