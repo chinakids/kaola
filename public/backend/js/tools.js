@@ -296,6 +296,10 @@ angular.module('Kaola.tools', [])
       id: 'logManage-view',
       pId: 'logManage',
       name: '查看'
+    }, {
+      id: 'sendMail',
+      pId: 'systemManage',
+      name: '发送系统邮件'
     }]
     return {
       getTree: function() {

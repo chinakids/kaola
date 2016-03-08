@@ -5,6 +5,7 @@ import path from 'path';
 import fs from 'fs';
 import parse from 'co-busboy';
 import check from './../controller/getAccess';
+import sendMail from './../utils/mail'
 
 let securityCode = ccap({
   'width':214,
@@ -49,6 +50,7 @@ R.post('/uploadImg', check.login(), function *(next) {
 	  }
   }
 });
+
 //删除缓存
 R.post('/delImgTmp', check.login(), function *(next) {
   let query = this.request.query;
@@ -57,8 +59,9 @@ R.post('/delImgTmp', check.login(), function *(next) {
   	status: 'SUCCESS::删除成功'
   }
 });
+
 //清空缓存
-R.post('/clearImgTmp', check.login(), function *(next) {
+R.post('/clearImgTmp', check.login(),check.access('filesManage-del'), function *(next) {
   //递归删除非今天的缓存
   let dir = process.cwd()+'/.tmp';
   let date = new Date();
@@ -74,6 +77,7 @@ R.post('/clearImgTmp', check.login(), function *(next) {
     status: 'SUCCESS::清空缓存成功'
   }
 });
+
 //下载文件
 R.get('/download',function *(next) {
   let query = this.request.query;
@@ -82,5 +86,13 @@ R.get('/download',function *(next) {
   this.body = buffer;
 });
 
+//发送邮件
+R.post('/sendMail', check.login(), check.access('sendMail'), function *(next) {
+  let parm = this.request.body;
+  yield sendMail(parm)
+  this.body = {
+    status: 'SUCCESS::邮件发送成功'
+  }
+});
 
 export default R;
