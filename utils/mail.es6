@@ -20,7 +20,7 @@ let sendMail = (data) => {
     }
   });
   // 设置邮件内容
-  let mailOptions = {
+  let config = {
     from: `${S.MAIL_NICKNAME} <${S.MAIL_USERNAME}>`, // 发件地址
     to: data.to.join(','), // 收件列表
     subject: data.subject, // 标题
@@ -28,7 +28,7 @@ let sendMail = (data) => {
   }
   // 发送邮件
   let p = new Promise((resolve, reject) => {
-    smtpTransport.sendMail(mailOptions, (error, data) => {
+    smtpTransport.sendMail(config, (error, data) => {
       if(error){
         reject(error);
       }else{
