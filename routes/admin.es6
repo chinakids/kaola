@@ -133,7 +133,9 @@ R.get('/login', function*(next) {
 R.post('/login', function*(next) {
   let parm = this.request.body;
   let md5 = crypto.createHash('md5');
+  console.log(parm.email);
   let result = yield usersModel.findAdminByEmail(parm.email);
+  console.log(result)
   if (result.length <= 0) {
     this.body = {
       status: 'FAIL::用户不存在'
@@ -145,6 +147,7 @@ R.post('/login', function*(next) {
       this.session.login = true;
       this.session.locked = false;
       this.session.ccap = '';
+      this.session.userInfo = result[0];
       //日志记录
       setLog('登陆',`${parm.email}登陆成功`,this);
       this.body = {
