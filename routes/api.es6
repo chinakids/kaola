@@ -5,7 +5,9 @@ import path from 'path';
 import fs from 'fs';
 import parse from 'co-busboy';
 import check from './../controller/getAccess';
-import sendMail from './../utils/mail'
+import sendMail from './../utils/mail';
+import setLog from './../controller/setLog';
+
 
 let securityCode = ccap({
   'width':214,
@@ -89,7 +91,8 @@ R.get('/download',function *(next) {
 //发送邮件
 R.post('/sendMail', check.login(), check.access('sendMail'), function *(next) {
   let parm = this.request.body;
-  yield sendMail(parm)
+  yield sendMail(parm);
+  setLog('邮件',`发送邮件:${JSON.stringify(parm)}`,this)
   this.body = {
     status: 'SUCCESS::邮件发送成功'
   }

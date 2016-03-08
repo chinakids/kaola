@@ -44,8 +44,8 @@ app.use(session({
   store: redisStore({
     host:S.REDIS_HOST,
     port:S.REDIS_PORT,
-    //socket:S.REDIS_SOCKET, //socket
-    //pass:S.REDIS_PASSWORD,   //redis连接密码
+    socket:S.REDIS_SOCKET, //socket
+    pass:S.REDIS_PASSWORD,   //redis连接密码
     db:S.REDIS_DB
   }),
   cookie:{
@@ -61,6 +61,7 @@ app.use(function *(next){
   try {
     yield next;
   } catch (err) {
+    logger('error',err);
     err.status = err.status || 500;
     this.status = err.status;
     if(this.request.method === 'GET'){
@@ -112,7 +113,6 @@ app.use(R.routes());
 
 //错误监听
 app.on('error', function(err, ctx){
-  log.error('server error', err, ctx)
   logger('error',err);
 });
 

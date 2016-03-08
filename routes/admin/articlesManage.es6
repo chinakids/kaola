@@ -19,11 +19,11 @@ R.use(check.login())
 //文章管理
 R.get('/', check.access('articlesManage-view'), function*(next) {
   let query = this.request.query;
-  let count = yield articlesModel.count({});
   //查询条件
   let regex = new RegExp(query.search,'i');
   let search = query.search ? {$or:[{title:{$regex:regex}},{'info.callWay':{$regex:regex}}]} : {};
 
+  let count = yield articlesModel.count(search);
   let articleFetch = yield articlesModel.fetch(query.page,query.limit,search);
   yield render('articlesManage', {
     title: '文章管理',

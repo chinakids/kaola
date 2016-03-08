@@ -12,10 +12,10 @@ block content
           table.table.table-hover
             tbody
               tr
-                th 类型
+                th.col-md-1 类型
                 th.col-md-3 记录时间
-                th 详情
-                th 操作人
+                th.col-md-6 详情
+                th.col-md-2 操作人
               tr.datalist(ng-repeat='item in logsList')
                 td(ng-switch,on='item.level')
                   i.fa.fa-circle-o.text-green(ng-switch-when='4')
@@ -26,7 +26,7 @@ block content
                 td {{item.meta.createAt | date:'yy/MM/dd HH:mm:ss'}}
                 td {{item.content}}
                 td(title='{{item.user.email}}') {{item.user.nickName}}
-                  
+
         include ./layout/listFooter
         #dataLoading.overlay.hide
           i.fa.fa-refresh.fa-spin

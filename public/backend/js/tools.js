@@ -801,12 +801,12 @@ angular.module('Kaola.tools', [])
         // 页码变化触发onchange事件
         scope.onsizechange = function(){
           scope.pagesize = scope.fixPageSize(scope.pagesize);
-          window.location.href = window.location.pathname + '?page=' + scope.currentPage + '&limit=' + scope.pagesize;
+          window.location.href = window.location.pathname + (window.location.search ? window.location.search+'&' : '?') + 'page=' + scope.currentPage + '&limit=' + scope.pagesize;
         }
         // 页码变化触发onchange事件
         scope.$watch('currentPage', function (currentPage, originalPage) {
           if (currentPage != originalPage) {
-            window.location.href = window.location.pathname + '?page=' + currentPage + '&limit=' + scope.pagesize;
+            window.location.href = window.location.pathname + (window.location.search ? window.location.search+'&' : '?') + 'page=' + currentPage + '&limit=' + scope.pagesize;
             scope.inputPage = scope.currentPage;
           }
         });

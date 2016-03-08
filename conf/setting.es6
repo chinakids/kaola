@@ -52,7 +52,7 @@ const globalSetting =  {
   REDIS_PASSWORD: '', //redis密码
   REDIS_DB: 0, //redis数据库
 
-  //邮件相关配置,链接类型为SMTP
+  //邮件相关配置,链接类型为SMTP,尽量别使用QQ邮箱，不然会显示QQ昵称
   MAIL_HOST:'',//SMTP地址
   MAIL_PORT: 465,//SMTP端口
   MAIL_SSL: true,//是否使用ssl

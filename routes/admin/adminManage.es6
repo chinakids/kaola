@@ -17,11 +17,11 @@ R.use(check.login())
 //管理员管理
 R.get('/', check.access('adminManage-view'), function*(next) {
   let query = this.request.query;
-  let count = yield usersModel.count({});
   //查询条件
   let regex = new RegExp(query.search,'i');
   let search = query.search ? {$or:[{nickName:{$regex:regex}},{email:{$regex:regex}},{phone:{$regex:regex}}]} : {};
 
+  let count = yield usersModel.count(search);
   let userFetch = yield usersModel.findAdmin(query.page,query.limit,search);
   let groupFetch = yield userGroupModel.fetch();
   yield render('adminManage', {

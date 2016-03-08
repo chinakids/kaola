@@ -18,7 +18,7 @@ R.get('/', check.access('logsManage-view'), function*(next) {
   let regex = new RegExp(query.search,'i');
   let search = query.search ? {$or:[{type:{$regex:regex}},{'content':{$regex:regex}}]} : {};
 
-  let count = yield logModel.count({});
+  let count = yield logModel.count(search);
   let fetch = yield logModel.fetch(query.page,query.limit,search);
   yield render('logsManage', {
     title: '日志查询',

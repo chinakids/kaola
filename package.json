@@ -27,6 +27,6 @@
     "koa-views": "^3.1.0",
     "mini-logger": "^1.1.0",
     "mongoose": "^4.3.4",
-    "nodemailer": "^2.3.0"
+    "nodemailer": "^0.7.1"
   }
 }

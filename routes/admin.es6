@@ -29,7 +29,7 @@ R.get('/', function*(next) {
   //日志记录
   let goodsCount = yield goodsModel.count({});
   let articlesCount = yield articlesModel.count({});
-  let usersCount = yield usersModel.count({});
+  let usersCount = yield usersModel.count({admin:false});
   let newUsers = yield usersModel.getNewUsers(5);
   if (this.session.login && !this.session.locked) {
     yield render('index', {

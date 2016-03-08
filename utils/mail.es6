@@ -1,5 +1,5 @@
-import nodemailer from 'nodemailer'
-import S from './../conf/setting'
+import nodemailer from 'nodemailer';
+import S from './../conf/setting';
 /**
  * [sendMail 邮件发送相关]
  * @param  {Object} data [发送相关参数]
@@ -28,11 +28,12 @@ let sendMail = (data) => {
   }
   // 发送邮件
   let p = new Promise((resolve, reject) => {
-    smtpTransport.sendMail(config, (error, data) => {
-      if(error){
+    smtpTransport.sendMail(config, (err, data) => {
+      if(err){
+        console.log(err)
         reject(error);
       }else{
-        esolve(null, data);
+        resolve(null, data);
       }
       smtpTransport.close(); // 如果没用，关闭连接池
     });

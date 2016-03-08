@@ -16,10 +16,10 @@ R.use(check.login());
 //日志管理
 R.get('/', check.access('filesManage-view'), function*(next) {
   let query = this.request.query;
-  let count = yield uploadFileModel.count({});
   //查询条件
   let search = query.type ? {type:query.type} : {};
 
+  let count = yield uploadFileModel.count(search);
   let filesFetch = yield uploadFileModel.fetch(query.page,query.limit,search);
   let dir = process.cwd()+'/.tmp';
   let cacheSize = 0;
