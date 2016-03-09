@@ -1,6 +1,5 @@
 import router from 'koa-router';
 import render from './../utils/render';
-import ccap from 'ccap';
 import crypto from 'crypto';
 import getPageCount from './../controller/getPageCount';
 import setLog from './../controller/setLog';
@@ -26,7 +25,6 @@ let R = router();
 //获取最新权限
 
 R.get('/', function*(next) {
-  //日志记录
   let goodsCount = yield goodsModel.count({});
   let articlesCount = yield articlesModel.count({});
   let usersCount = yield usersModel.count({admin:false});
@@ -133,7 +131,6 @@ R.get('/login', function*(next) {
 R.post('/login', function*(next) {
   let parm = this.request.body;
   let md5 = crypto.createHash('md5');
-  console.log(parm.email);
   let result = yield usersModel.findAdminByEmail(parm.email);
   console.log(result)
   if (result.length <= 0) {
