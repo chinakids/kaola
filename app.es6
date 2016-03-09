@@ -16,6 +16,8 @@ import S from './conf/setting'
 import index from './routes/index';
 import users from './routes/users';
 import admin from './routes/admin';
+import good from './routes/good';
+import article from './routes/article';
 import api from './routes/api';
 //导入控制部分
 import userInfo from './controller/getUserInfo';
@@ -105,6 +107,8 @@ R.use(userInfo);
 //路由设置
 R.use('/', index.routes(), index.allowedMethods());
 R.use('/api', api.routes(), api.allowedMethods());
+R.use('/good', good.routes(), good.allowedMethods());
+R.use('/article', article.routes(), article.allowedMethods());
 R.use('/users', users.routes(), users.allowedMethods());
 R.use('/'+S.ADMIN_DOMAIN, admin.routes(), admin.allowedMethods());
 
