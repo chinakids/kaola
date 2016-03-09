@@ -4,6 +4,9 @@ block content
   include ./layout/breadcrumbNav
   section.content(ng-controller='logsManageCtrl')
     div.col-md-12
+      div.panel.clearfix
+        include ./layout/search
+    div.col-md-12
       div.box.box-default
         div.box-header.with-border
           h5.box-title #{title}

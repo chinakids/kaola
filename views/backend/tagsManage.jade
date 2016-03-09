@@ -5,12 +5,7 @@ block content
   section.content(ng-controller='TagManageCtrl')
     div.col-md-12
       div.panel.clearfix
-        div.pull-right
-          div.input-group
-            input#searchInput.form-control.input-sm.pull-right(type='text',name='searchKey',style='width: 200px;', placeholder='请输入需要查询的关键字',value='')
-            div.input-group-btn(style='width: auto;')
-              button.btn.btn-sm.btn-default(type='button')
-                i.fa.fa-search
+        include ./layout/search
     div.col-md-9
       div.box.box-default
         div.box-header.with-border

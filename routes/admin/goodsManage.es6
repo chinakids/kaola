@@ -24,7 +24,7 @@ R.get('/', check.access('goodsManage-view'), function*(next) {
   let search = query.search ? {$or:[{title:{$regex:regex}},{'info.callWay':{$regex:regex}}]} : {};
 
   let count = yield goodsModel.count(search);
-  let goodFetch = yield goodsModel.fetch(query.page,query.limit,seach);
+  let goodFetch = yield goodsModel.fetch(query.page,query.limit,search);
   yield render('goodsManage', {
     title: '商品管理',
     desc: '',

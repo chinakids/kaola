@@ -1,3 +1,17 @@
+window.URL = {
+  parse:function(str){
+    var reg = /([^=&\s]+)[=\s]*([^=&\s]*)/g;
+    var obj = {};
+    while(reg.exec(decodeURI(str.substring(1)))){
+        obj[RegExp.$1] = RegExp.$2;
+    }
+    return obj;
+  },
+  format:function(obj){
+    return $.param(obj)
+  }
+}
+
 //全局toast配置
 toastr.options = {
   'closeButton': true,
@@ -590,7 +604,7 @@ angular.module('Kaola.tools', [])
 
       maxDepth        : number of levels an item can be nested (default 5)
       group           : group ID to allow dragging between lists (default 0)
-      
+
       listNodeName    : The HTML element to create for lists (default 'ol')
       itemNodeName    : The HTML element to create for list items (default 'li')
       rootClass       : The class of the root element .nestable() was used on (default 'dd')
@@ -801,12 +815,18 @@ angular.module('Kaola.tools', [])
         // 页码变化触发onchange事件
         scope.onsizechange = function(){
           scope.pagesize = scope.fixPageSize(scope.pagesize);
-          window.location.href = window.location.pathname + (window.location.search ? window.location.search+'&' : '?') + 'page=' + scope.currentPage + '&limit=' + scope.pagesize;
+          var search = window.location.search ? URL.parse(window.location.search) : {};
+          search.page = scope.currentPage;
+          search.limit = scope.pagesize;
+          window.location.href = window.location.pathname + '?' + URL.format(search);
         }
         // 页码变化触发onchange事件
         scope.$watch('currentPage', function (currentPage, originalPage) {
           if (currentPage != originalPage) {
-            window.location.href = window.location.pathname + (window.location.search ? window.location.search+'&' : '?') + 'page=' + currentPage + '&limit=' + scope.pagesize;
+            var search = window.location.search ? URL.parse(window.location.search) : {};
+            search.page = currentPage;
+            search.limit = scope.pagesize;
+            window.location.href = window.location.pathname + '?' + URL.format(search);
             scope.inputPage = scope.currentPage;
           }
         });
