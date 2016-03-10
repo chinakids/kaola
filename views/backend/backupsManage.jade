@@ -3,17 +3,17 @@ extends ./layout/layout
 block content
   include ./layout/breadcrumbNav
   section.content(ng-controller='backupsManageCtrl')
-    div.col-md-12
-      div.panel
-        div.btn-group
+    .col-md-12
+      .panel
+        .btn-group
           a.btn.btn-primary.btn-sm(href='javascript:;',ng-click='backup()')
             i.fa.fa-plus-square
             |  备份
-    div.col-md-12
-      div.box.box-default
-        div.box-header.with-border
+    .col-md-12
+      .box.box-default
+        .box-header.with-border
           h5.box-title #{title}
-        div.box-body.table-responsive.no-padding
+        .box-body.table-responsive.no-padding
           table.table.table-hover
             tbody
               tr
@@ -22,7 +22,7 @@ block content
               tr.datalist(ng-repeat='item in backupsList')
                 td {{item | date:' yy/MM/dd HH:mm:ss'}}
                 td
-                  div.btn-group
+                  .btn-group
                     button.btn.btn-default.btn-xs(ng-click='restore(item,"true")',title='将删除备份后新增内容')
                       span.fa.fa-history
                       | 全量恢复

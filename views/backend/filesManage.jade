@@ -3,13 +3,13 @@ extends ./layout/layout
 block content
   include ./layout/breadcrumbNav
   section.content(ng-controller='filesManageCtrl')
-    div.col-md-3
+    .col-md-3
       //- a.btn.btn-primary.btn-block.margin-bottom 上传图片
-      div.box.box-solid
-        div.box-header.with-border
+      .box.box-solid
+        .box-header.with-border
           h3.box-title 资源分类
             small  共查询到#{page.count}条记录
-        div.box-body.no-padding
+        .box-body.no-padding
           ul.nav.nav-pills.nav-stacked
             li(ng-class='{"active":type == "goods"}')
               a(href='?type=goods')
@@ -20,16 +20,16 @@ block content
                 i.fa.fa-cubes
                 |  文章资源
       a.btn.btn-primary.btn-block.margin-bottom(href='javascript:;',title='慎点,尽量在没有用户上传时使用',ng-click='clearTmp($event)') 清空上传缓存(#{cacheSize}Mb)
-    div.col-md-9
-      div.box.box-primary
-        div.box-header.with-border
+    .col-md-9
+      .box.box-primary
+        .box-header.with-border
           h3.box-title {{type == 'goods' ? '商品' : '文章'}}资源列表
-        div.box-body
+        .box-body
           ul.mailbox-attachments.clearfix
             li(ng-repeat='item in filesList track by $index')
               span.mailbox-attachment-icon.has-img
                 img(ng-src='{{item.url}}',alt='{{item.name}}')
-              div.mailbox-attachment-info
+              .mailbox-attachment-info
                 a.mailbox-attachment-name(ng-href='{{item.url}}',target='_blank',title='查看大图')
                   i.fa.fa-camera
                   |  {{item.name | subStr:18}}
@@ -37,7 +37,7 @@ block content
                   |  {{item.mimeType}}
                   a.btn.btn-default.btn-xs.pull-right(ng-href='/api/download/?url={{item.url}}',target='_blank',title='下载')
                     i.fa.fa-cloud-download
-        div.box-footer
+        .box-footer
           include ./layout/listFooter
   script.
     angular.module('Kaola',['Kaola.tools'])
@@ -45,7 +45,6 @@ block content
       $scope.type = '#{type}';
       $scope.filesList = !{filesList};
       $scope.clearTmp = function(e){
-        
         $.post('/api/clearImgTmp',function(data){
           var status = data.status.split('::')[0],
           msg = data.status.split('::')[1];

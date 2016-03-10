@@ -3,19 +3,19 @@ extends ./layout/layout
 block content
   include ./layout/breadcrumbNav
   section.content(ng-controller='UserManageCtrl')
-    div.col-md-12
-      div.panel
-        div.btn-group
+    .col-md-12
+      .panel
+        .btn-group
           a.btn.btn-primary.btn-sm(href='javascript:;',ng-click='modal = true')
             i.fa.fa-plus-square
             |  添加用户
         include ./layout/search
-    div.col-md-12
-      div.box.box-default
-        div.box-header.with-border
+    .col-md-12
+      .box.box-default
+        .box-header.with-border
           h5.box-title #{title}
             small  共 #{page.count} 条记录
-        div.box-body.table-responsive.no-padding
+        .box-body.table-responsive.no-padding
           table.table.table-hover
             tbody
               tr
@@ -32,7 +32,7 @@ block content
                   span.label.label-success(ng-switch-when='activated') 已激活
                   span.label.label-warning(ng-switch-when='activation') 未激活
                 td
-                  div.btn-group
+                  .btn-group
                     button.btn.btn-primary.btn-xs(ng-click='edit($index)')
                       span.fa.fa-fw.fa-edit
                       | 编辑
@@ -42,16 +42,16 @@ block content
         include ./layout/listFooter
         #dataLoading.overlay.hide
           i.fa.fa-refresh.fa-spin
-    div#myModal.modal(ng-class='{in:modal,fade:!modal}')
-      div.modal-dialog(role='document')
-        div.modal-content
-          div.modal-header
+    #myModal.modal(ng-class='{in:modal,fade:!modal}')
+      .modal-dialog(role='document')
+        .modal-content
+          .modal-header
             button.close(type='button',ng-click='modal = false')
               span &times;
             h4#myModalLabel.modal-title {{type == 'add' ? '新增' : '修改'}}用户
               small(ng-if='type == "edit"')  密码为空则为不修改密码
-          div.modal-body.clearfix
-            div.col-xs-12.clearfix
+          .modal-body.clearfix
+            .col-xs-12.clearfix
               form#add
                 .form-group.has-feedback
                   input.form-control(type='email',ng-model='userData.email',placeholder='邮箱',reg='e',err-tip='请输入正确邮箱',ng-readonly='type == "edit"')
@@ -149,7 +149,7 @@ block content
               },ajaxCb)
             }else{
               toastr.error('填写信息不完整');
-            }  
+            }
           }else{
             $('#add input').each(function(){
               $(this).trigger('focus').trigger('blur');
@@ -164,8 +164,8 @@ block content
               },ajaxCb)
             }else{
               toastr.error('填写信息不完整');
-            }  
-          }     
+            }
+          }
         }
       }
       $scope.del = function(name,id){

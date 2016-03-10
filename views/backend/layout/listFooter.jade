@@ -1,12 +1,12 @@
-div.box-footer
-  div.row
-    //- div.col-xs-6
-      div(style='padding-top:4px')
+.box-footer
+  .row
+    //- .col-xs-6
+      (style='padding-top:4px')
         |  每页  
         select(ng-options='item for item in limitList',ng-model='limit')
         |  条，共 #{page.count} 条记录 ，共 #{page.totalPage} 页
-    div.col-xs-12
+    .col-xs-12
       if title !== '标签统计'
-        div.pull-right(ng-pagination,size='sm',aside='4',pagesize='#{page.limit}',total-pages='#{page.totalPage}',current-page='#{page.index}',hide-input='true',hide-pagesize='false')
+        .pull-right(ng-pagination,size='sm',aside='4',pagesize='#{page.limit}',total-pages='#{page.totalPage}',current-page='#{page.index}',hide-input='true',hide-pagesize='false')
       else
-        div.pull-right(ng-pagination,size='sm',aside='4',pagesize='#{page.limit * 10}',total-pages='#{page.totalPage}',current-page='#{page.index}',hide-input='true',hide-pagesize='false')
+        .pull-right(ng-pagination,size='sm',aside='4',pagesize='#{page.limit * 10}',total-pages='#{page.totalPage}',current-page='#{page.index}',hide-input='true',hide-pagesize='false')

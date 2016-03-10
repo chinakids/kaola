@@ -3,47 +3,47 @@ extends ./layout/layout
 block content
   include ./layout/breadcrumbNav
   section.content(ng-controller='MainPanelCtrl')
-    div.col-md-12
-      div.box.box-solid
-        div.box-header.with-border
+    .col-md-12
+      .box.box-solid
+        .box-header.with-border
           h5.box-title #{title}
-        div.box-body
-          div.row
-            div.col-lg-3.col-xs-6
-              div.small-box.bg-aqua
-                div.inner
+        .box-body
+          .row
+            .col-lg-3.col-xs-6
+              .small-box.bg-aqua
+                .inner
                   h3 #{panel[0].goodsCount}
-                div.icon
+                .icon
                   i.fa.fa-fw.fa-file-image-o
                 a.small-box-footer(href='/#{pageInfo.adminDomain}/goodsManage/') 商品
-            div.col-lg-3.col-xs-6
-              div.small-box.bg-yellow
-                div.inner
+            .col-lg-3.col-xs-6
+              .small-box.bg-yellow
+                .inner
                   h3 #{panel[0].articlesCount}
-                div.icon
+                .icon
                   i.fa.fa-fw.fa-file-text-o
                 a.small-box-footer(href='/#{pageInfo.adminDomain}/articlesManage/') 文章
-            div.col-lg-3.col-xs-6
-              div.small-box.bg-green
-                div.inner
+            .col-lg-3.col-xs-6
+              .small-box.bg-green
+                .inner
                   h3 #{panel[0].usersCount}
-                div.icon
+                .icon
                   i.fa.fa-fw.fa-users
                 a.small-box-footer(href='/#{pageInfo.adminDomain}/usersManage/') 用户
-            div.col-lg-3.col-xs-6
-              div.small-box.bg-red
-                div.inner
+            .col-lg-3.col-xs-6
+              .small-box.bg-red
+                .inner
                   h3 #{panel[0].commentsCount}
-                div.icon
+                .icon
                   i.fa.fa-fw.fa-comments-o
                 a.small-box-footer(href='javascrit:;') 留言
-    div.col-md-12
-      div.row
-        div.col-md-4
-          div.box.box-solid
-            div.box-header.with-border
+    .col-md-12
+      .row
+        .col-md-4
+          .box.box-solid
+            .box-header.with-border
               h5.box-title 快捷操作
-            div.box-body
+            .box-body
                 a.btn.btn-app(href='/#{pageInfo.adminDomain}/adminManage/')
                   i.fa.fa-user
                   | 添加管理员
@@ -56,25 +56,25 @@ block content
                 a.btn.btn-app(href='/#{pageInfo.adminDomain}/backupsManage/')
                   i.fa.fa-cloud
                   | 数据备份
-        div.col-md-4
-          div.box.box-solid
-            div.box-header.with-border
+        .col-md-4
+          .box.box-solid
+            .box-header.with-border
               h5.box-title 近期评论
-            div.box-body.chat#chat-box
-              div.direct-chat-messages(style='height: auto;max-height: 500px;')
-        div.col-md-4
-          div.box.box-solid
-            div.box-header.with-border
+            .box-body.chat#chat-box
+              .direct-chat-messages(style='height: auto;max-height: 500px;')
+        .col-md-4
+          .box.box-solid
+            .box-header.with-border
               h5.box-title 新注册用户
-              div.box-tools.pull-right
+              .box-tools.pull-right
                 span.label.label-danger 注册用户 #{panel[2].usersCount}
-            div.box-body.no-padding
+            .box-body.no-padding
               ul.users-list.clearfix
                 each item in panel[2].newUsers
                   li
                     img(src='#{item.avatar}',alt='User Image')
                     a.users-list-name(href='#',title='#{item.nickName}') #{item.nickName}
-            div.box-footer.text-center
+            .box-footer.text-center
               a.uppercase(href='/#{pageInfo.adminDomain}/usersManage/') View All Users
   script.
     angular.module('Kaola',['Kaola.tools'])

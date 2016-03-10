@@ -3,12 +3,12 @@ extends ./layout/layout
 block content
   include ./layout/breadcrumbNav
   section.content(ng-controller='categoriesManageCtrl')
-    div.col-md-4
-      div.box.box-default
-        div.box-header.with-border
+    .col-md-4
+      .box.box-default
+        .box-header.with-border
           h5.box-title 添加栏目
             small 添加后不可修改/删除,请慎重添加
-        div.box-body.table-responsive.no-padding.clearfx
+        .box-body.table-responsive.no-padding.clearfx
           br
           dic.col-md-12
             .form-group.has-feedback
@@ -22,20 +22,20 @@ block content
                 option(value='') 一级类目
             .form-group.has-feedback
               button.btn.btn-primary.btn-block.btn-flat(type='button',ng-click='add()') 添 加
-    div.col-md-8
-      div.box.box-default
-        div.box-header.with-border
+    .col-md-8
+      .box.box-default
+        .box-header.with-border
           h5.box-title 目录结构
             small  拖动可调整顺序
-        div.box-body.table-responsive.no-padding
-          div.col-md-12(ng-nestable,ng-model='list') 
+        .box-body.table-responsive.no-padding
+          .col-md-12(ng-nestable,ng-model='list') 
             i.fa.fa-book
             |  {{$item.name}}
             span.pull-right 别名:{{$item.alias}}
-        div.box-footer
-          div.col-md-12
+        .box-footer
+          .col-md-12
             button.btn.btn-primary.btn-flat.pull-right(type='button',ng-click='submit()') 保 存
-          
+
   script.
     angular.module('Kaola',['Kaola.tools'])
     .controller('categoriesManageCtrl',['$scope','$filter',function($scope,$filter){

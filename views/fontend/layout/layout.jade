@@ -4,63 +4,44 @@ block layout
   body.skin-black-light.layout-top-nav
     .wrapper
       header.main-header
-        nav.navbar.navbar-static-top
+        nav.navbar.navbar-static-top.opacity
           .container
             .navbar-header
               a.navbar-brand(href='../../index2.html')
-                b Admin
-                | LTE
+                .logo
+                .sublogo
               button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar-collapse')
                 i.fa.fa-bars
             #navbar-collapse.collapse.navbar-collapse.pull-left
               ul.nav.navbar-nav
                 li.active
-                  a(href='#')
-                    | Link
-                    span.sr-only (current)
+                  a(href='#') 闲置市场
                 li
-                  a(href='#') Link
-                li.dropdown
-                  a.dropdown-toggle(href='#', data-toggle='dropdown')
-                    | Dropdown
-                    span.caret
-                  ul.dropdown-menu(role='menu')
-                    li
-                      a(href='#') Action
-                    li
-                      a(href='#') Another action
-                    li
-                      a(href='#') Something else here
-                    li.divider
-                    li
-                      a(href='#') Separated link
-                    li.divider
-                    li
-                      a(href='#') One more separated link
+                  a(href='#') 资讯广场
               form.navbar-form.navbar-left(role='search')
                 .form-group
                   input#navbar-search-input.form-control(type='text', placeholder='Search')
             .navbar-custom-menu
               ul.nav.navbar-nav
-                li.dropdown.messages-menu
-                  a.dropdown-toggle(href='#', data-toggle='dropdown')
-                    i.fa.fa-envelope-o
-                    span.label.label-success 4
-                  ul.dropdown-menu
-                    li.header You have 4 messages
-                    li
-                      ul.menu
-                        li
-                          a(href='#')
-                            .pull-left
-                              img.img-circle(src='../../dist/img/user2-160x160.jpg', alt='User Image')
-                            h4 Support Team
-                              small
-                                i.fa.fa-clock-o
-                                |  5 mins
-                            p Why not buy a new awesome theme?
-                    li.footer
-                      a(href='#') See All Messages
+                //- li.dropdown.messages-menu
+                //-   a.dropdown-toggle(href='#', data-toggle='dropdown')
+                //-     i.fa.fa-envelope-o
+                //-     span.label.label-success 4
+                //-   ul.dropdown-menu
+                //-     li.header You have 4 messages
+                //-     li
+                //-       ul.menu
+                //-         li
+                //-           a(href='#')
+                //-             .pull-left
+                //-               img.img-circle(src='avatar/avatar.jpg', alt='User Image')
+                //-             h4 Support Team
+                //-               small
+                //-                 i.fa.fa-clock-o
+                //-                 |  5 mins
+                //-             p Why not buy a new awesome theme?
+                //-     li.footer
+                //-       a(href='#') See All Messages
                 li.dropdown.notifications-menu
                   a.dropdown-toggle(href='#', data-toggle='dropdown')
                     i.fa.fa-bell-o
@@ -75,44 +56,52 @@ block layout
                             |  5 new members joined today
                     li.footer
                       a(href='#') View all
-                li.dropdown.tasks-menu
-                  a.dropdown-toggle(href='#', data-toggle='dropdown')
-                    i.fa.fa-flag-o
-                    span.label.label-danger 9
-                  ul.dropdown-menu
-                    li.header You have 9 tasks
-                    li
-                      ul.menu
-                        li
-                          a(href='#')
-                            h3 Design some buttons
-                              small.pull-right 20%
-                            .progress.xs
-                              .progress-bar.progress-bar-aqua(style='width: 20%', role='progressbar', aria-valuenow='20', aria-valuemin='0', aria-valuemax='100')
-                                span.sr-only 20% Complete
-                    li.footer
-                      a(href='#') View all tasks
+                //- li.dropdown.tasks-menu
+                //-   a.dropdown-toggle(href='#', data-toggle='dropdown')
+                //-     i.fa.fa-flag-o
+                //-     span.label.label-danger 9
+                //-   ul.dropdown-menu
+                //-     li.header You have 9 tasks
+                //-     li
+                //-       ul.menu
+                //-         li
+                //-           a(href='#')
+                //-             h3 Design some buttons
+                //-               small.pull-right 20%
+                //-             .progress.xs
+                //-               .progress-bar.progress-bar-aqua(style='width: 20%', role='progressbar', aria-valuenow='20', aria-valuemin='0', aria-valuemax='100')
+                //-                 span.sr-only 20% Complete
+                //-     li.footer
+                //-       a(href='#') View all tasks
                 li.dropdown.user.user-menu
                   a.dropdown-toggle(href='#', data-toggle='dropdown')
-                    img.user-image(src='../../dist/img/user2-160x160.jpg', alt='User Image')
+                    img.user-image(src='avatar/avatar.jpg', alt='User Image')
                     span.hidden-xs Alexander Pierce
-                  ul.dropdown-menu
-                    li.user-header
-                      img.img-circle(src='../../dist/img/user2-160x160.jpg', alt='User Image')
-                      p
-                        | Alexander Pierce - Web Developer
-                        small Member since Nov. 2012
-                    li.user-body
-                      .col-xs-4.text-center
-                        a(href='#') Followers
-                      .col-xs-4.text-center
-                        a(href='#') Sales
-                      .col-xs-4.text-center
-                        a(href='#') Friends
-                    li.user-footer
-                      .pull-left
-                        a.btn.btn-default.btn-flat(href='#') Profile
-                      .pull-right
-                        a.btn.btn-default.btn-flat(href='#') Sign out
+                  //- ul.dropdown-menu
+                  //-   li.user-header
+                  //-     img.img-circle(src='avatar/avatar.jpg', alt='User Image')
+                  //-     p
+                  //-       | Alexander Pierce - Web Developer
+                  //-       small Member since Nov. 2012
+                  //-   li.user-body
+                  //-     .col-xs-4.text-center
+                  //-       a(href='#') Followers
+                  //-     .col-xs-4.text-center
+                  //-       a(href='#') Sales
+                  //-     .col-xs-4.text-center
+                  //-       a(href='#') Friends
+                  //-   li.user-footer
+                  //-     .pull-left
+                  //-       a.btn.btn-default.btn-flat(href='#') Profile
+                  //-     .pull-right
+                  //-       a.btn.btn-default.btn-flat(href='#') Sign out
       block content
+      footer.main-footer
+        .container
+          .pull-right.hidden-xs
+            strong
+              | Copyright &copy; 2015-2018
+              a(href='#')  kaola
+              | .
+            |  All rights reserved.
 

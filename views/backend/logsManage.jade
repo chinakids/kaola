@@ -3,15 +3,15 @@ extends ./layout/layout
 block content
   include ./layout/breadcrumbNav
   section.content(ng-controller='logsManageCtrl')
-    div.col-md-12
-      div.panel.clearfix
+    .col-md-12
+      .panel.clearfix
         include ./layout/search
-    div.col-md-12
-      div.box.box-default
-        div.box-header.with-border
+    .col-md-12
+      .box.box-default
+        .box-header.with-border
           h5.box-title #{title}
             small  共 #{page.count} 条记录
-        div.box-body.table-responsive.no-padding
+        .box-body.table-responsive.no-padding
           table.table.table-hover
             tbody
               tr

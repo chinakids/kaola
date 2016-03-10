@@ -5,7 +5,7 @@ let R = router();
 
 R.get('/', function *(next) {
   yield render('index',{
-    title: 'Hello World Kaola!'
+    title: '首页'
   },this);
 });
 

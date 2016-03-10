@@ -10,14 +10,14 @@ import babel from 'gulp-babel';
 import concat from 'gulp-concat';
 
 gulp.task('less', () => {
-  gulp.src('public/fontend/less/**/*.less')
+  gulp.src('public/fontend/less/*.less')
     .pipe(plumber({errorHandler: notify.onError('Error: <%= error.message %>')}))
     .pipe(less())
     .pipe(gulp.dest('public/fontend/css'));
 });
 
 gulp.task('css', () => {
-  gulp.src('public/fontend/css/**/*.css')
+  gulp.src('public/fontend/css/*.css')
     .pipe(plumber({errorHandler: notify.onError('Error: <%= error.message %>')}))
     .pipe(sourcemaps.init())
     .pipe(autoprefixer({
@@ -32,7 +32,7 @@ gulp.task('css', () => {
 });
 
 gulp.task('babel', () => {
-  gulp.src('public/fontend/babel/**/*.es6')
+  gulp.src('public/fontend/babel/*.es6')
     .pipe(sourcemaps.init())
     .pipe(babel({
       presets: ['es2015']
@@ -43,6 +43,7 @@ gulp.task('babel', () => {
 });
 
 gulp.task('watch', () => {
-    gulp.watch('public/fontend/less/**/*.less', ['less','css']);
-    gulp.watch('public/fontend/babel/**/*.es6', ['babel']);
+    gulp.watch('public/fontend/less/*.less', ['less']);
+    gulp.watch('public/fontend/css/*.css', ['css']);
+    gulp.watch('public/fontend/babel/*.es6', ['babel']);
 });

@@ -3,19 +3,19 @@ extends ./layout/layout
 block content
   include ./layout/breadcrumbNav
   section.content(ng-controller='GoodsManageCtrl')
-    div.col-md-12
-      div.panel
-        div.btn-group
+    .col-md-12
+      .panel
+        .btn-group
           a.btn.btn-primary.btn-sm(href='/#{pageInfo.adminDomain}/goodsManage/addGood')
             i.fa.fa-plus-square
             |  添加商品
         include ./layout/search
-    div.col-md-12
-      div.box.box-default
-        div.box-header.with-border
+    .col-md-12
+      .box.box-default
+        .box-header.with-border
           h5.box-title #{title}
             small  共 #{page.count} 条记录
-        div.box-body.table-responsive.no-padding
+        .box-body.table-responsive.no-padding
           table.table.table-hover
             tbody
               tr
@@ -49,7 +49,7 @@ block content
                   span.label.label-warning(ng-switch-when='false') 隐藏
                 td(ng-bind='item.author.nickName')
                 td
-                  div.btn-group
+                  .btn-group
                     a.btn.btn-primary.btn-xs(href='/#{pageInfo.adminDomain}/goodsManage/editGood?id={{item._id}}', role='button', title='编辑')
                       i.fa.fa-edit
                     a.btn.btn-warning.btn-xs(href='javascript:;', role='button', title='推荐',ng-hide='item.state.top',ng-click='changeTop($index,item._id)')

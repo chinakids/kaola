@@ -2,26 +2,26 @@ extends ./layout/common
 
 block layout
   body.hold-transition.lockscreen(ng-controller='LockCtrl')
-    div.lockscreen-wrapper
-      div.lockscreen-logo
+    .lockscreen-wrapper
+      .lockscreen-logo
         a(href='/')
         b Kaola
         |  CMS
-      div.lockscreen-name #{userInfo.nickName}
-      div.lockscreen-item
-        div.lockscreen-image
+      .lockscreen-name #{userInfo.nickName}
+      .lockscreen-item
+        .lockscreen-image
           img(src='#{userInfo.avatar}',alt='User Image')
         form.lockscreen-credentials
-          div.input-group
+          .input-group
             input#password.form-control(type='password',placeholder='password',ng-model='password')
-            div.input-group-btn
+            .input-group-btn
               button.btn(ng-click='submit()')
                 i.fa.fa-arrow-right.text-muted
-      div.help-block.text-center
+      .help-block.text-center
         Enter 请输入密码以解除账号锁定
-      div.text-center
+      .text-center
         a(href='/#{pageInfo.adminDomain}/logut') 退出当前账号并重新登录
-      div.lockscreen-footer.text-center
+      .lockscreen-footer.text-center
         | Copyright &copy; 2016-2018 
         b
           a.text-blackAlmsaeed(href='http://github.com/chinakids',target='_blank') Chinakids

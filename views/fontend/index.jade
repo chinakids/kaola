@@ -1,5 +1,29 @@
 extends ./layout/layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  .content-wrapper
+    .banner(style='background-image:url(fontend/img/eq/banner2.jpg)')
+      .search-box
+        h3(style='background-image:url(fontend/img/logo/title.png)')
+        .search
+          input(type='text',placeholder='搜索您所需要的...')
+          button.btn.btn-xs(type='button')
+            span.ar.ar-seach
+        .hot 热门：
+          a(href='#') xxx
+          a(href='#') xxx
+          a(href='#') xxx
+          a(href='#') xxx
+          a(href='#') xxx
+          a(href='#') xxx
+          a(href='#') xxx
+          a(href='#') xxx
+          a(href='#') xxx
+          a(href='#') xxx
+    .container
+      h1= title
+      p Welcome to #{title}
+      p Welcome to #{title}
+      p Welcome to #{title}
+      p Welcome to #{title}
+      p Welcome to #{title}

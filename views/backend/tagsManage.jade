@@ -3,32 +3,32 @@ extends ./layout/layout
 block content
   include ./layout/breadcrumbNav
   section.content(ng-controller='TagManageCtrl')
-    div.col-md-12
-      div.panel.clearfix
+    .col-md-12
+      .panel.clearfix
         include ./layout/search
-    div.col-md-9
-      div.box.box-default
-        div.box-header.with-border
+    .col-md-9
+      .box.box-default
+        .box-header.with-border
           h5.box-title #{title}
             small  共 #{page.count} 条记录
-        div.box-body.table-responsive.no-padding
+        .box-body.table-responsive.no-padding
           ul.tag-list.col-md-12
             li.btn.btn-primary.btn-sm(ng-repeat='item in tagList track by $index')
               | {{item.name}} ({{item.count}})
         include ./layout/listFooter
         #dataLoading.overlay.hide
           i.fa.fa-refresh.fa-spin
-    div.col-md-3
-      div.box.box-default
-        div.box-header.with-border
+    .col-md-3
+      .box.box-default
+        .box-header.with-border
           h3.box-title 标签使用量
             small  前五名
-        div.box-body
-          div.row
-            div.col-md-7
-              div.chart-responsive
+        .box-body
+          .row
+            .col-md-7
+              .chart-responsive
                 canvas#pieChart(height='150')
-            div.col-md-5
+            .col-md-5
               ul.chart-legend.clearfix
                 li(ng-repeat='item in ranking track by $index')
                   i.fa.fa-circle-o(style='color:{{item.color}}')

@@ -3,14 +3,14 @@ extends ./layout/layout
 block content
   include ./layout/breadcrumbNav
   section.content(ng-controller='GoodsEditCtrl')
-    div.col-md-12
-      div.box.box-default.big-form.clearfix
+    .col-md-12
+      .box.box-default.big-form.clearfix
         form#add
           dl.clearfix.col-md-12
             dt 标题:
             dd.form-group
-              div.input-group
-                div.input-group-btn
+              .input-group
+                .input-group-btn
                   button.btn.btn-default.dropdown-toggle(type='button',data-toggle='dropdown',aria-haspopup='true',aria-expanded='false')
                     | {{categoryText | category}}&nbsp;
                     span.caret
@@ -29,8 +29,8 @@ block content
           dl.clearfix.col-md-4
             dt 联系方式:
             dd.form-group
-              div.input-group
-                div.input-group-btn
+              .input-group
+                .input-group-btn
                   button.btn.btn-default.dropdown-toggle(type='button',data-toggle='dropdown',aria-haspopup='true',aria-expanded='false')
                     | {{goodData.info.callType | calltype }}&nbsp;
                     span.caret

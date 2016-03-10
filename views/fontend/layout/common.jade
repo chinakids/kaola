@@ -15,7 +15,7 @@ html(lang='zh',ng-app='Kaola')
     link(href='/backend/theme/css/AdminLTE.min.css', rel='stylesheet', type='text/css')
     link(href='/backend/theme/css/skins/all-skins.min.css', rel='stylesheet', type='text/css')
     link(href='/lib/toastr/toastr.min.css', rel='stylesheet', type='text/css')
-    link(href='/fontend/css/other.css', rel='stylesheet', type='text/css')
+    link(href='/fontend/css/common.css', rel='stylesheet', type='text/css')
     script(src='/lib/angular/angular.min.js')
     script(src='/lib/jquery/dist/jquery.min.js')
     script(src='/lib/toastr/toastr.min.js')
@@ -30,12 +30,12 @@ html(lang='zh',ng-app='Kaola')
 
   script(src='/backend/theme/js/app.min.js')
   script(src='/lib/bootstrap/dist/js/bootstrap.min.js')
-  script.
-    $(function() {
-      var path = window.location.pathname.split('/').slice(0,3).join('/');
-      var sv = $('a[href="' + path + '/"]');
-      $('.treeview-menu').removeClass('open-menu');
-      $(".sidebar-menu").find("li").removeClass('active');
-      sv.parents('li').addClass('active');
-      sv.parent('li').addClass('active').parents('.treeview-menu').addClass('open-menu');
-    })
+  //- script.
+  //-   $(function() {
+  //-     var path = window.location.pathname.split('/').slice(0,3).join('/');
+  //-     var sv = $('a[href="' + path + '/"]');
+  //-     $('.treeview-menu').removeClass('open-menu');
+  //-     $(".sidebar-menu").find("li").removeClass('active');
+  //-     sv.parents('li').addClass('active');
+  //-     sv.parent('li').addClass('active').parents('.treeview-menu').addClass('open-menu');
+  //-   })
