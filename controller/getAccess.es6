@@ -46,8 +46,18 @@ let check = {
         }
       }
     }
+  },
+  isAdmin(){
+    return function*(next){
+      if(this.session.userInfo.admin){
+        yield next;
+      }else{
+        this.body = {
+          status: 'FAIL::当前用户不具备操作权限'
+        }
+      }
+    }
   }
 }
-  
 
 export default check;

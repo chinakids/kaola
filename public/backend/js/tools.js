@@ -137,217 +137,33 @@ angular.module('Kaola.tools', [])
     }
   }])
   //权限模型
-  .factory('powerModal', function() {
-    var powerModal = [{
-      id: 'goodsManage',
-      pId: 0,
-      name: '商品管理',
-      open: true
-    }, {
-      id: 'goodsManage-add',
-      pId: 'goodsManage',
-      name: '新增'
-    }, {
-      id: 'goodsManage-view',
-      pId: 'goodsManage',
-      name: '查看'
-    }, {
-      id: 'goodsManage-edit',
-      pId: 'goodsManage',
-      name: '修改'
-    }, {
-      id: 'goodsManage-del',
-      pId: 'goodsManage',
-      name: '删除'
-    }, {
-      id: 'articlesManage',
-      pId: 0,
-      name: '文章管理',
-      open: true
-    }, {
-      id: 'articlesManage-add',
-      pId: 'articlesManage',
-      name: '新增'
-    }, {
-      id: 'articlesManage-view',
-      pId: 'articlesManage',
-      name: '查看'
-    }, {
-      id: 'articlesManage-edit',
-      pId: 'articlesManage',
-      name: '修改'
-    }, {
-      id: 'articlesManage-del',
-      pId: 'articlesManage',
-      name: '删除'
-    }, {
-      id: 'tagsManage',
-      pId: 0,
-      name: '标签管理',
-      open: true
-    }, {
-      id: 'tagsManage-view',
-      pId: 'tagsManage',
-      name: '查看'
-    }, {
-      id: 'categoriesManage',
-      pId: 0,
-      name: '分类管理',
-      open: true
-    }, {
-      id: 'categoriesManage-view',
-      pId: 'categoriesManage',
-      name: '更新'
-    },{
-      id: 'usersManage',
-      pId: 0,
-      name: '用户管理',
-      open: true
-    }, {
-      id: 'usersManage-add',
-      pId: 'usersManage',
-      name: '新增'
-    }, {
-      id: 'usersManage-view',
-      pId: 'usersManage',
-      name: '查看'
-    }, {
-      id: 'usersManage-edit',
-      pId: 'usersManage',
-      name: '修改'
-    }, {
-      id: 'usersManage-del',
-      pId: 'usersManage',
-      name: '删除'
-    }, {
-      id: 'systemManage',
-      pId: 0,
-      name: '系统管理',
-      open: true
-    }, {
-      id: 'adminManage',
-      pId: 'systemManage',
-      name: '系统用户管理',
-      open: true
-    }, {
-      id: 'adminManage-add',
-      pId: 'adminManage',
-      name: '新增'
-    }, {
-      id: 'adminManage-view',
-      pId: 'adminManage',
-      name: '查看'
-    }, {
-      id: 'adminManage-edit',
-      pId: 'adminManage',
-      name: '修改'
-    }, {
-      id: 'adminManage-del',
-      pId: 'adminManage',
-      name: '删除'
-    }, {
-      id: 'groupManage',
-      pId: 'systemManage',
-      name: '权限组管理',
-      open: true
-    }, {
-      id: 'groupManage-add',
-      pId: 'groupManage',
-      name: '新增'
-    }, {
-      id: 'groupManage-view',
-      pId: 'groupManage',
-      name: '查看'
-    }, {
-      id: 'groupManage-edit',
-      pId: 'groupManage',
-      name: '修改'
-    }, {
-      id: 'groupManage-del',
-      pId: 'groupManage',
-      name: '删除'
-    }, {
-      id: 'filesManage',
-      pId: 'systemManage',
-      name: '文件管理',
-      open: true
-    }, {
-      id: 'filesManage-view',
-      pId: 'filesManage',
-      name: '查看'
-    }, {
-      id: 'filesManage-del',
-      pId: 'filesManage',
-      name: '删除'
-    }, {
-      id: 'dataManage',
-      pId: 'systemManage',
-      name: '数据管理',
-      open: true
-    }, {
-      id: 'backupsMange',
-      pId: 'dataManage',
-      name: '备份管理',
-      open: true
-    }, {
-      id: 'backupsMange-add',
-      pId: 'backupsMange',
-      name: '备份'
-    }, {
-      id: 'backupsMange-del',
-      pId: 'backupsMange',
-      name: '删除'
-    }, {
-      id: 'backupsMange-re',
-      pId: 'backupsMange',
-      name: '恢复'
-    }, {
-      id: 'logManage',
-      pId: 'systemManage',
-      name: '日志管理',
-      open: true
-    }, {
-      id: 'logManage-view',
-      pId: 'logManage',
-      name: '查看'
-    }, {
-      id: 'sendMail',
-      pId: 'systemManage',
-      name: '发送系统邮件'
-    }]
+  .factory('powerModel',['$q','$http',function($q,$http) {
+    var q = $q.defer(); // 声明延后执行，表示要去监控后面的执行
+    $http.post('/api/getPowerList',{},{"timeout":10000}).success(function(data, status, headers, config){
+      q.resolve(data);
+    }).error(function(data, status, headers, config){
+      q.reject(data);
+    });
     return {
       getTree: function() {
-        return powerModal;
+        return q.promise;
       },
-      getModal: function() {
+      getModel: function(tree) {
         var modal = {}
-        for (var i = 0, len = powerModal.length; i < len; i++) {
-          if (!powerModal[i].open) {
-            modal[powerModal[i].id] = false;
+        for (var i = 0, len = tree.length; i < len; i++) {
+          if (!tree[i].open) {
+            modal[tree[i].id] = false;
           }
         }
         return modal;
       }
     }
-  })
+  }])
   //树组件
-  .directive('powerTree', ['powerModal', function(powerModal) {
+  .directive('powerTree', ['powerModel', function(powerModel) {
     return {
       restrict: 'A',
       link: function($scope, element, attrs) {
-        $scope[attrs.modal] = powerModal.getModal();
-        //解构目录
-        function eachGroup(nodes, status) {
-          for (var i = 0, len = nodes.length; i < len; i++) {
-            if (nodes[i].open) {
-              eachGroup(nodes[i].children, status)
-            } else {
-              $scope.$apply(function() {
-                $scope[attrs.modal][nodes[i].id] = status;
-              })
-            }
-          }
-        }
 
         var setting = {
           data: {
@@ -385,7 +201,22 @@ angular.module('Kaola.tools', [])
             }
           }
         };
-        $.fn.zTree.init($('.ztree'), setting, powerModal.getTree());
+        powerModel.getTree().then(function(res){
+          $scope[attrs.modal] = powerModel.getModel(res.data);
+          //解构目录
+          function eachGroup(nodes, status) {
+            for (var i = 0, len = nodes.length; i < len; i++) {
+              if (nodes[i].open) {
+                eachGroup(nodes[i].children, status)
+              } else {
+                $scope.$apply(function() {
+                  $scope[attrs.modal][nodes[i].id] = status;
+                })
+              }
+            }
+          }
+          $.fn.zTree.init($('.ztree'), setting, res.data);
+        })
       }
     };
   }])

@@ -79,7 +79,7 @@ block content
           $scope.type = 'add';
           $scope.power = {};
           treeObj = $.fn.zTree.getZTreeObj("ztree")
-          treeObj.checkAllNodes(false);
+          if(treeObj) treeObj.checkAllNodes(false);
         }
       })
       $scope.editId = '';
@@ -126,7 +126,7 @@ block content
                 toastr.error(msg)
               }
             })
-          }  
+          }
         }else{
           toastr.error('填写信息不完整')
         }

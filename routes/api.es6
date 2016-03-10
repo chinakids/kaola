@@ -98,4 +98,55 @@ R.post('/sendMail', check.login(), check.access('sendMail'), function *(next) {
   }
 });
 
+//获取权限模型
+R.post('/getPowerList',check.login(),check.isAdmin(),function *(next){
+  const powerList = [
+    {id: 'goodsManage',pId: 0,name: '商品管理',open: true},
+    {id: 'goodsManage-add',pId: 'goodsManage',name: '新增'},
+    {id: 'goodsManage-view',pId: 'goodsManage',name: '查看'},
+    {id: 'goodsManage-edit',pId: 'goodsManage',name: '修改'},
+    {id: 'goodsManage-del',pId: 'goodsManage',name: '删除'},
+    {id: 'articlesManage',pId: 0,name: '文章管理',open: true},
+    {id: 'articlesManage-add',pId: 'articlesManage',name: '新增'},
+    {id: 'articlesManage-view',pId: 'articlesManage',name: '查看'},
+    {id: 'articlesManage-edit',pId: 'articlesManage',name: '修改'},
+    {id: 'articlesManage-del',pId: 'articlesManage',name: '删除'},
+    {id: 'tagsManage',pId: 0,name: '标签管理',open: true},
+    {id: 'tagsManage-view',pId: 'tagsManage',name: '查看'},
+    {id: 'categoriesManage',pId: 0,name: '分类管理',open: true},
+    {id: 'categoriesManage-view',pId: 'categoriesManage',name: '更新'},
+    {id: 'usersManage',pId: 0,name: '用户管理',open: true},
+    {id: 'usersManage-add',pId: 'usersManage',name: '新增'},
+    {id: 'usersManage-view',pId: 'usersManage',name: '查看'},
+    {id: 'usersManage-edit',pId: 'usersManage',name: '修改'},
+    {id: 'usersManage-del',pId: 'usersManage',name: '删除'},
+    {id: 'systemManage',pId: 0,name: '系统管理',open: true},
+    {id: 'adminManage',pId: 'systemManage',name: '系统用户管理',open: true},
+    {id: 'adminManage-add',pId: 'adminManage',name: '新增'},
+    {id: 'adminManage-view',pId: 'adminManage',name: '查看'},
+    {id: 'adminManage-edit',pId: 'adminManage',name: '修改'},
+    {id: 'adminManage-del',pId: 'adminManage',name: '删除'},
+    {id: 'groupManage',pId: 'systemManage',name: '权限组管理',open: true},
+    {id: 'groupManage-add',pId: 'groupManage',name: '新增'},
+    {id: 'groupManage-view',pId: 'groupManage',name: '查看'},
+    {id: 'groupManage-edit',pId: 'groupManage',name: '修改'},
+    {id: 'groupManage-del',pId: 'groupManage',name: '删除'},
+    {id: 'filesManage',pId: 'systemManage',name: '文件管理',open: true},
+    {id: 'filesManage-view',pId: 'filesManage',name: '查看'},
+    {id: 'filesManage-del',pId: 'filesManage',name: '删除'},
+    {id: 'dataManage',pId: 'systemManage',name: '数据管理',open: true},
+    {id: 'backupsMange',pId: 'dataManage',name: '备份管理',open: true},
+    {id: 'backupsMange-add',pId: 'backupsMange',name: '备份'},
+    {id: 'backupsMange-del',pId: 'backupsMange',name: '删除'},
+    {id: 'backupsMange-re',pId: 'backupsMange',name: '恢复'},
+    {id: 'logManage',pId: 'systemManage',name: '日志管理',open: true},
+    {id: 'logManage-view',pId: 'logManage',name: '查看'},
+    {id: 'sendMail',pId: 'systemManage',name: '发送系统邮件'}
+  ]
+  this.body = {
+    status: 'SUCCESS::获取权限模型成功',
+    data: powerList
+  }
+})
+
 export default R;
