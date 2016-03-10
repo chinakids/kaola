@@ -1,0 +1,41 @@
+doctype html
+html(lang='zh',ng-app='Kaola')
+  head
+    title #{siteInfo.title} | #{title}
+    meta(charset='UTF-8')
+    meta(name='description',content='#{siteInfo.desc}')
+    meta(name='keywords',content='#{siteInfo.basicKW},#{siteInfo.keywords}')
+    meta(name='renderer',content='webkit')
+    meta(name='viewport',content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0')
+    link(href='/lib/bootstrap/dist/css/bootstrap.min.css', rel='stylesheet', type='text/css')
+    link(href='/lib/font-awesome/css/font-awesome.min.css', rel='stylesheet', type='text/css')
+    link(href='/lib/ionicons/css/ionicons.min.css', rel='stylesheet', type='text/css')
+    link(href='/lib/editor.md/css/editormd.min.css', rel='stylesheet', type='text/css')
+    link(href="/lib/fex-webuploader/dist/webuploader.css",rel="stylesheet")
+    link(href='/backend/theme/css/AdminLTE.min.css', rel='stylesheet', type='text/css')
+    link(href='/backend/theme/css/skins/all-skins.min.css', rel='stylesheet', type='text/css')
+    link(href='/lib/toastr/toastr.min.css', rel='stylesheet', type='text/css')
+    link(href='/fontend/css/other.css', rel='stylesheet', type='text/css')
+    script(src='/lib/angular/angular.min.js')
+    script(src='/lib/jquery/dist/jquery.min.js')
+    script(src='/lib/toastr/toastr.min.js')
+    script(src='/lib/editor.md/editormd.min.js')
+    script(src='/lib/fex-webuploader/dist/webuploader.min.js')
+    script(src='/lib/crypto-js/crypto-js.js')
+    script(src='/backend/js/tools.js')
+    //if lt IE 9
+      script(src='https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js')
+      script(src='https://oss.maxcdn.com/respond/1.4.2/respond.min.js')
+  block layout
+
+  script(src='/backend/theme/js/app.min.js')
+  script(src='/lib/bootstrap/dist/js/bootstrap.min.js')
+  script.
+    $(function() {
+      var path = window.location.pathname.split('/').slice(0,3).join('/');
+      var sv = $('a[href="' + path + '/"]');
+      $('.treeview-menu').removeClass('open-menu');
+      $(".sidebar-menu").find("li").removeClass('active');
+      sv.parents('li').addClass('active');
+      sv.parent('li').addClass('active').parents('.treeview-menu').addClass('open-menu');
+    })
