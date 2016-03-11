@@ -123,7 +123,7 @@ R.post('/editGoodSell', check.access('goodsManage-edit'), function*(next) {
     good[0].state.sell = !good[0].state.sell;
     yield good[0].save();
     //日志记录
-    setLog((article[0].state.sell?'下架':'上架'),`${(article[0].state.sell?'下架':'上架')}商品<<${article[0].title}>>成功`,this);
+    setLog((good[0].state.sell?'下架':'上架'),`${(good[0].state.sell?'下架':'上架')}商品<<${good[0].title}>>成功`,this);
     this.body = {
       status: 'SUCCESS::'+(good[0].state.sell?'下架成功':'上架成功')
     }
@@ -142,7 +142,7 @@ R.post('/editGoodDisplay', check.access('goodsManage-edit'), function*(next) {
     good[0].state.display = !good[0].state.display;
     yield good[0].save();
     //日志记录
-    setLog((article[0].state.display?'显示':'隐藏'),`${(article[0].state.display?'显示':'隐藏')}商品<<${article[0].title}>>成功`,this);
+    setLog((good[0].state.display?'显示':'隐藏'),`${(good[0].state.display?'显示':'隐藏')}商品<<${good[0].title}>>成功`,this);
     this.body = {
       status: 'SUCCESS::'+(good[0].state.display?'开启显示':'取消显示')
     }
@@ -159,7 +159,7 @@ R.post('/delGood', check.access('goodsManage-del'), function*(next) {
   } else {
     yield good[0].del();
     //日志记录
-    setLog('删除',`删除商品<<${article[0].title}>>成功`,this);
+    setLog('删除',`删除商品<<${good[0].title}>>成功`,this);
     this.body = {
       status: 'SUCCESS::成功删除商品'
     }

@@ -4,10 +4,10 @@ block layout
   body.skin-black-light.layout-top-nav
     .wrapper
       header.main-header
-        nav.navbar.navbar-static-top.opacity
+        nav.navbar.navbar-static-top(class={opacity:pageInfo.path==='/'})
           .container
             .navbar-header
-              a.navbar-brand(href='../../index2.html')
+              a.navbar-brand(href='/')
                 .logo
                 .sublogo
               button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar-collapse')
@@ -15,9 +15,9 @@ block layout
             #navbar-collapse.collapse.navbar-collapse.pull-left
               ul.nav.navbar-nav
                 li.active
-                  a(href='#') 闲置市场
+                  a(href='/goods/') 闲置市场
                 li
-                  a(href='#') 资讯广场
+                  a(href='/articles/') 资讯广场
               form.navbar-form.navbar-left(role='search')
                 .form-group
                   input#navbar-search-input.form-control(type='text', placeholder='Search')

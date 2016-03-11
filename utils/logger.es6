@@ -31,6 +31,7 @@ let print = (categories, info) => {
   });
 
   if (categories === 'error') {
+    console.log(info)
     logger.error(info);
   } else {
     if ('function' === typeof logger[categories]) {
