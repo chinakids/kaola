@@ -1,14 +1,14 @@
 extends ./layout/layout
 
 block content
-  .content-wrapper
+  .content-wrapper(ng-controller='IndexCtrl')
     .banner(style='background-image:url(fontend/img/eq/banner2.jpg)')
       .search-box
         h3(style='background-image:url(fontend/img/logo/title.png)')
         .search
           input(type='text',placeholder='搜索您所需要的...')
           button.btn.btn-xs(type='button')
-            span.ar.ar-seach
+            span.fa.fa-seach
         .hot 热门：
           a(href='#') xxx
           a(href='#') xxx
@@ -21,9 +21,384 @@ block content
           a(href='#') xxx
           a(href='#') xxx
     .container
-      h1= title
-      p Welcome to #{title}
-      p Welcome to #{title}
-      p Welcome to #{title}
-      p Welcome to #{title}
-      p Welcome to #{pageInfo.path}
+      ul.masonry-wrap.clefafix.js-masonry
+        li.grid-item
+          div.img-box
+            a.img(href='#')
+              img(src='fontend/img/eq/eq-head.png',onload='RM()')
+            p.num
+              a.watch-num(href='javascript:;')
+                i.fa.fa-eye
+                |  18
+              a.like-num(href='javascript:;')
+                i.fa.fa-heart
+                |  30
+          div.clearfix
+            a.img-name(href='#') 激情畅想“青春派“威丝曼
+            p.sort
+              i.fa.fa-location-arrow
+              |  KU劳伦斯校区
+            a.method.clefafix(href='#')
+              span(style='background-image:url(fontend/img/eq/bg-small-head.png);')
+              b 莫小夕
+        li.grid-item
+          div.img-box
+            a.img(href='#')
+              img(src='fontend/img/eq/eq-head.png',onload='RM()')
+            p.num
+              a.watch-num(href='javascript:;')
+                i.fa.fa-eye
+                |  18
+              a.like-num(href='javascript:;')
+                i.fa.fa-heart
+                |  30
+          div.clearfix
+            a.img-name(href='#') 激情畅想“青春派“威丝曼
+            p.sort
+              i.fa.fa-location-arrow
+              |  KU劳伦斯校区
+            a.method.clefafix(href='#')
+              span(style='background-image:url(fontend/img/eq/bg-small-head.png);')
+              b 莫小夕
+        li.grid-item
+          div.img-box
+            a.img(href='#')
+              img(src='fontend/img/eq/eq-head.png',onload='RM()')
+            p.num
+              a.watch-num(href='javascript:;')
+                i.fa.fa-eye
+                |  18
+              a.like-num(href='javascript:;')
+                i.fa.fa-heart
+                |  30
+          div.clearfix
+            a.img-name(href='#') 激情畅想“青春派“威丝曼
+            p.sort
+              i.fa.fa-location-arrow
+              |  KU劳伦斯校区
+            a.method.clefafix(href='#')
+              span(style='background-image:url(fontend/img/eq/bg-small-head.png);')
+              b 莫小夕
+        li.grid-item
+          div.img-box
+            a.img(href='#')
+              img(src='fontend/img/eq/eq-head.png',onload='RM()')
+            p.num
+              a.watch-num(href='javascript:;')
+                i.fa.fa-eye
+                |  18
+              a.like-num(href='javascript:;')
+                i.fa.fa-heart
+                |  30
+          div.clearfix
+            a.img-name(href='#') 激情畅想“青春派“威丝曼
+            p.sort
+              i.fa.fa-location-arrow
+              |  KU劳伦斯校区
+            a.method.clefafix(href='#')
+              span(style='background-image:url(fontend/img/eq/bg-small-head.png);')
+              b 莫小夕
+        li.grid-item
+          div.img-box
+            a.img(href='#')
+              img(src='fontend/img/eq/eq-head.png',onload='RM()')
+            p.num
+              a.watch-num(href='javascript:;')
+                i.fa.fa-eye
+                |  18
+              a.like-num(href='javascript:;')
+                i.fa.fa-heart
+                |  30
+          div.clearfix
+            a.img-name(href='#') 激情畅想“青春派“威丝曼
+            p.sort
+              i.fa.fa-location-arrow
+              |  KU劳伦斯校区
+            a.method.clefafix(href='#')
+              span(style='background-image:url(fontend/img/eq/bg-small-head.png);')
+              b 莫小夕
+        li.grid-item
+          div.img-box
+            a.img(href='#')
+              img(src='fontend/img/eq/eq-head.png',onload='RM()')
+            p.num
+              a.watch-num(href='javascript:;')
+                i.fa.fa-eye
+                |  18
+              a.like-num(href='javascript:;')
+                i.fa.fa-heart
+                |  30
+          div.clearfix
+            a.img-name(href='#') 激情畅想“青春派“威丝曼
+            p.sort
+              i.fa.fa-location-arrow
+              |  KU劳伦斯校区
+            a.method.clefafix(href='#')
+              span(style='background-image:url(fontend/img/eq/bg-small-head.png);')
+              b 莫小夕
+        li.grid-item
+          div.img-box
+            a.img(href='#')
+              img(src='fontend/img/eq/eq-head.png',onload='RM()')
+            p.num
+              a.watch-num(href='javascript:;')
+                i.fa.fa-eye
+                |  18
+              a.like-num(href='javascript:;')
+                i.fa.fa-heart
+                |  30
+          div.clearfix
+            a.img-name(href='#') 激情畅想“青春派“威丝曼
+            p.sort
+              i.fa.fa-location-arrow
+              |  KU劳伦斯校区
+            a.method.clefafix(href='#')
+              span(style='background-image:url(fontend/img/eq/bg-small-head.png);')
+              b 莫小夕
+        li.grid-item
+          div.img-box
+            a.img(href='#')
+              img(src='fontend/img/eq/eq-head.png',onload='RM()')
+            p.num
+              a.watch-num(href='javascript:;')
+                i.fa.fa-eye
+                |  18
+              a.like-num(href='javascript:;')
+                i.fa.fa-heart
+                |  30
+          div.clearfix
+            a.img-name(href='#') 激情畅想“青春派“威丝曼
+            p.sort
+              i.fa.fa-location-arrow
+              |  KU劳伦斯校区
+            a.method.clefafix(href='#')
+              span(style='background-image:url(fontend/img/eq/bg-small-head.png);')
+              b 莫小夕
+        li.grid-item
+          div.img-box
+            a.img(href='#')
+              img(src='fontend/img/eq/eq-head.png',onload='RM()')
+            p.num
+              a.watch-num(href='javascript:;')
+                i.fa.fa-eye
+                |  18
+              a.like-num(href='javascript:;')
+                i.fa.fa-heart
+                |  30
+          div.clearfix
+            a.img-name(href='#') 激情畅想“青春派“威丝曼
+            p.sort
+              i.fa.fa-location-arrow
+              |  KU劳伦斯校区
+            a.method.clefafix(href='#')
+              span(style='background-image:url(fontend/img/eq/bg-small-head.png);')
+              b 莫小夕
+        li.grid-item
+          div.img-box
+            a.img(href='#')
+              img(src='fontend/img/eq/eq-head.png',onload='RM()')
+            p.num
+              a.watch-num(href='javascript:;')
+                i.fa.fa-eye
+                |  18
+              a.like-num(href='javascript:;')
+                i.fa.fa-heart
+                |  30
+          div.clearfix
+            a.img-name(href='#') 激情畅想“青春派“威丝曼
+            p.sort
+              i.fa.fa-location-arrow
+              |  KU劳伦斯校区
+            a.method.clefafix(href='#')
+              span(style='background-image:url(fontend/img/eq/bg-small-head.png);')
+              b 莫小夕
+        li.grid-item
+          div.img-box
+            a.img(href='#')
+              img(src='fontend/img/eq/eq-head.png',onload='RM()')
+            p.num
+              a.watch-num(href='javascript:;')
+                i.fa.fa-eye
+                |  18
+              a.like-num(href='javascript:;')
+                i.fa.fa-heart
+                |  30
+          div.clearfix
+            a.img-name(href='#') 激情畅想“青春派“威丝曼
+            p.sort
+              i.fa.fa-location-arrow
+              |  KU劳伦斯校区
+            a.method.clefafix(href='#')
+              span(style='background-image:url(fontend/img/eq/bg-small-head.png);')
+              b 莫小夕
+        li.grid-item
+          div.img-box
+            a.img(href='#')
+              img(src='fontend/img/eq/eq-head.png',onload='RM()')
+            p.num
+              a.watch-num(href='javascript:;')
+                i.fa.fa-eye
+                |  18
+              a.like-num(href='javascript:;')
+                i.fa.fa-heart
+                |  30
+          div.clearfix
+            a.img-name(href='#') 激情畅想“青春派“威丝曼
+            p.sort
+              i.fa.fa-location-arrow
+              |  KU劳伦斯校区
+            a.method.clefafix(href='#')
+              span(style='background-image:url(fontend/img/eq/bg-small-head.png);')
+              b 莫小夕
+        li.grid-item
+          div.img-box
+            a.img(href='#')
+              img(src='fontend/img/eq/eq-head.png',onload='RM()')
+            p.num
+              a.watch-num(href='javascript:;')
+                i.fa.fa-eye
+                |  18
+              a.like-num(href='javascript:;')
+                i.fa.fa-heart
+                |  30
+          div.clearfix
+            a.img-name(href='#') 激情畅想“青春派“威丝曼
+            p.sort
+              i.fa.fa-location-arrow
+              |  KU劳伦斯校区
+            a.method.clefafix(href='#')
+              span(style='background-image:url(fontend/img/eq/bg-small-head.png);')
+              b 莫小夕
+        li.grid-item
+          div.img-box
+            a.img(href='#')
+              img(src='fontend/img/eq/eq-head.png',onload='RM()')
+            p.num
+              a.watch-num(href='javascript:;')
+                i.fa.fa-eye
+                |  18
+              a.like-num(href='javascript:;')
+                i.fa.fa-heart
+                |  30
+          div.clearfix
+            a.img-name(href='#') 激情畅想“青春派“威丝曼
+            p.sort
+              i.fa.fa-location-arrow
+              |  KU劳伦斯校区
+            a.method.clefafix(href='#')
+              span(style='background-image:url(fontend/img/eq/bg-small-head.png);')
+              b 莫小夕
+        li.grid-item
+          div.img-box
+            a.img(href='#')
+              img(src='fontend/img/eq/eq-head.png',onload='RM()')
+            p.num
+              a.watch-num(href='javascript:;')
+                i.fa.fa-eye
+                |  18
+              a.like-num(href='javascript:;')
+                i.fa.fa-heart
+                |  30
+          div.clearfix
+            a.img-name(href='#') 激情畅想“青春派“威丝曼
+            p.sort
+              i.fa.fa-location-arrow
+              |  KU劳伦斯校区
+            a.method.clefafix(href='#')
+              span(style='background-image:url(fontend/img/eq/bg-small-head.png);')
+              b 莫小夕
+        li.grid-item
+          div.img-box
+            a.img(href='#')
+              img(src='fontend/img/eq/eq-head.png',onload='RM()')
+            p.num
+              a.watch-num(href='javascript:;')
+                i.fa.fa-eye
+                |  18
+              a.like-num(href='javascript:;')
+                i.fa.fa-heart
+                |  30
+          div.clearfix
+            a.img-name(href='#') 激情畅想“青春派“威丝曼
+            p.sort
+              i.fa.fa-location-arrow
+              |  KU劳伦斯校区
+            a.method.clefafix(href='#')
+              span(style='background-image:url(fontend/img/eq/bg-small-head.png);')
+              b 莫小夕
+        li.grid-item
+          div.img-box
+            a.img(href='#')
+              img(src='fontend/img/eq/eq-head.png',onload='RM()')
+            p.num
+              a.watch-num(href='javascript:;')
+                i.fa.fa-eye
+                |  18
+              a.like-num(href='javascript:;')
+                i.fa.fa-heart
+                |  30
+          div.clearfix
+            a.img-name(href='#') 激情畅想“青春派“威丝曼
+            p.sort
+              i.fa.fa-location-arrow
+              |  KU劳伦斯校区
+            a.method.clefafix(href='#')
+              span(style='background-image:url(fontend/img/eq/bg-small-head.png);')
+              b 莫小夕
+        li.grid-item
+          div.img-box
+            a.img(href='#')
+              img(src='fontend/img/eq/eq-head.png',onload='RM()')
+            p.num
+              a.watch-num(href='javascript:;')
+                i.fa.fa-eye
+                |  18
+              a.like-num(href='javascript:;')
+                i.fa.fa-heart
+                |  30
+          div.clearfix
+            a.img-name(href='#') 激情畅想“青春派“威丝曼
+            p.sort
+              i.fa.fa-location-arrow
+              |  KU劳伦斯校区
+            a.method.clefafix(href='#')
+              span(style='background-image:url(fontend/img/eq/bg-small-head.png);')
+              b 莫小夕
+        li.grid-item
+          div.img-box
+            a.img(href='#')
+              img(src='fontend/img/eq/eq-head.png',onload='RM()')
+            p.num
+              a.watch-num(href='javascript:;')
+                i.fa.fa-eye
+                |  18
+              a.like-num(href='javascript:;')
+                i.fa.fa-heart
+                |  30
+          div.clearfix
+            a.img-name(href='#') 激情畅想“青春派“威丝曼
+            p.sort
+              i.fa.fa-location-arrow
+              |  KU劳伦斯校区
+            a.method.clefafix(href='#')
+              span(style='background-image:url(fontend/img/eq/bg-small-head.png);')
+              b 莫小夕
+        li.grid-item
+          div.img-box
+            a.img(href='#')
+              img(src='fontend/img/eq/eq-head.png',onload='RM()')
+            p.num
+              a.watch-num(href='javascript:;')
+                i.fa.fa-eye
+                |  18
+              a.like-num(href='javascript:;')
+                i.fa.fa-heart
+                |  30
+          div.clearfix
+            a.img-name(href='#') 激情畅想“青春派“威丝曼
+            p.sort
+              i.fa.fa-location-arrow
+              |  KU劳伦斯校区
+            a.method.clefafix(href='#')
+              span(style='background-image:url(fontend/img/eq/bg-small-head.png);')
+              b 莫小夕
