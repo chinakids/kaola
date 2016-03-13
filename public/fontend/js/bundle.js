@@ -54,17 +54,21 @@
 
 	var _login2 = _interopRequireDefault(_login);
 
+	var _lazyImage = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./directive/lazyImage\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+
+	var _lazyImage2 = _interopRequireDefault(_lazyImage);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	window.RM = function () {
+	  if (window.M) window.M.layout();
+	};
+	//指令集
 
 	//控制器
 
 
-	window.RM = function () {
-	  console.log(window.M);
-	  if (window.M) window.M.layout();
-	};
-
-	angular.module('Kaola', ['Kaola.tools']).controller(_index2.default[0], _index2.default[1]).controller(_login2.default[0], _login2.default[1]);
+	angular.module('Kaola', ['Kaola.tools']).controller(_index2.default[0], _index2.default[1]).controller(_login2.default[0], _login2.default[1]).directive(_lazyImage2.default[0], _lazyImage2.default[1]);
 
 /***/ },
 /* 1 */
