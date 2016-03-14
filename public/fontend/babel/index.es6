@@ -3,7 +3,7 @@
 import index from './controller/index.es6';
 import login from './controller/login.es6';
 //指令集
-import lazyImage from './directive/lazyImage';
+import lazyImage from './directive/lazyImage.es6';
 
 window.RM = function(){
   if(window.M) window.M.layout();

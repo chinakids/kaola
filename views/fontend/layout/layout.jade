@@ -73,28 +73,34 @@ block layout
                 //-                 span.sr-only 20% Complete
                 //-     li.footer
                 //-       a(href='#') View all tasks
-                li.dropdown.user.user-menu
-                  a.dropdown-toggle(href='#', data-toggle='dropdown')
-                    img.user-image(src='avatar/avatar.jpg', alt='User Image')
-                    span.hidden-xs Alexander Pierce
-                  //- ul.dropdown-menu
-                  //-   li.user-header
-                  //-     img.img-circle(src='avatar/avatar.jpg', alt='User Image')
-                  //-     p
-                  //-       | Alexander Pierce - Web Developer
-                  //-       small Member since Nov. 2012
-                  //-   li.user-body
-                  //-     .col-xs-4.text-center
-                  //-       a(href='#') Followers
-                  //-     .col-xs-4.text-center
-                  //-       a(href='#') Sales
-                  //-     .col-xs-4.text-center
-                  //-       a(href='#') Friends
-                  //-   li.user-footer
-                  //-     .pull-left
-                  //-       a.btn.btn-default.btn-flat(href='#') Profile
-                  //-     .pull-right
-                  //-       a.btn.btn-default.btn-flat(href='#') Sign out
+                if userInfo.login
+                  li.dropdown.user.user-menu
+                    a.dropdown-toggle(href='#', data-toggle='dropdown')
+                      img.user-image(src='#{userInfo.avatar}', alt='User Image')
+                      span.hidden-xs #{userInfo.nickName}
+                    //- ul.dropdown-menu
+                    //-   li.user-header
+                    //-     img.img-circle(src='avatar/avatar.jpg', alt='User Image')
+                    //-     p
+                    //-       | Alexander Pierce - Web Developer
+                    //-       small Member since Nov. 2012
+                    //-   li.user-body
+                    //-     .col-xs-4.text-center
+                    //-       a(href='#') Followers
+                    //-     .col-xs-4.text-center
+                    //-       a(href='#') Sales
+                    //-     .col-xs-4.text-center
+                    //-       a(href='#') Friends
+                    //-   li.user-footer
+                    //-     .pull-left
+                    //-       a.btn.btn-default.btn-flat(href='#') Profile
+                    //-     .pull-right
+                    //-       a.btn.btn-default.btn-flat(href='#') Sign out
+                else
+                  li
+                    a(href='#') 登陆
+                  li
+                    a(href='#') 注册
       block content
       footer.main-footer
         .container

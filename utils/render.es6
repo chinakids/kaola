@@ -26,14 +26,14 @@ export default function * render(name, source ,ctx){
       'path'        : urlPath,
       'adminDomain' : S.ADMIN_DOMAIN
     }
-    data.userInfo = self.session.userInfo || {};
   }else{
     //填充其他数据
     data.pageInfo = {
       'path'        : urlPath
     }
-    data.userInfo = self.session.userInfo || {};
   }
+  data.userInfo = self.session.userInfo || {};
+  data.userInfo.login = self.session.login;
   data.siteInfo = {
     title   : S.SITE_TITLE,
     domain  : S.SITE_DOMAIN,
