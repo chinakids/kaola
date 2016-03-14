@@ -24,36 +24,32 @@ const controller = [
         }
       }
       let addMasonry = (data) => {
-        let html = []
         for (let i = 0, len=data.length; i<len; i++) {
           let template = `
             <li class='grid-item'>
               <div class='img-box'>
-                <a class='img' href='#'>
+                <a class='img' href='/goods/${data[i]._id}'>
                   <img src='${getFirstImage(JSON.parse(data[i].imgList))}' onload='RM()'/>
                 </a>
                 <p class='num'>
                   <a class='watch-num' href='javascript:;'>
-                    <i class='fa fa-eye'></i> ${data[0].statistics.view}
+                    <i class='fa fa-eye'></i> ${data[i].statistics.view}
                   </a>
                   <a class='like-num' href='javascript:;'>
-                    <i class='fa fa-heart'></i> ${data[0].statistics.like}
+                    <i class='fa fa-heart'></i> ${data[i].statistics.like}
                   </a>
                 </p>
               </div>
               <div class='clearfix'>
-                <a class='img-name' href='#'>${data[0].title}</a>
-                <p class='sort'>
-                  <i class='fa fa-location-arrow'></i> ${data[0].info.location}
-                </p>
-                <a class='method clefafix' href='#'>
-                  <span style='background-image:url(${data[0].author.avatar});'></span>
-                  <b>${data[0].author.nickName}</b>
+                <a class='img-name' href='/goods/${data[i]._id}'>${data[i].title}</a>
+                ${data[i].info ? '<p class=\'sort\'><i class=\'fa fa-location-arrow\'></i> '+data[i].info.location+'</p>' : ''}
+                <a class='method clefafix' href='/users/${data[i].author._id}'>
+                  <span style='background-image:url(${data[i].author.avatar});'></span>
+                  <b>${data[i].author.nickName}</b>
                 </a>
               </div>
             </li>`;
-          html.push(template);
-          $('.js-masonry').append(html.join(''));
+          $('.js-masonry').append(template);
           window.M.reloadItems();
         };
       }
