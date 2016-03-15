@@ -28,7 +28,7 @@ const controller = [
           let template = `
             <li class='grid-item'>
               <div class='img-box'>
-                <a class='img' href='/goods/${data[i]._id}'>
+                <a class='img' href='/${data[i].info ? 'good' : 'article'}/${data[i]._id}'>
                   <img src='${getFirstImage(JSON.parse(data[i].imgList))}' onload='RM()'/>
                 </a>
                 <p class='num'>
@@ -41,7 +41,7 @@ const controller = [
                 </p>
               </div>
               <div class='clearfix'>
-                <a class='img-name' href='/goods/${data[i]._id}'>${data[i].title}</a>
+                <a class='img-name' href='/${data[i].info ? 'good' : 'article'}/${data[i]._id}'>${data[i].title}</a>
                 ${data[i].info ? '<p class=\'sort\'><i class=\'fa fa-location-arrow\'></i> '+data[i].info.location+'</p>' : ''}
                 <a class='method clefafix' href='/users/${data[i].author._id}'>
                   <span style='background-image:url(${data[i].author.avatar});'></span>

@@ -1,0 +1,87 @@
+extends ./layout/layout
+
+block content
+  .content-wrapper(ng-controller='GoodCtrl')
+    .container
+      .row(style='padding-top:120px;')
+        .col-md-3
+          .box.box-primary
+            .box-body.box-profile
+              img.profile-user-img.img-responsive.img-circle(src='/avatar/avatar.jpg', alt='User profile picture')
+              h3.profile-username.text-center Nina Mcintire
+              p.text-muted.text-center #{id}
+              ul.list-group.list-group-unbordered
+                li.list-group-item
+                  b 贩卖商品
+                  a.pull-right 1,322
+                li.list-group-item
+                  b 收获喜欢
+                  a.pull-right 543
+          .box.box-primary
+            .box-header.with-border
+              h3.box-title 关于此商品
+            .box-body
+              strong
+                i.fa.fa-book.margin-r-5
+                |  名称
+              p.text-muted
+                | B.S. in Computer Science from the University of Tennessee at Knoxville
+              hr
+              strong
+                i.fa.fa-btc.margin-r-5
+                |  价格
+              p.text-muted Malibu, California
+              hr
+              strong
+                i.fa.fa-map-marker.margin-r-5
+                |  交易地
+              p.text-muted Malibu, California
+              hr
+              strong
+                i.fa.fa-phone.margin-r-5
+                |  联系方式
+              p
+                | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.
+              hr
+              strong
+                i.fa.fa-pencil.margin-r-5
+                |  标签
+              p
+                span.label.label-info Javascript
+        .col-md-9
+          .box.box-primary
+            .box-body
+              .post
+                .info-block
+                  //- img.img-circle.img-bordered-sm(src='../../dist/img/user1-128x128.jpg', alt='user image')
+                  p.title Jonathan Burke Jr.
+                  p.description Shared publicly - 7:30 PM today
+                .row.margin-bottom
+                  .col-sm-6
+                    img.img-responsive(src='/fontend/img/eq/photo1.png', alt='Photo')
+                  .col-sm-6
+                    .row
+                      .col-sm-6
+                        img.img-responsive(src='/fontend/img/eq/photo2.png', alt='Photo')
+                        br
+                        img.img-responsive(src='/fontend/img/eq/photo3.jpg', alt='Photo')
+                      .col-sm-6
+                        img.img-responsive(src='/fontend/img/eq/photo4.jpg', alt='Photo')
+                        br
+                        img.img-responsive(src='/fontend/img/eq/photo1.png', alt='Photo')
+                p
+                  | Lorem ipsum represents a long-held tradition for designers,
+                  | typographers and the like. Some people hate it and argue for
+                  | its demise, but others ignore the hate as they create awesome
+                  | tools to help create filler text for everyone from bacon lovers
+                  | to Charlie Sheen fans.
+                ul.list-inline
+                  li
+                    a.link-black.text-sm(href='#')
+                      i.fa.fa-thumbs-o-up.margin-r-5
+                      |  喜欢 (5)
+                  li.pull-right
+                    a.link-black.text-sm(href='#')
+                      i.fa.fa-comments-o.margin-r-5
+                      |  评论 (5)
+                input.form-control.input-sm(type='text', placeholder='输入评论')

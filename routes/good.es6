@@ -4,8 +4,11 @@ import render from './../utils/render';
 let R = router();
 
 R.get('/:id', function *(next) {
-  console.log(this.params.id);
-  this.body = this.params.id;
+  yield render('good',{
+    title: '首页',
+    desc:'',
+    id:this.params.id
+  },this);
 });
 
 
