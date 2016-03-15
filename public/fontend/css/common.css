@@ -39,12 +39,48 @@ textarea:active,
 textarea:focus {
   border-color: #48B4CE;
 }
+hr {
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
 .ellipsis {
   display: block;
   word-break: keep-all;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.label-info {
+  margin: 0 5px 5px 0;
+}
+.list-group {
+  margin-bottom: 0;
+}
+.list-group .list-group-item {
+  border-color: #eee;
+}
+.list-group .list-group-item:first-child {
+  border-top: none;
+}
+.list-group .list-group-item:last-child {
+  border-bottom: none;
+}
+.box.box-info {
+  border-top-color: #758E92;
+}
+.navbar-form {
+  margin-right: 0;
+}
+@media (max-width: 991px) {
+  .navbar #navbar-search-input {
+    margin-bottom: 10px;
+    width: 90%;
+  }
+  .navbar-form {
+    margin-top: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
 }
 .wrapper {
   background-color: #ffffff !important;
