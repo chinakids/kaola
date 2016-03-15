@@ -25,6 +25,7 @@ const controller = [
       }
       let addMasonry = (data) => {
         for (let i = 0, len=data.length; i<len; i++) {
+          console.log(data[i]);
           let template = `
             <li class='grid-item'>
               <div class='img-box'>

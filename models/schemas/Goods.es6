@@ -112,8 +112,19 @@ GoodSchema.statics = {
   fetch(page = 1,limit = 10, query = {}) {
     return this.find({
         ...query
+      },{
+        _v:0,
+        content:0
       })
-      .populate('author')
+      .populate('author',{
+        password: 0,
+        meta:0,
+        phoneNum:0,
+        email:0,
+        _id:0,
+        _v:0,
+        group:0
+      })
       .populate('category')
       .sort('-meta.createAt')
       .skip((page - 1) * limit)
@@ -125,7 +136,15 @@ GoodSchema.statics = {
       return this.find({
           _id: id
         })
-        .populate('author')
+        .populate('author',{
+          password: 0,
+          meta:0,
+          phoneNum:0,
+          email:0,
+          _id:0,
+          _v:0,
+          group:0
+        })
         .populate('category')
         .sort('meta.updateAt')
         .exec()
