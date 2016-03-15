@@ -117,7 +117,7 @@ GoodSchema.statics = {
     return this.find({
         ...query
       },{
-        _v:0,
+        __v:0,
         content:0
       })
       .populate('author',{
@@ -126,7 +126,7 @@ GoodSchema.statics = {
         phoneNum:0,
         email:0,
         _id:0,
-        _v:0,
+        __v:0,
         group:0
       })
       .populate('category')
@@ -139,6 +139,8 @@ GoodSchema.statics = {
     if(id){
       return this.find({
           _id: id
+        },{
+          __v:0
         })
         .populate('author',{
           password: 0,
@@ -146,7 +148,7 @@ GoodSchema.statics = {
           phoneNum:0,
           email:0,
           _id:0,
-          _v:0,
+          __v:0,
           group:0
         })
         .populate('category')

@@ -78,6 +78,8 @@ TagsSchema.statics = {
   findByName(name){
     return this.find({
         name:name
+      },{
+        __v:0
       })
       .sort('meta.updateAt')
       .exec()

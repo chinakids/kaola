@@ -66,7 +66,7 @@ UploadFileSchema.method('del', function() {
 UploadFileSchema.statics = {
   fetch(page = 1, limit = 10 , query = {type : 'goods'}) {
     return this.find(query,{
-        _v:0  
+        __v:0
       })
       .sort('-meta.createAt')
       .skip((page - 1) * limit)
@@ -77,6 +77,8 @@ UploadFileSchema.statics = {
     if (id) {
       return this.find({
           _id: id
+        },{
+          __v:0
         })
         .sort('meta.updateAt')
         .exec()

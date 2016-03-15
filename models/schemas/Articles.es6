@@ -104,7 +104,7 @@ ArticleSchema.statics = {
     return this.find({
         ...query
       },{
-        _v:0,
+        __v:0,
         content:0
       })
       .populate('author',{
@@ -113,7 +113,7 @@ ArticleSchema.statics = {
         phoneNum:0,
         email:0,
         _id:0,
-        _v:0,
+        __v:0,
         group:0
       })
       .populate('category')
@@ -126,6 +126,8 @@ ArticleSchema.statics = {
     if(id){
       return this.find({
           _id: id
+        },{
+          __v:0
         })
         .populate('author',{
           password: 0,
@@ -133,7 +135,7 @@ ArticleSchema.statics = {
           phoneNum:0,
           email:0,
           _id:0,
-          _v:0,
+          __v:0,
           group:0
         })
         .populate('category')

@@ -73,8 +73,15 @@ LogSchema.statics = {
   fetch(page = 1,limit = 10, query = {}){
     return this.find({
         ...query
+      },{
+        __v:0
       })
-      .populate('user')
+      .populate('user',{
+        password: 0,
+        meta:0,
+        _id:0,
+        __v:0
+      })
       .sort('-meta.updateAt')
       .skip((page - 1) * limit)
       .limit(limit)

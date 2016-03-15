@@ -72,21 +72,35 @@ UserLikeSchema.pre('save', function(next){
 */
 UserLikeSchema.statics = {
   fetch(){
-    return this.find({})
+    return this.find({},{
+        __v:0
+      })
       .sort('-meta.createAt')
       .exec()
   },
   findByGood(id){
     return this.find({
         good:id
+      },{
+        __v:0
       })
-      .populate('user')
+      .populate('user',{
+        password: 0,
+        meta:0,
+        phoneNum:0,
+        email:0,
+        _id:0,
+        __v:0,
+        group:0
+      })
       .sort('-meta.createAt')
       .exec()
   },
   findByUser(id){
     return this.find({
         user:id
+      },{
+        __v:0
       })
       .populate('good')
       .populate('article')
@@ -96,8 +110,18 @@ UserLikeSchema.statics = {
   findByArticle(id){
     return this.find({
         article:id
+      },{
+        __v:0
       })
-      .populate('user')
+      .populate('user',{
+        password: 0,
+        meta:0,
+        phoneNum:0,
+        email:0,
+        _id:0,
+        __v:0,
+        group:0
+      })
       .sort('-meta.createAt')
       .exec()
   }

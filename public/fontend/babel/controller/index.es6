@@ -42,7 +42,7 @@ const controller = [
                 </p>
               </div>
               <div class='clearfix'>
-                <a class='img-name' href='/${data[i].info ? 'good' : 'article'}/${data[i]._id}'>${data[i].title}</a>
+                <a class='img-name' href='/${data[i].type === 'good' ? 'good' : 'article'}/${data[i]._id}'>${data[i].title}</a>
                 ${data[i].info ? '<p class=\'sort\'><i class=\'fa fa-location-arrow\'></i> '+data[i].info.location+'</p>' : ''}
                 <a class='method clefafix' href='/users/${data[i].author._id}'>
                   <span style='background-image:url(${data[i].author.avatar});'></span>

@@ -64,6 +64,8 @@ TemplateSchema.statics = {
     return this.find({
         name:query.name,
         group:query.group
+      },{
+        __v:0
       })
       .sort('meta.updateAt')
       .exec()

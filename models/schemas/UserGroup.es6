@@ -68,6 +68,8 @@ UserGroupSchema.statics = {
     //全部查询忽略最高权限
     return this.find({
         power:{'$ne':'root'}
+      },{
+        __v:0
       })
       .sort('-meta.createAt')
       .exec()
@@ -75,6 +77,8 @@ UserGroupSchema.statics = {
   findByName(name){
     return this.find({
         name:name
+      },{
+        __v:0
       })
       .sort('meta.updateAt')
       .exec()
@@ -83,6 +87,8 @@ UserGroupSchema.statics = {
     if(id){
       return this.find({
           _id:id
+        },{
+          __v:0
         })
         .sort('meta.updateAt')
         .exec()

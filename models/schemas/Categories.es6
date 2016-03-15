@@ -77,6 +77,8 @@ CategoriesSchema.statics = {
   findByAlias(alias) {
     return this.find({
         alias: alias
+      },{
+        __v:0
       })
       .sort('level')
       .exec()
@@ -85,13 +87,14 @@ CategoriesSchema.statics = {
     if(id){
       return this.find({
           _id: id
+        },{
+          __v:0
         })
         .sort('level')
         .exec()
     }else{
       return []
     }
-    
   }
 }
 
