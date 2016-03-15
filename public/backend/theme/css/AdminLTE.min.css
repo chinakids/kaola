@@ -1793,7 +1793,7 @@ a:focus {
 }
 
 .small-box:hover .icon {
-  font-size: 95px;
+  font-size: 55px;
 }
 
 @media (max-width:767px) {

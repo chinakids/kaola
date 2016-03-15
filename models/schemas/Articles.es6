@@ -122,14 +122,9 @@ ArticleSchema.statics = {
       .limit(limit)
       .exec()
   },
-  findById(id) {
+  findById(id,safe = false) {
     if(id){
-      return this.find({
-          _id: id
-        },{
-          __v:0
-        })
-        .populate('author',{
+      let filter = safe ? {
           password: 0,
           meta:0,
           phoneNum:0,
@@ -137,7 +132,13 @@ ArticleSchema.statics = {
           _id:0,
           __v:0,
           group:0
+        } : {}
+      return this.find({
+          _id: id
+        },{
+          __v:0
         })
+        .populate('author',filter)
         .populate('category')
         .sort('meta.updateAt')
         .exec()
