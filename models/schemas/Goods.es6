@@ -8,6 +8,10 @@ let GoodSchema = new mongoose.Schema({
   title: String, //标题
   content: String, //源码markdown
   price: Number, //价格
+  type: {
+    type: String,
+    default: 'good',
+  },
   info: {
     location: String, //位置
     callType: {

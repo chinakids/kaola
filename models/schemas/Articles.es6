@@ -8,6 +8,10 @@ let ArticleSchema = new mongoose.Schema({
   title: String, //标题
   content: String, //内容markdown格式
   imgList: String, //图片
+  type: {
+    type: String,
+    default: 'article',
+  },
   category: {
    type     : String,
    ref      : 'Categories'
