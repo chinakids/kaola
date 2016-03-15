@@ -54,21 +54,26 @@
 
 	var _login2 = _interopRequireDefault(_login);
 
-	var _lazyImage = __webpack_require__(3);
+	var _good = __webpack_require__(3);
+
+	var _good2 = _interopRequireDefault(_good);
+
+	var _lazyImage = __webpack_require__(4);
 
 	var _lazyImage2 = _interopRequireDefault(_lazyImage);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	//控制器
+
 
 	window.RM = function () {
 	  if (window.M) window.M.layout();
 	};
 	//指令集
 
-	//控制器
 
-
-	angular.module('Kaola', ['Kaola.tools']).controller(_index2.default[0], _index2.default[1]).controller(_login2.default[0], _login2.default[1]).directive(_lazyImage2.default[0], _lazyImage2.default[1]);
+	angular.module('Kaola', ['Kaola.tools']).controller(_index2.default[0], _index2.default[1]).controller(_login2.default[0], _login2.default[1]).controller(_good2.default[0], _good2.default[1]).directive(_lazyImage2.default[0], _lazyImage2.default[1]);
 
 /***/ },
 /* 1 */
@@ -126,6 +131,20 @@
 
 /***/ },
 /* 3 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var controller = ['GoodCtrl', ['$scope', '$http', '$filter', function ($scope, $http, $filter) {
+	  $scope.index = 'xx';
+	}]];
+	exports.default = controller;
+
+/***/ },
+/* 4 */
 /***/ function(module, exports) {
 
 	'use strict';

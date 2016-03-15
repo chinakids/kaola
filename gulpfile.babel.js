@@ -11,6 +11,7 @@ import concat from 'gulp-concat';
 import rename from 'gulp-rename';
 import uglify from 'gulp-uglify';
 import webpack from 'gulp-webpack';
+import gutil from 'gulp-util';
 //编译less
 gulp.task('less', () => {
   gulp.src('public/fontend/less/*.less')
