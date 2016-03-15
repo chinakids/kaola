@@ -8,9 +8,8 @@ let R = router();
 R.get('/:id', function *(next) {
   let good = yield goodsModel.findById(this.params.id,true);
   good[0].contentHTML = marked(good[0].content);
-  console.log(good[0]);
   yield render('good',{
-    title: '首页',
+    title: good[0].title,
     desc:'',
     data:good[0]
   },this);
