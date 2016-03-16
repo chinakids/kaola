@@ -101,6 +101,7 @@ ArticleSchema.method('del', function() {
  */
 ArticleSchema.statics = {
   fetch(page = 1,limit = 10, query = {}) {
+    if(typeof(page) === 'object') query = page;
     return this.find({
         ...query
       },{

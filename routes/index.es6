@@ -9,8 +9,8 @@ let R = router();
 
 R.get('/', function *(next) {
   let hot = yield tagModel.ranking(6);
-  let goodFetch = yield goodsModel.fetch();
-  let articleFetch = yield articlesModel.fetch();
+  let goodFetch = yield goodsModel.fetch({'state.display':true});
+  let articleFetch = yield articlesModel.fetch({'state.display':true});
   let list = mixList(goodFetch,articleFetch);
   yield render('index',{
     title: '首页',
