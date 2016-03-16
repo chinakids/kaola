@@ -14,8 +14,6 @@ R.get('/:id', function *(next) {
   good[0].userGoodCount = userGoodCount;
   good[0].userArticleCount = userArticleCount;
   if(good.length > 0){
-    console.log(this.cookies.get('view'));
-    console.log(this.request.cookies)
     //浏览加1
     if(!this.cookies.get('view')){
       let _good = Object.assign(good[0], {statistics:{view:good[0].statistics.view + 1}});
