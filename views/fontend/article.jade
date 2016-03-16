@@ -41,19 +41,7 @@ block content
                   //- img.img-circle.img-bordered-sm(src='../../dist/img/user1-128x128.jpg', alt='user image')
                   p.title #{data.title}
                   p.description 最后修改 - #{(new Date(data.meta.updateAt)).toLocaleString()}
-                .row.margin-bottom
-                  .col-sm-6
-                    img.img-responsive(src='/fontend/img/eq/photo1.png', alt='Photo')
-                  .col-sm-6
-                    .row
-                      .col-sm-6
-                        img.img-responsive(src='/fontend/img/eq/photo2.png', alt='Photo')
-                        br
-                        img.img-responsive(src='/fontend/img/eq/photo3.jpg', alt='Photo')
-                      .col-sm-6
-                        img.img-responsive(src='/fontend/img/eq/photo4.jpg', alt='Photo')
-                        br
-                        img.img-responsive(src='/fontend/img/eq/photo1.png', alt='Photo')
+                image-slide(data='#{data.imgList}')
                 .markdown-body !{data.contentHTML}
                 ul.list-inline
                   li

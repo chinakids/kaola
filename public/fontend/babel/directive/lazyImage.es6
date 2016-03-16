@@ -63,7 +63,7 @@ const directive = [
           win.on('resize', checkImage);
         }
       }
-    return {
+      return {
         restrict: 'A',//仅可以使用  attr
         scope: {},//独立的scope
         link($scope, $elem, attrs) {

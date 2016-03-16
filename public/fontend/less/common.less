@@ -259,11 +259,37 @@ hr{
     margin-bottom: 0;
   }
   .description {
-    color: #999;
+    color: @gray-light;
     font-size: 13px;
   }
 }
-
+.image-box{
+  .big-img,.small-img{
+    //border:1px solid @gray-lighter;
+    background-image: url(../img/bg/bg-w.png);
+    text-align: center;
+    img{
+      height:auto;
+      width:auto;
+      display:inline-block;
+      margin:auto;
+      max-width: 100%;
+      max-height: 100%;
+    }
+  }
+  .big-img{
+    height:370px;
+    line-height: 365px;
+  }
+  .small-img{
+    height:77.3px;
+    line-height: 73.3px;
+    margin-bottom: 20px;
+    &:last-child{
+      margin-bottom: 0;
+    }
+  }
+}
 // .wrapper {
 //   width: 100%;
 //   height: auto;

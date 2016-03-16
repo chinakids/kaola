@@ -62,18 +62,22 @@
 
 	var _lazyImage2 = _interopRequireDefault(_lazyImage);
 
+	var _imageSlide = __webpack_require__(5);
+
+	var _imageSlide2 = _interopRequireDefault(_imageSlide);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	//控制器
+	//指令集
 
 
 	window.RM = function () {
 	  if (window.M) window.M.layout();
 	};
-	//指令集
+	//控制器
 
 
-	angular.module('Kaola', ['Kaola.tools']).controller(_index2.default[0], _index2.default[1]).controller(_login2.default[0], _login2.default[1]).controller(_good2.default[0], _good2.default[1]).directive(_lazyImage2.default[0], _lazyImage2.default[1]);
+	angular.module('Kaola', ['Kaola.tools']).controller(_index2.default[0], _index2.default[1]).controller(_login2.default[0], _login2.default[1]).controller(_good2.default[0], _good2.default[1]).directive(_lazyImage2.default[0], _lazyImage2.default[1]).directive(_imageSlide2.default[0], _imageSlide2.default[1]);
 
 /***/ },
 /* 1 */
@@ -233,6 +237,47 @@
 	        }
 	      });
 	      initLazyLoad();
+	    }
+	  };
+	}]];
+	exports.default = directive;
+
+/***/ },
+/* 5 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var directive = ['imageSlide', ['$window', '$document', function ($win, $doc) {
+	  return {
+	    restrict: 'EMAC',
+	    replace: true,
+	    template: '\n          <div class=\'row margin-bottom image-box\' ng-if=\'remove\'>\n            <div class=\'col-sm-8\'>\n              <div class=\'big-img\'><img class=\'img-responsive\' ng-src=\'{{showImage.url}}\' alt=\'Photo\'/></div>\n            </div>\n            <div class=\'col-sm-4\'>\n              <div class=\'row\'>\n                <div class=\'col-xs-6\'>\n                <div class=\'small-img\' ng-repeat=\'item in leftData track by $index\'><img class=\'img-responsive\' ng-src=\'{{item.url}}\' ng-click=\'show(item)\' alt=\'Photo\'/></div>\n                </div>\n                <div class=\'col-xs-6\'>\n                <div class=\'small-img\' ng-repeat=\'item in rightData track by $index\'><img class=\'img-responsive\' ng-src=\'{{item.url}}\' ng-click=\'show(item)\' alt=\'Photo\'/></div>\n                </div>\n              </div>\n            </div>\n          </div>\n        ',
+	    controller: ['$scope', function ($scope) {
+	      $scope.rightData = [];
+	      $scope.leftData = [];
+	      $scope.remove = true;
+	      $scope.showImage = '';
+	      $scope.show = function (obj) {
+	        $scope.showImage = obj;
+	      };
+	    }],
+	    link: function link($scope, $elem, attrs) {
+	      var data = JSON.parse(attrs.data);
+	      var index = 1;
+	      for (var item in data) {
+	        if (index === 1) $scope.showImage = data[item];
+	        if (index % 2 === 0) {
+	          $scope.rightData.push(data[item]);
+	        } else {
+	          $scope.leftData.push(data[item]);
+	        }
+	        index++;
+	      }
+	      if (index === 1) $scope.remove = false;
 	    }
 	  };
 	}]];
