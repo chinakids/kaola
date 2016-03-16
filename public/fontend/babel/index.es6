@@ -7,7 +7,7 @@ import good from './controller/good.es6';
 import lazyImage from './directive/lazyImage.es6';
 import imageSlide from './directive/imageSlide.es6';
 
-window.RM = function(){
+window.RM = () => {
   if(window.M) window.M.layout();
 }
 

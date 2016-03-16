@@ -30,7 +30,7 @@ const controller = [
             <li class='grid-item'>
               <div class='img-box'>
                 <a class='img' href='/${data[i].info ? 'good' : 'article'}/${data[i]._id}'>
-                  <img src='${getFirstImage(JSON.parse(data[i].imgList))}' onload='RM()'/>
+                  <img src='${getFirstImage(JSON.parse(data[i].imgList))}' onload='RM()' onerror='this.src="fontend/img/bg/nopicture.jpg"'/>
                 </a>
                 <p class='num'>
                   <a class='watch-num' href='javascript:;'>
