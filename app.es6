@@ -63,33 +63,36 @@ app.use(function *(next){
   try {
     yield next;
   } catch (err) {
-    logger('error',err);
-    err.status = err.status || 500;
-    this.status = err.status;
-    if(this.request.method === 'GET'){
+    let status = e.status || 500;
+    // 根据 status 渲染不同的页面
+    if (status == 404) {
       yield render('error',{
         debug: S.DEBUG,
-        title: '系统发生错误',
-        referer:this.request.header.referer,
-        error: err
+        title: '页面未找到',
+        referer: this.request.header.referer,
+        error: {
+          status : 404
+        }
       },this);
-    }else{
-      this.body = {
-        status : 'FAIL::系统发生错误',
-        err : err
+    }
+    if (status == 500) {
+      if(this.request.method === 'GET'){
+        yield render('error',{
+          debug: S.DEBUG,
+          title: '系统发生错误',
+          referer:this.request.header.referer,
+          error: err
+        },this);
+      }else{
+        this.body = {
+          status : 'FAIL::系统发生错误',
+          err : err
+        }
       }
+      // 触发 koa 统一错误事件，可以打印出详细的错误堆栈 log
+      this.app.emit('error', e, this);
     }
   }
-  if (this.status !== 404) return false;
-  this.status = 404;
-  yield render('error',{
-    debug: S.DEBUG,
-    title: '页面未找到',
-    referer: this.request.header.referer,
-    error: {
-      status : 404
-    }
-  },this);
 })
 //过滤非法URL请求
 app.use(function *(next){
