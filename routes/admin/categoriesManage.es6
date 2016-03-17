@@ -23,28 +23,28 @@ R.get('/', check.access('categoriesManage-view'), function*(next) {
 });
 
 R.post('/updateCategory', check.access('categoriesManage-update'), function*(next) {
-	let parm = this.request.body;
-	let arr = cf.parse(parm.data);
-	for (let i = 0,len = arr.length; i < len; i++) {
-		let [ category ] = yield categoryModel.findById(arr[i]._id);
-	  if (!category) {
-	    //新增
-	    let user = new categoryModel({
-	      name: arr[i].name,
-	      alias: arr[i].alias,
-	      parent: arr[i].parent,
-	      level: arr[i].level
-	    })
-	    yield user.add()
-	  } else {
-	  	//修改
+  let parm = this.request.body;
+  let arr = cf.parse(parm.data);
+  for (let i = 0,len = arr.length; i < len; i++) {
+    let [ category ] = yield categoryModel.findById(arr[i]._id);
+    if (!category) {
+      //新增
+      let user = new categoryModel({
+        name: arr[i].name,
+        alias: arr[i].alias,
+        parent: arr[i].parent,
+        level: arr[i].level
+      })
+      yield user.add()
+    } else {
+      //修改
       let _category = Object.assign(category, arr[i]);
       yield _category.save()
-  	}
-	};
-	//日志记录
+    }
+  };
+  //日志记录
   setLog('更新','更新栏目列表成功',this);
-	this.body = {
+  this.body = {
     status: 'SUCCESS::成功更新类目信息'
   }
 });

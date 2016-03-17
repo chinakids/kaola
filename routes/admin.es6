@@ -75,16 +75,16 @@ R.post('/init', function*(next) {
     let parm = this.request.body;
     let md5 = crypto.createHash('md5');
     //先初始化root权限组
-    let [ checkingGroup ] = yield userGroupModel.findByName('root');
+    let [ group ] = yield userGroupModel.findByName('root');
     let userGroup;
-    if (!checkingGroup.length) {
+    if (!group) {
       userGroup = new userGroupModel({
         name: 'root',
         power: 'root'
       })
       yield userGroup.add();
     } else {
-      userGroup = checkingGroup;
+      userGroup = group;
     }
     let [ checkingUser ] = yield usersModel.findAdminByEmail(parm.email);
     if (checkingUser) {
@@ -133,7 +133,7 @@ R.post('/login', function*(next) {
   let md5 = crypto.createHash('md5');
   let [ admin ] = yield usersModel.findAdminByEmail(parm.email);
 
-  if (admin.length <= 0) {
+  if (!admin) {
     this.body = {
       status: 'FAIL::用户不存在'
     }

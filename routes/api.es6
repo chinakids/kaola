@@ -20,7 +20,7 @@ let R = router();
 
 //验证码
 R.get('/securityCode',function *(next) {
-  let [  str , buffer ] = securityCode.get();
+  let [ str , buffer ] = securityCode.get();
   this.session.ccap = str;
   this.body = buffer;
 });
@@ -33,23 +33,23 @@ R.post('/uploadImg', check.login(), function *(next) {
   });
   let part;
   if (part = yield parts) {
-  	if(part.mimeType.split('/')[0] === 'image'){
-  		let tmp = Date.parse(new Date()) + Math.random().toString().substr(0,10) + path.extname(part.filename);
-	  	let stream = fs.createWriteStream(path.join(process.cwd() + '/.tmp', tmp));
-		  part.pipe(stream);
-		  this.body = {
-		  	status: 'SUCCESS::上传成功',
-		  	tmp : tmp
-		  }
-  	}else{
-  		this.body = {
-		  	status: 'FAIL::本接口只可上传图片'
-		  }
-  	}
+    if(part.mimeType.split('/')[0] === 'image'){
+      let tmp = Date.parse(new Date()) + Math.random().toString().substr(0,10) + path.extname(part.filename);
+      let stream = fs.createWriteStream(path.join(process.cwd() + '/.tmp', tmp));
+      part.pipe(stream);
+      this.body = {
+        status: 'SUCCESS::上传成功',
+        tmp : tmp
+      }
+    }else{
+      this.body = {
+        status: 'FAIL::本接口只可上传图片'
+      }
+    }
   }else{
-  	this.body = {
-	  	status: 'FAIL::接口出错'
-	  }
+    this.body = {
+      status: 'FAIL::接口出错'
+    }
   }
 });
 
@@ -58,7 +58,7 @@ R.post('/delImgTmp', check.login(), function *(next) {
   let query = this.request.query;
   if(fs.existsSync(path.join(process.cwd() + '/.tmp', query.url))) fs.unlinkSync(path.join(process.cwd() + '/.tmp', query.url));
   this.body = {
-  	status: 'SUCCESS::删除成功'
+    status: 'SUCCESS::删除成功'
   }
 });
 
