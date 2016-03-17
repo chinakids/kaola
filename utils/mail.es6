@@ -30,7 +30,6 @@ let sendMail = (data) => {
   let p = new Promise((resolve, reject) => {
     smtpTransport.sendMail(config, (err, data) => {
       if(err){
-        console.log(err)
         reject(error);
       }else{
         resolve(null, data);

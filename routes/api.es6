@@ -20,9 +20,9 @@ let R = router();
 
 //验证码
 R.get('/securityCode',function *(next) {
-  let arry = securityCode.get();
-  this.session.ccap = arry[0];
-  this.body = arry[1];
+  let [  str , buffer ] = securityCode.get();
+  this.session.ccap = str;
+  this.body = buffer;
 });
 
 //上传图片,目前只做单张上传

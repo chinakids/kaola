@@ -34,8 +34,8 @@ R.get('/', check.access('usersManage-view'), function*(next) {
 R.post('/addUser', check.access('usersManage-add'), function*(next) {
   let parm = this.request.body;
   let md5 = crypto.createHash('md5');
-  let checking = yield usersModel.findUserByEmail(parm.email);
-  if (checking.length > 0) {
+  let [ user ] = yield usersModel.findUserByEmail(parm.email);
+  if (user) {
     this.body = {
       status: 'FAIL::该邮箱已存在'
     }
@@ -60,13 +60,13 @@ R.post('/addUser', check.access('usersManage-add'), function*(next) {
 R.post('/editUser', check.access('usersManage-edit'), function*(next) {
   let parm = this.request.body;
   let md5 = crypto.createHash('md5');
-  let user = yield usersModel.findUserById(parm._id);
-  if (user.length <= 0) {
+  let [ user ] = yield usersModel.findUserById(parm._id);
+  if (!user) {
     this.body = {
       status: 'FAIL::该账号不存在'
     }
   } else {
-    if (user[0].group.power === 'root') {
+    if (user.group.power === 'root') {
       this.body = {
         status: 'FAIL::Root权限账号无法修改'
       }
@@ -80,7 +80,7 @@ R.post('/editUser', check.access('usersManage-edit'), function*(next) {
         delete parm.email;
       }
       //合并
-      let _user = Object.assign(user[0], parm);
+      let _user = Object.assign(user, parm);
       yield _user.save()
       //日志记录
       setLog('修改',`修改用户(email:${_user.email})成功`,this);
@@ -93,20 +93,20 @@ R.post('/editUser', check.access('usersManage-edit'), function*(next) {
 //会员管理 - 删除
 R.post('/delUser', check.access('usersManage-del'), function*(next) {
   let parm = this.request.body;
-  let user = yield usersModel.findUserById(parm._id);
-  if (user.length <= 0) {
+  let [ user ] = yield usersModel.findUserById(parm._id);
+  if (!user) {
     this.body = {
       status: 'FAIL::该账号不存在'
     }
   } else {
-    if (user[0].group.power === 'root') {
+    if (user.group.power === 'root') {
       this.body = {
         status: 'FAIL::Root权限账号无法删除'
       }
     } else {
-      yield user[0].del()
+      yield user.del()
       //日志记录
-      setLog('删除',`删除用户(email:${user[0].email})成功`,this);
+      setLog('删除',`删除用户(email:${user.email})成功`,this);
       this.body = {
         status: 'SUCCESS::成功删除会员账号'
       }

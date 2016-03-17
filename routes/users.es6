@@ -31,20 +31,19 @@ R.get('/login', function *(next) {
 R.post('/login', function*(next) {
   let parm = this.request.body;
   let md5 = crypto.createHash('md5');
-  let result = yield usersModel.findUserByEmail(parm.email);
-  console.log(result)
-  if (result.length <= 0) {
+  let [ user ] = yield usersModel.findUserByEmail(parm.email);
+  if (!user) {
     this.body = {
       status: 'FAIL::用户不存在'
     }
   } else {
-    let ticket = md5.update((result[0].password + this.session.ccap).toUpperCase()).digest('hex');
+    let ticket = md5.update((user.password + this.session.ccap).toUpperCase()).digest('hex');
     if (parm.ticket.toUpperCase() === ticket.toUpperCase()) {
       this.session.email = parm.email;
       this.session.login = true;
       this.session.locked = false;
       this.session.ccap = '';
-      this.session.userInfo = result[0];
+      this.session.userInfo = user;
       this.body = {
         status: 'SUCCESS::登陆成功'
       }

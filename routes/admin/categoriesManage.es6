@@ -26,8 +26,8 @@ R.post('/updateCategory', check.access('categoriesManage-update'), function*(nex
 	let parm = this.request.body;
 	let arr = cf.parse(parm.data);
 	for (let i = 0,len = arr.length; i < len; i++) {
-		let category = yield categoryModel.findById(arr[i]._id);
-	  if (category.length <= 0) {
+		let [ category ] = yield categoryModel.findById(arr[i]._id);
+	  if (!category) {
 	    //新增
 	    let user = new categoryModel({
 	      name: arr[i].name,
@@ -38,7 +38,7 @@ R.post('/updateCategory', check.access('categoriesManage-update'), function*(nex
 	    yield user.add()
 	  } else {
 	  	//修改
-      let _category = Object.assign(category[0], arr[i]);
+      let _category = Object.assign(category, arr[i]);
       yield _category.save()
   	}
 	};

@@ -7,13 +7,15 @@ import good from './controller/good.es6';
 import lazyImage from './directive/lazyImage.es6';
 import imageSlide from './directive/imageSlide.es6';
 
+console.log('%c Kaola %c Copyright \xa9 2015-%s  Power by github/chinakids','font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;font-size:64px;color:#00bbee;-webkit-text-fill-color:#00bbee;-webkit-text-stroke: 1px #00bbee;',"font-size:12px;color:#999999;",(new Date).getFullYear())
+
 window.RM = () => {
   if(window.M) window.M.layout();
 }
 
 angular.module('Kaola', ['Kaola.tools'])
-.controller(index[0],index[1])
-.controller(login[0],login[1])
-.controller(good[0],good[1])
-.directive(lazyImage[0],lazyImage[1])
-.directive(imageSlide[0],imageSlide[1])
+.controller(...index)
+.controller(...login)
+.controller(...good)
+.directive(...lazyImage)
+.directive(...imageSlide)

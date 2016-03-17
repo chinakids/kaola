@@ -75,19 +75,19 @@ R.post('/init', function*(next) {
     let parm = this.request.body;
     let md5 = crypto.createHash('md5');
     //先初始化root权限组
-    let checkingGroup = yield userGroupModel.findByName('root');
+    let [ checkingGroup ] = yield userGroupModel.findByName('root');
     let userGroup;
-    if (checkingGroup.length <= 0) {
+    if (!checkingGroup.length) {
       userGroup = new userGroupModel({
         name: 'root',
         power: 'root'
       })
       yield userGroup.add();
     } else {
-      userGroup = checkingGroup[0];
+      userGroup = checkingGroup;
     }
-    let checkingUser = yield usersModel.findAdminByEmail(parm.email);
-    if (checkingUser.length > 0) {
+    let [ checkingUser ] = yield usersModel.findAdminByEmail(parm.email);
+    if (checkingUser) {
       this.body = {
         status: 'FAIL::该邮箱已存在'
       }
@@ -131,20 +131,20 @@ R.get('/login', function*(next) {
 R.post('/login', function*(next) {
   let parm = this.request.body;
   let md5 = crypto.createHash('md5');
-  let result = yield usersModel.findAdminByEmail(parm.email);
-  console.log(result)
-  if (result.length <= 0) {
+  let [ admin ] = yield usersModel.findAdminByEmail(parm.email);
+
+  if (admin.length <= 0) {
     this.body = {
       status: 'FAIL::用户不存在'
     }
   } else {
-    let ticket = md5.update((result[0].password + this.session.ccap).toUpperCase()).digest('hex');
+    let ticket = md5.update((admin.password + this.session.ccap).toUpperCase()).digest('hex');
     if (parm.ticket.toUpperCase() === ticket.toUpperCase()) {
       this.session.email = parm.email;
       this.session.login = true;
       this.session.locked = false;
       this.session.ccap = '';
-      this.session.userInfo = result[0];
+      this.session.userInfo = admin;
       //日志记录
       setLog('登陆',`${parm.email}登陆成功`,this);
       this.body = {
@@ -190,13 +190,13 @@ R.get('/lock', function*(next) {
 R.post('/unlock', function*(next) {
   let parm = this.request.body;
   let md5 = crypto.createHash('md5');
-  let result = yield usersModel.findAdminByEmail(this.session.email);
-  if (result.length <= 0) {
+  let [ admin ] = yield usersModel.findAdminByEmail(this.session.email);
+  if (!admin) {
     this.body = {
       status: 'FAIL::用户不存在'
     }
   } else {
-    if (parm.ticket.toUpperCase() === result[0].password.toUpperCase()) {
+    if (parm.ticket.toUpperCase() === admin.password.toUpperCase()) {
       //日志记录
       setLog('解锁','账户解锁',this);
       this.session.locked = false;

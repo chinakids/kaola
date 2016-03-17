@@ -1,4 +1,6 @@
 import fs from 'fs';
+import co from 'co';
+import settingModel from '../models/Setting';
 /*
 *   全局设置
 */
@@ -61,4 +63,4 @@ const globalSetting =  {
   MAIL_PASSWORD:'',//发送账户密码
 }
 
-export default globalSetting;
+export default globalSetting

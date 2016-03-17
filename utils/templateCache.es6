@@ -26,11 +26,12 @@ let preCompile = (filePath, pageName, group) => {
   fs.writeFile(path.join(__dirname,`./../views/.cache/${group}/${pageName}.cache`),jade.compileFileClient(filePath))
   //数据库存入副本
   templateModel.findByName({'name':pageName,'group':group}, (err,templates) => {
+    let [ template ] = templates;
     if(err){
       logger('model',err);
     }else{
       //判断模板是否存在
-      if(templates.length<=0){
+      if(!template){
         let _template = new templateModel({
           name      : pageName,
           content   : jade.compileFileClient(filePath),
@@ -47,7 +48,7 @@ let preCompile = (filePath, pageName, group) => {
         let _template = {
           content : jade.compileFileClient(filePath)
         };
-        let newTemplate = Object.assign(templates[0],_template);
+        let newTemplate = Object.assign(template,_template);
         newTemplate.compiled = newTemplate.compiled + 1;
         newTemplate.save((err,template) => {
           if(err){

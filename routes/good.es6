@@ -7,23 +7,23 @@ import marked from 'marked';
 let R = router();
 
 R.get('/:id', function *(next) {
-  let good = yield goodsModel.findById(this.params.id,true); //true安全读取模式
-  let userGoodCount = yield goodsModel.count({author:good[0].author._id}) //读取用户发布商品总量
-  let userArticleCount = yield articlesModel.count({author:good[0].author._id}) //读取用户文章总量
-  good[0].contentHTML = marked(good[0].content);
-  good[0].userGoodCount = userGoodCount;
-  good[0].userArticleCount = userArticleCount;
-  if(good.length > 0){
+  let [ good ] = yield goodsModel.findById(this.params.id,true); //true安全读取模式
+  let userGoodCount = yield goodsModel.count({author:good.author._id}) //读取用户发布商品总量
+  let userArticleCount = yield articlesModel.count({author:good.author._id}) //读取用户文章总量
+  good.contentHTML = marked(good.content);
+  good.userGoodCount = userGoodCount;
+  good.userArticleCount = userArticleCount;
+  if(good){
     //浏览加1
     if(!this.cookies.get('view')){
-      let _good = Object.assign(good[0], {statistics:{view:good[0].statistics.view + 1}});
+      let _good = Object.assign(good, {statistics:{view:good.statistics.view + 1}});
       yield _good.save();
       this.cookies = this.cookies.set('view', '1', { signed:false, path: this.request.path,httpOnly:true });
     }
     yield render('good',{
-      title: good[0].title,
+      title: good.title,
       desc:'',
-      data:good[0]
+      data:good
     },this);
   }
 });

@@ -46,6 +46,8 @@
 
 	'use strict';
 
+	var _angular$module$contr, _angular$module$contr2, _angular$module$contr3, _angular$module$contr4, _angular$module;
+
 	var _index = __webpack_require__(1);
 
 	var _index2 = _interopRequireDefault(_index);
@@ -68,16 +70,19 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	//控制器
+
 	//指令集
 
+
+	console.log('%c Kaola %c Copyright \xa9 2015-%s  Power by github/chinakids', 'font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;font-size:64px;color:#00bbee;-webkit-text-fill-color:#00bbee;-webkit-text-stroke: 1px #00bbee;', "font-size:12px;color:#999999;", new Date().getFullYear());
 
 	window.RM = function () {
 	  if (window.M) window.M.layout();
 	};
-	//控制器
 
-
-	angular.module('Kaola', ['Kaola.tools']).controller(_index2.default[0], _index2.default[1]).controller(_login2.default[0], _login2.default[1]).controller(_good2.default[0], _good2.default[1]).directive(_lazyImage2.default[0], _lazyImage2.default[1]).directive(_imageSlide2.default[0], _imageSlide2.default[1]);
+	(_angular$module$contr = (_angular$module$contr2 = (_angular$module$contr3 = (_angular$module$contr4 = (_angular$module = angular.module('Kaola', ['Kaola.tools'])).controller.apply(_angular$module, _toConsumableArray(_index2.default))).controller.apply(_angular$module$contr4, _toConsumableArray(_login2.default))).controller.apply(_angular$module$contr3, _toConsumableArray(_good2.default))).directive.apply(_angular$module$contr2, _toConsumableArray(_lazyImage2.default))).directive.apply(_angular$module$contr, _toConsumableArray(_imageSlide2.default));
 
 /***/ },
 /* 1 */

@@ -36,8 +36,8 @@ R.get('/', check.access('adminManage-view'), function*(next) {
 R.post('/addAdmin', check.access('adminManage-add'), function*(next) {
   let parm = this.request.body;
   let md5 = crypto.createHash('md5');
-  let checking = yield usersModel.findAdminByEmail(parm.email);
-  if (checking.length > 0) {
+  let [ admin ] = yield usersModel.findAdminByEmail(parm.email);
+  if (admin) {
     this.body = {
       status: 'FAIL::该邮箱已存在'
     }
@@ -62,13 +62,13 @@ R.post('/addAdmin', check.access('adminManage-add'), function*(next) {
 R.post('/editAdmin', check.access('adminManage-edit'), function*(next) {
   let parm = this.request.body;
   let md5 = crypto.createHash('md5');
-  let admin = yield usersModel.findAdminById(parm._id);
-  if (admin.length <= 0) {
+  let [ admin ] = yield usersModel.findAdminById(parm._id);
+  if (!admin) {
     this.body = {
       status: 'FAIL::该账号不存在'
     }
   } else {
-    if (admin[0].group.power === 'root') {
+    if (admin.group.power === 'root') {
       this.body = {
         status: 'FAIL::Root权限账号无法修改'
       }
@@ -78,7 +78,7 @@ R.post('/editAdmin', check.access('adminManage-edit'), function*(next) {
         parm.password = md5.update(parm.password).digest('hex')
       }
       //合并
-      let _admin = Object.assign(admin[0], parm);
+      let _admin = Object.assign(admin, parm);
       yield _admin.save()
       //日志记录
       setLog('修改',`修改系统管理员(email:${parm.email})成功`,this);
@@ -91,20 +91,20 @@ R.post('/editAdmin', check.access('adminManage-edit'), function*(next) {
 //管理员管理 - 删除
 R.post('/delAdmin', check.access('adminManage-del'), function*(next) {
   let parm = this.request.body;
-  let admin = yield usersModel.findAdminById(parm._id);
-  if (admin.length <= 0) {
+  let [ admin ] = yield usersModel.findAdminById(parm._id);
+  if (!admin) {
     this.body = {
       status: 'FAIL::该账号不存在'
     }
   } else {
-    if (admin[0].group.power === 'root') {
+    if (admin.group.power === 'root') {
       this.body = {
         status: 'FAIL::Root权限账号无法删除'
       }
     } else {
-      yield admin[0].del()
+      yield admin.del()
       //日志记录
-      setLog('删除',`删除系统管理员(email:${admin[0].email})成功`,this);
+      setLog('删除',`删除系统管理员(email:${admin.email})成功`,this);
       this.body = {
         status: 'SUCCESS::成功删除管理员账号'
       }

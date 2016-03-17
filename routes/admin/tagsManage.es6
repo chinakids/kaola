@@ -26,7 +26,7 @@ R.get('/', check.access('tagManage-view'), function*(next) {
   yield render('tagsManage', {
     title: '标签统计',
     desc: '',
-    page: getPageCount(count,query.page,query.limit),
+    page: getPageCount(count,query.page,query.limit ? query.limit : 100),
     tagList: JSON.stringify(fetch),
     ranking: JSON.stringify(ranking)
   }, this);

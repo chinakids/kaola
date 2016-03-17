@@ -57,9 +57,9 @@ R.post('/addArticle', check.access('articlesManage-add'), setTag, function*(next
 //修改文章
 R.get('/editArticle', check.access('articlesManage-edit'), function*(next) {
   let parm = this.request.query;
-  let article = yield articlesModel.findById(parm.id);
+  let [ article ] = yield articlesModel.findById(parm.id);
   let categoriesList = yield categoryModel.fetch();
-  if (article.length <= 0) {
+  if (!article) {
     this.body = {
       status: 'FAIL::该文章不存在'
     }
@@ -67,22 +67,22 @@ R.get('/editArticle', check.access('articlesManage-edit'), function*(next) {
     yield render('articlesEdit', {
       title: '修改文章',
       desc: '',
-      articleData:JSON.stringify(article[0]),
+      articleData:JSON.stringify(article),
       categoriesList:JSON.stringify(cf.tree(categoriesList))
     }, this);
   }
 });
 R.post('/editArticle', check.access('articlesManage-edit'), setTag, function*(next) {
   let parm = this.request.body;
-  let article = yield articlesModel.findById(parm._id);
-  if (article.length <= 0) {
+  let [ article ] = yield articlesModel.findById(parm._id);
+  if (!article) {
     this.body = {
       status: 'FAIL::该文章不存在'
     }
   } else {
     parm.imgList = copyImage(parm.imgList,'articles');
     //合并
-    let _article = Object.assign(article[0], parm);
+    let _article = Object.assign(article, parm);
     yield _article.save();
     //日志记录
     setLog('修改',`修改文章<<${_article.title}>>成功`,this);
@@ -94,53 +94,53 @@ R.post('/editArticle', check.access('articlesManage-edit'), setTag, function*(ne
 //修改文章 - 置顶
 R.post('/editArticleTop', check.access('articlesManage-edit'), function*(next) {
   let parm = this.request.body;
-  let article = yield articlesModel.findById(parm.id);
-  if (article.length <= 0) {
+  let [ article ] = yield articlesModel.findById(parm.id);
+  if (!article) {
     this.body = {
       status: 'FAIL::该文章不存在'
     }
   } else {
     //合并
-    article[0].state.top = !article[0].state.top;
-    yield article[0].save();
+    article.state.top = !article.state.top;
+    yield article.save();
     //日志记录
-    setLog('置顶',`置顶文章<<${article[0].title}>>成功`,this);
+    setLog('置顶',`置顶文章<<${article.title}>>成功`,this);
     this.body = {
-      status: 'SUCCESS::'+(article[0].state.top?'成功置顶':'取消置顶')
+      status: 'SUCCESS::'+(article.state.top?'成功置顶':'取消置顶')
     }
   }
 });
 //修改文章 - 显示
 R.post('/editArticleDisplay', check.access('articlesManage-edit'), function*(next) {
   let parm = this.request.body;
-  let article = yield articlesModel.findById(parm.id);
-  if (article.length <= 0) {
+  let [ article ] = yield articlesModel.findById(parm.id);
+  if (!article) {
     this.body = {
       status: 'FAIL::该文章不存在'
     }
   } else {
     //合并
-    article[0].state.display = !article[0].state.display;
-    yield article[0].save();
+    article.state.display = !article.state.display;
+    yield article.save();
     //日志记录
-    setLog((article[0].state.display?'显示':'隐藏'),`${(article[0].state.display?'显示':'隐藏')}文章<<${article[0].title}>>成功`,this);
+    setLog((article.state.display?'显示':'隐藏'),`${(article.state.display?'显示':'隐藏')}文章<<${article.title}>>成功`,this);
     this.body = {
-      status: 'SUCCESS::'+(article[0].state.display?'开启显示':'取消显示')
+      status: 'SUCCESS::'+(article.state.display?'开启显示':'取消显示')
     }
   }
 });
 //删除文章
 R.post('/delArticle', check.access('articlesManage-del'), function*(next) {
   let parm = this.request.body;
-  let article = yield articlesModel.findById(parm.id);
-  if (article.length <= 0) {
+  let [ article ] = yield articlesModel.findById(parm.id);
+  if (!article) {
     this.body = {
       status: 'FAIL::该文章不存在'
     }
   } else {
-    yield article[0].del();
+    yield article.del();
     //日志记录
-    setLog('删除',`删除文章<<${article[0].title}>>成功`,this);
+    setLog('删除',`删除文章<<${article.title}>>成功`,this);
     this.body = {
       status: 'SUCCESS::成功删除文章'
     }

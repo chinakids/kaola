@@ -28,8 +28,8 @@ R.get('/', check.access('groupManage-view'), function*(next) {
 R.post('/addGroup', check.access('groupManage-add'), function*(next) {
   //存入
   let parm = this.request.body;
-  let checking = yield userGroupModel.findByName(parm.name);
-  if (checking.length > 0) {
+  let [ group ] = yield userGroupModel.findByName(parm.name);
+  if (group) {
     this.body = {
       status: 'FAIL::存在该名称权限组'
     }
@@ -49,19 +49,19 @@ R.post('/addGroup', check.access('groupManage-add'), function*(next) {
 //管理员管理 - 修改
 R.post('/editGroup',check.access('groupManage-edit'), function*(next) {
   let parm = this.request.body;
-  let group = yield userGroupModel.findById(parm._id);
-  if (group.length <= 0) {
+  let [ group ] = yield userGroupModel.findById(parm._id);
+  if (!group) {
     this.body = {
       status: 'FAIL::该权限组不存在'
     }
   } else {
     //合并
-    if (group[0].power === 'root') {
+    if (group.power === 'root') {
       this.body = {
         status: 'FAIL::Root权限无法修改'
       }
     } else {
-      let _group = Object.assign(group[0], parm);
+      let _group = Object.assign(group, parm);
       yield _group.save()
       //日志记录
       setLog('修改',`修改系统权限组(name:${_group.name})成功`,this);
@@ -74,20 +74,20 @@ R.post('/editGroup',check.access('groupManage-edit'), function*(next) {
 //管理员管理 - 删除
 R.post('/delGroup', check.access('groupManage-del'), function*(next) {
   let parm = this.request.body;
-  let group = yield userGroupModel.findById(parm._id);
-  if (group.length <= 0) {
+  let [ group ] = yield userGroupModel.findById(parm._id);
+  if (!group) {
     this.body = {
       status: 'FAIL::该权限组不存在'
     }
   } else {
-    if (group[0].power === 'root') {
+    if (group.power === 'root') {
       this.body = {
         status: 'FAIL::Root权限无法删除'
       }
     } else {
-      yield group[0].del()
+      yield group.del()
       //日志记录
-      setLog('删除',`删除系统权限组(name:${group[0].name})成功`,this);
+      setLog('删除',`删除系统权限组(name:${group.name})成功`,this);
       this.body = {
         status: 'SUCCESS::成功删除权限组'
       }
