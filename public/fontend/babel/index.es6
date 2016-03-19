@@ -3,6 +3,7 @@
 import index from './controller/index.es6';
 import login from './controller/login.es6';
 import good from './controller/good.es6';
+import register from './controller/register.es6';
 //指令集
 import lazyImage from './directive/lazyImage.es6';
 import imageSlide from './directive/imageSlide.es6';
@@ -16,6 +17,7 @@ window.RM = () => {
 angular.module('Kaola', ['Kaola.tools'])
 .controller(...index)
 .controller(...login)
+.controller(...register)
 .controller(...good)
 .directive(...lazyImage)
 .directive(...imageSlide)
