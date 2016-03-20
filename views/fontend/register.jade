@@ -1,0 +1,34 @@
+extends ./layout/common
+
+block layout
+  body.login-page(ng-controller='LoginCtrl')
+    .login-box
+      .login-logo
+        a(href='/') #{siteInfo.title}
+      .login-box-body
+        p.login-box-msg 用户注册
+        form#login
+          .form-group.has-feedback
+            input.form-control(type='email',ng-model='userData.email',placeholder='邮箱',reg='e',err-tip='请输入正确邮箱',ng-readonly='type == "edit"')
+            span.glyphicon.glyphicon-envelope.form-control-feedback
+          .form-group.has-feedback
+            input.form-control(type='text',ng-model='userData.nickName',placeholder='昵称',reg='nick',err-tip='1到12位非特殊字符')
+            span.glyphicon.glyphicon-user.form-control-feedback
+          .form-group.has-feedback
+            input.form-control(type='text',ng-model='userData.phoneNum',placeholder='电话',reg='m',err-tip='请输入正确的手机号码')
+            span.glyphicon.glyphicon-phone.form-control-feedback
+          .form-group.has-feedback
+            input.form-control#password(type='password',ng-model='userData.password',placeholder='密码',reg='s6-18',err-tip='密码应当为6到18位非非特殊字符',autocomplete='off')
+            span.glyphicon.glyphicon-lock.form-control-feedback
+          .form-group.has-feedback
+            input.form-control(type='password',name='repassword',placeholder='再次输入密码',regto='password',err-tip='两次密码输入不一致',autocomplete='off')
+            span.glyphicon.glyphicon-lock.form-control-feedback
+          .form-group.has-feedback.clearfix
+            .col-xs-8(style='margin-left: 0;padding: 0;')
+              input.form-control(type='text',placeholder='请输入验证码',ng-model='securityCode',reg='s1-6',err-tip='验证码格式错误')
+            .col-xs-4(style='margin-left: 0;padding: 0;overflow:hidden')
+              img#code(src='/api/securityCode',ng-src='{{code}}',style='width:100%;height: 34px;border: 1px solid #ccc;border-left:none',title='点击刷新验证码',ng-click='reCode()')
+          .form-group.has-feedback#tip
+          .form-group.has-feedback
+            button.btn.btn-primary.btn-block.btn-flat(type='button',ng-click='submit()')  注 册
+
