@@ -21,7 +21,6 @@ block layout
               input.form-control(type='text',placeholder='请输入验证码',ng-model='securityCode',reg='s1-6',err-tip='验证码格式错误')
             .col-xs-4(style='margin-left: 0;padding: 0;overflow:hidden')
               img#code(src='/api/securityCode',ng-src='{{code}}',style='width:100%;height: 34px;border: 1px solid #ccc;border-left:none',title='点击刷新验证码',ng-click='reCode()')
-          .form-group.has-feedback#tip
           .form-group.has-feedback
             button.btn.btn-primary.btn-block.btn-flat(type='button',ng-click='submit()')  登 陆
   script.
