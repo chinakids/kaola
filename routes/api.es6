@@ -162,13 +162,20 @@ R.post('/addLike', function *(next) {
       let [ userLike ] = yield userLikeModel.findByGood(query.id, this.session.userInfo._id);
       if(userLike){
         //取消喜欢
-        // this.body = {
-        //   status: 'SUCCESS::已经喜欢过'
-        // }
+        yield userLike.del();
+        let _good = Object.assign(good, {statistics:{like:good.statistics.like - 1}});
+        yield _good.save();
+        this.body = {
+          status: 'SUCCESS::取消喜欢成功'
+        }
       }else{
+        let _userLike = new userLikeModel({
+          good : query.id,
+          user : this.session.userInfo._id
+        })
+        yield _userLike.save();
         let _good = Object.assign(good, {statistics:{like:good.statistics.like + 1}});
         yield _good.save();
-
         this.body = {
           status: 'SUCCESS::喜欢成功'
         }
