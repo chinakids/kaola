@@ -78,9 +78,10 @@ UserLikeSchema.statics = {
       .sort('-meta.createAt')
       .exec()
   },
-  findByGood(id){
+  findByGood(id, userId){
     return this.find({
-        good:id
+        good:id,
+        user:userId
       },{
         __v:0
       })
@@ -96,20 +97,10 @@ UserLikeSchema.statics = {
       .sort('-meta.createAt')
       .exec()
   },
-  findByUser(id){
+  findByArticle(id, userId){
     return this.find({
-        user:id
-      },{
-        __v:0
-      })
-      .populate('good')
-      .populate('article')
-      .sort('-meta.createAt')
-      .exec()
-  },
-  findByArticle(id){
-    return this.find({
-        article:id
+        article:id,
+        user:userId
       },{
         __v:0
       })

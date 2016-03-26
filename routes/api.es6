@@ -159,18 +159,19 @@ R.post('/addLike', function *(next) {
   if(query.type === 'good'){
     let [ good ] = yield goodsModel.findById(query.id);
     if(good){
-      //喜欢加1
-      //userLikeModel
-      let [ userLike ] = yield userLikeModel.findById(query.id);
-      let _good = Object.assign(good, {statistics:{like:good.statistics.like + 1}});
-      yield _good.save();
-      // if(!this.cookies.get('view')){
-      //   let _good = Object.assign(good, {statistics:{view:good.statistics.view + 1}});
-      //   yield _good.save();
-      //   this.cookies = this.cookies.set('view', '1', { signed:false, path: this.request.path,httpOnly:true });
-      // }
-      this.body = {
-        status: 'SUCCESS::喜欢成功'
+      let [ userLike ] = yield userLikeModel.findByGood(query.id, this.session.userInfo._id);
+      if(userLike){
+        //取消喜欢
+        // this.body = {
+        //   status: 'SUCCESS::已经喜欢过'
+        // }
+      }else{
+        let _good = Object.assign(good, {statistics:{like:good.statistics.like + 1}});
+        yield _good.save();
+
+        this.body = {
+          status: 'SUCCESS::喜欢成功'
+        }
       }
     }else{
       this.body = {
