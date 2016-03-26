@@ -7,6 +7,9 @@ import parse from 'co-busboy';
 import check from './../controller/getAccess';
 import sendMail from './../utils/mail';
 import setLog from './../controller/setLog';
+import goodsModel from './../models/Goods';
+import articlesModel from './../models/Articles';
+import userLikeModel from './../models/UserLike.es6';
 
 
 let securityCode = ccap({
@@ -149,4 +152,33 @@ R.post('/getPowerList',check.login(),check.isAdmin(),function *(next){
   }
 })
 
+
+//喜欢
+R.post('/addLike', function *(next) {
+  let query = this.request.query;
+  if(query.type === 'good'){
+    let [ good ] = yield goodsModel.findById(query.id);
+    if(good){
+      //喜欢加1
+      //userLikeModel
+      let [ userLike ] = yield userLikeModel.findById(query.id);
+      let _good = Object.assign(good, {statistics:{like:good.statistics.like + 1}});
+      yield _good.save();
+      // if(!this.cookies.get('view')){
+      //   let _good = Object.assign(good, {statistics:{view:good.statistics.view + 1}});
+      //   yield _good.save();
+      //   this.cookies = this.cookies.set('view', '1', { signed:false, path: this.request.path,httpOnly:true });
+      // }
+      this.body = {
+        status: 'SUCCESS::喜欢成功'
+      }
+    }else{
+      this.body = {
+        status: 'SUCCESS::商品不存在'
+      }
+    }
+  }else if(query.type === 'article'){
+    let [ article ] = yield articlesModel.findById(query.id); //true安全读取模式
+  }
+});
 export default R;
