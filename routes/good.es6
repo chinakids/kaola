@@ -2,7 +2,7 @@ import router from 'koa-router';
 import render from './../utils/render';
 import goodsModel from './../models/Goods';
 import articlesModel from './../models/Articles';
-import userLikeModel from './../models/UserLike.es6';
+import userLikeModel from './../models/UserLike';
 import marked from 'marked';
 
 let R = router();
