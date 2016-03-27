@@ -186,7 +186,35 @@ R.post('/addLike', function *(next) {
       }
     }
   }else if(query.type === 'article'){
-    let [ article ] = yield articlesModel.findById(query.id); //true安全读取模式
+    let [ article ] = yield articlesModel.findById(query.id);
+    if(article){
+      let [ userLike ] = yield userLikeModel.findByArticle(query.id, this.session.userInfo._id);
+      if(userLike){
+        //取消喜欢
+        yield userLike.del();
+        let _article = Object.assign(article, {statistics:{like:article.statistics.like - 1}});
+        yield _article.save();
+        this.body = {
+          status: 'SUCCESS::取消喜欢成功'
+        }
+      }else{
+        let _userLike = new userLikeModel({
+          article : query.id,
+          user : this.session.userInfo._id
+        })
+        yield _userLike.save();
+        let _article = Object.assign(article, {statistics:{like:article.statistics.like + 1}});
+        yield _article.save();
+        this.body = {
+          status: 'SUCCESS::喜欢成功'
+        }
+      }
+    }else{
+      this.body = {
+        status: 'SUCCESS::文章不存在'
+      }
+    }
   }
 });
+
 export default R;
