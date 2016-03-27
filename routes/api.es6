@@ -9,7 +9,7 @@ import sendMail from './../utils/mail';
 import setLog from './../controller/setLog';
 import goodsModel from './../models/Goods';
 import articlesModel from './../models/Articles';
-import userLikeModel from './../models/UserLike.es6';
+import userLikeModel from './../models/UserLike';
 
 
 let securityCode = ccap({
