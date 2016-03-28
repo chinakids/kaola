@@ -2,7 +2,7 @@ import router from 'koa-router';
 import crypto from 'crypto';
 import render from './../utils/render';
 import usersModel from './../models/Users';
-import check from './../../controller/getAccess';
+import check from './../controller/getAccess';
 
 let R = router();
 
