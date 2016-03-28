@@ -6,7 +6,7 @@ import check from './../controller/getAccess';
 
 let R = router();
 
-R.get('/', check.isLogin(), function*(next) {
+R.get('/', check.login(), function*(next) {
   yield render('index', {
     title: '用户中心',
     desc: '',
