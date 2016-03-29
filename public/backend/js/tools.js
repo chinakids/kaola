@@ -14,7 +14,7 @@ window.URL = {
 
 //全局toast配置
 toastr.options = {
-  'closeButton': true,
+  'closeButton': false,
   'debug': false,
   'newestOnTop': true,
   'progressBar': true,

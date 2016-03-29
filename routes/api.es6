@@ -154,7 +154,7 @@ R.post('/getPowerList',check.login(),check.isAdmin(),function *(next){
 
 
 //喜欢
-R.post('/addLike', function *(next) {
+R.post('/addLike', check.login(), function *(next) {
   let query = this.request.query;
   if(query.type === 'good'){
     let [ good ] = yield goodsModel.findById(query.id);
@@ -166,7 +166,8 @@ R.post('/addLike', function *(next) {
         let _good = Object.assign(good, {statistics:{like:good.statistics.like - 1}});
         yield _good.save();
         this.body = {
-          status: 'SUCCESS::取消喜欢成功'
+          status: 'SUCCESS::取消喜欢成功',
+          data:_good.statistics.like
         }
       }else{
         let _userLike = new userLikeModel({
@@ -177,12 +178,13 @@ R.post('/addLike', function *(next) {
         let _good = Object.assign(good, {statistics:{like:good.statistics.like + 1}});
         yield _good.save();
         this.body = {
-          status: 'SUCCESS::喜欢成功'
+          status: 'SUCCESS::喜欢成功',
+          data:_good.statistics.like
         }
       }
     }else{
       this.body = {
-        status: 'SUCCESS::商品不存在'
+        status: 'FAIL::商品不存在'
       }
     }
   }else if(query.type === 'article'){
@@ -195,7 +197,8 @@ R.post('/addLike', function *(next) {
         let _article = Object.assign(article, {statistics:{like:article.statistics.like - 1}});
         yield _article.save();
         this.body = {
-          status: 'SUCCESS::取消喜欢成功'
+          status: 'SUCCESS::取消喜欢成功',
+          data:_article.statistics.like
         }
       }else{
         let _userLike = new userLikeModel({
@@ -206,13 +209,18 @@ R.post('/addLike', function *(next) {
         let _article = Object.assign(article, {statistics:{like:article.statistics.like + 1}});
         yield _article.save();
         this.body = {
-          status: 'SUCCESS::喜欢成功'
+          status: 'SUCCESS::喜欢成功',
+          data:_article.statistics.like
         }
       }
     }else{
       this.body = {
-        status: 'SUCCESS::文章不存在'
+        status: 'FAIL::文章不存在'
       }
+    }
+  }else{
+    this.body = {
+      status: 'FAIL::需要传递类型'
     }
   }
 });

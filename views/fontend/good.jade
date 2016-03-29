@@ -64,9 +64,11 @@ block content
                       i.fa.fa-eye.margin-r-5
                       |  查看 (#{data.statistics.view})
                   li
-                    a.link-black.text-sm(href='#')
+                    a#like.link-black.text-sm(href='javascript:;',ng-click='like(\'#{data._id}\')')
                       i.fa.fa-thumbs-o-up.margin-r-5
-                      |  喜欢 (#{data.statistics.like})
+                      |  喜欢 (
+                      span #{data.statistics.like}
+                      | )
                   li.pull-right
                     a.link-black.text-sm(href='#')
                       i.fa.fa-comments-o.margin-r-5

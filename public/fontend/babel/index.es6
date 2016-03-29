@@ -3,6 +3,7 @@
 import index from './controller/index.es6';
 import login from './controller/login.es6';
 import good from './controller/good.es6';
+import article from './controller/article.es6';
 import register from './controller/register.es6';
 //指令集
 import lazyImage from './directive/lazyImage.es6';
@@ -14,10 +15,31 @@ window.RM = () => {
   if(window.M) window.M.layout();
 }
 
+//前端提示设定
+toastr.options = {
+  'closeButton': false,
+  'debug': false,
+  'newestOnTop': true,
+  'progressBar': true,
+  'positionClass': 'toast-top-center',
+  'preventDuplicates': false,
+  'onclick': null,
+  'showDuration': '300',
+  'hideDuration': '1000',
+  'timeOut': '1500',
+  'extendedTimeOut': '1000',
+  'showEasing': 'swing',
+  'hideEasing': 'linear',
+  'showMethod': 'fadeIn',
+  'hideMethod': 'fadeOut'
+}
+
+
 angular.module('Kaola', ['Kaola.tools'])
 .controller(...index)
 .controller(...login)
 .controller(...register)
 .controller(...good)
+.controller(...article)
 .directive(...lazyImage)
 .directive(...imageSlide)

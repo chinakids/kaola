@@ -46,7 +46,7 @@
 
 	'use strict';
 
-	var _angular$module$contr, _angular$module$contr2, _angular$module$contr3, _angular$module$contr4, _angular$module;
+	var _angular$module$contr, _angular$module$contr2, _angular$module$contr3, _angular$module$contr4, _angular$module$contr5, _angular$module$contr6, _angular$module;
 
 	var _index = __webpack_require__(1);
 
@@ -60,11 +60,19 @@
 
 	var _good2 = _interopRequireDefault(_good);
 
-	var _lazyImage = __webpack_require__(4);
+	var _article = __webpack_require__(4);
+
+	var _article2 = _interopRequireDefault(_article);
+
+	var _register = __webpack_require__(5);
+
+	var _register2 = _interopRequireDefault(_register);
+
+	var _lazyImage = __webpack_require__(6);
 
 	var _lazyImage2 = _interopRequireDefault(_lazyImage);
 
-	var _imageSlide = __webpack_require__(5);
+	var _imageSlide = __webpack_require__(7);
 
 	var _imageSlide2 = _interopRequireDefault(_imageSlide);
 
@@ -82,7 +90,26 @@
 	  if (window.M) window.M.layout();
 	};
 
-	(_angular$module$contr = (_angular$module$contr2 = (_angular$module$contr3 = (_angular$module$contr4 = (_angular$module = angular.module('Kaola', ['Kaola.tools'])).controller.apply(_angular$module, _toConsumableArray(_index2.default))).controller.apply(_angular$module$contr4, _toConsumableArray(_login2.default))).controller.apply(_angular$module$contr3, _toConsumableArray(_good2.default))).directive.apply(_angular$module$contr2, _toConsumableArray(_lazyImage2.default))).directive.apply(_angular$module$contr, _toConsumableArray(_imageSlide2.default));
+	//前端提示设定
+	toastr.options = {
+	  'closeButton': false,
+	  'debug': false,
+	  'newestOnTop': true,
+	  'progressBar': true,
+	  'positionClass': 'toast-top-center',
+	  'preventDuplicates': false,
+	  'onclick': null,
+	  'showDuration': '300',
+	  'hideDuration': '1000',
+	  'timeOut': '1500',
+	  'extendedTimeOut': '1000',
+	  'showEasing': 'swing',
+	  'hideEasing': 'linear',
+	  'showMethod': 'fadeIn',
+	  'hideMethod': 'fadeOut'
+	};
+
+	(_angular$module$contr = (_angular$module$contr2 = (_angular$module$contr3 = (_angular$module$contr4 = (_angular$module$contr5 = (_angular$module$contr6 = (_angular$module = angular.module('Kaola', ['Kaola.tools'])).controller.apply(_angular$module, _toConsumableArray(_index2.default))).controller.apply(_angular$module$contr6, _toConsumableArray(_login2.default))).controller.apply(_angular$module$contr5, _toConsumableArray(_register2.default))).controller.apply(_angular$module$contr4, _toConsumableArray(_good2.default))).controller.apply(_angular$module$contr3, _toConsumableArray(_article2.default))).directive.apply(_angular$module$contr2, _toConsumableArray(_lazyImage2.default))).directive.apply(_angular$module$contr, _toConsumableArray(_imageSlide2.default));
 
 /***/ },
 /* 1 */
@@ -148,12 +175,62 @@
 	  value: true
 	});
 	var controller = ['GoodCtrl', ['$scope', '$http', '$filter', function ($scope, $http, $filter) {
-	  $scope.index = 'xx';
+	  $scope.like = function (id) {
+	    $.post('/api/addLike?id=' + id + '&type=good', {}, function (res) {
+	      var status = res.status.split('::')[0],
+	          msg = res.status.split('::')[1];
+	      if (status === 'SUCCESS') {
+	        toastr.success(msg);
+	        $('#like span').text(res.data);
+	      } else {
+	        toastr.error(msg);
+	      }
+	    });
+	  };
 	}]];
 	exports.default = controller;
 
 /***/ },
 /* 4 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var controller = ['ArticleCtrl', ['$scope', '$http', '$filter', function ($scope, $http, $filter) {
+	  $scope.like = function (id) {
+	    $.post('/api/addLike?id=' + id + '&type=article', {}, function (res) {
+	      var status = res.status.split('::')[0],
+	          msg = res.status.split('::')[1];
+	      if (status === 'SUCCESS') {
+	        toastr.success(msg);
+	        $('#like span').text(res.data);
+	      } else {
+	        toastr.error(msg);
+	      }
+	    });
+	  };
+	}]];
+	exports.default = controller;
+
+/***/ },
+/* 5 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var controller = ['RegisterCtrl', ['$scope', '$http', '$filter', function ($scope, $http, $filter) {
+	  $scope.index = 'xx';
+	}]];
+	exports.default = controller;
+
+/***/ },
+/* 6 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -248,7 +325,7 @@
 	exports.default = directive;
 
 /***/ },
-/* 5 */
+/* 7 */
 /***/ function(module, exports) {
 
 	'use strict';
