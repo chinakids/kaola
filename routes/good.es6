@@ -11,11 +11,15 @@ R.get('/:id', function *(next) {
   let [ good ] = yield goodsModel.findById(this.params.id,true); //true安全读取模式
   let userGoodCount = yield goodsModel.count({author:good.author._id}) //读取用户发布商品总量
   let userArticleCount = yield articlesModel.count({author:good.author._id}) //读取用户文章总量
-  let [ userLikeModel ] = yield userLikeModel.findByGood(this.params.id, this.session.userInfo._id)
+  if(this.session.login){
+    let [ userLike ] = yield userLikeModel.findByGood(this.params.id, this.session.userInfo._id)
+    good.isLike = userLike ? true : false;
+  }else{
+    good.isLike = false;
+  }
   good.contentHTML = marked(good.content);
   good.userGoodCount = userGoodCount;
   good.userArticleCount = userArticleCount;
-  good.isLike = userLikeModel ? true : false;
   if(good){
     //浏览加1
     if(!this.cookies.get('view')){

@@ -22,4 +22,4 @@ block content
       div.error-footer(style='width: 150%;margin-left: -25%;')
         if error.status != 404
           if debug || userInfo.admin
-            pre #{error.stack}
+            pre #{error.data.stack}

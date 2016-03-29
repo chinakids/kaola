@@ -63,7 +63,7 @@ app.use(function *(next){
   try {
     yield next;
   } catch (err) {
-    let status = e.status || 500;
+    let status = err.status || 500;
     // 根据 status 渲染不同的页面
     if (status == 404) {
       yield render('error',{
@@ -81,16 +81,19 @@ app.use(function *(next){
           debug: S.DEBUG,
           title: '系统发生错误',
           referer:this.request.header.referer,
-          error: err
+          error: {
+            status : 500,
+            data: err
+          }
         },this);
       }else{
         this.body = {
           status : 'FAIL::系统发生错误',
-          err : err
+          error : err
         }
       }
       // 触发 koa 统一错误事件，可以打印出详细的错误堆栈 log
-      this.app.emit('error', e, this);
+      this.app.emit('error', err, this);
     }
   }
 })
