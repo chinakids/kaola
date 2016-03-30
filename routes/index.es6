@@ -16,7 +16,7 @@ R.get('/', function *(next) {
     title: '首页',
     desc:'',
     hot:hot,
-    list:JSON.stringify(list)
+    list:list
   },this);
 });
 

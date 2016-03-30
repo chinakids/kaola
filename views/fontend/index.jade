@@ -13,9 +13,30 @@ block content
           each item in hot
             a(href='/search/?kw=#{item.name}') #{item.name}
     .container
-      script.
-        window.list = !{list}
+      //- script.
+      //-   window.list = !{list}
       ul.masonry-wrap.clefafix.js-masonry
+        each item in list
+          li.grid-item
+            div.img-box
+              a.img(href='/content/#{item.category.alias}/#{item.title}?type=#{item.type}&id=#{item._id}')
+                img(src='',onload='RM()',onerror='this.src="fontend/img/bg/nopicture.jpg"')
+              p.num
+                a.watch-num(href='javascript:;')
+                  i.fa.fa-eye
+                  |  #{item.statistics.view}
+                a.like-num(href='javascript:;')
+                  i.fa.fa-heart
+                  |  #{item.statistics.like}
+            div.clearfix
+              a.img-name(href='/content/#{item.category.alias}/#{item.title}?type=#{item.type}&id=#{item._id}') #{item.title}
+              if item.type === 'good'
+                p.sort
+                  i.fa.fa-location-arrow
+                    |  #{item.info.location}
+              a.method.clefafix(href='/users/#{item.author._id}')
+                span(style='background-image:url(#{item.author.avatar});')
+                b #{item.author.nickName}
         //- li.grid-item
         //-   div.img-box
         //-     a.img(href='#')
