@@ -2,18 +2,18 @@ extends ./layout/layout
 
 block content
   .content-wrapper(ng-controller='IndexCtrl')
-    .banner(style='background-image:url(fontend/img/eq/banner2.jpg)')
-      .search-box
-        h3(style='background-image:url(fontend/img/logo/title.png)')
-        .search
-          input(type='text',placeholder='搜索您所需要的...')
-          button.btn.btn-xs(type='button')
-            span.fa.fa-seach
-        .hot 热门：
-          each item in hot
-            a(href='/search/?kw=#{item.name}') #{item.name}
+    //- .banner(style='background-image:url(fontend/img/eq/banner2.jpg)')
+    //-   .search-box
+    //-     h3(style='background-image:url(fontend/img/logo/title.png)')
+    //-     .search
+    //-       input(type='text',placeholder='搜索您所需要的...')
+    //-       button.btn.btn-xs(type='button')
+    //-         span.fa.fa-seach
+    //-     .hot 热门：
+    //-       each item in hot
+    //-         a(href='/search/?kw=#{item.name}') #{item.name}
     .container
-      ul.masonry-wrap.clefafix.js-masonry
+      ul.masonry-wrap.clefafix.js-masonry(style='padding-top:120px;')
         each item in list
           li.grid-item
             div.img-box

@@ -286,6 +286,9 @@ hr {
   margin-bottom: 20px;
   cursor: pointer;
 }
+.image-box .small-img img {
+  cursor: pointer;
+}
 .image-box .small-img:last-child {
   margin-bottom: 0;
 }
@@ -303,7 +306,7 @@ hr {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.3) url(../img/ico/sellout.png?v=2016-03-29) center center no-repeat;
+  background: rgba(0, 0, 0, 0.3) url(../img/ico/sellout.png?v=2016-03-31) center center no-repeat;
   background-size: 75% auto;
   z-index: 8;
 }
