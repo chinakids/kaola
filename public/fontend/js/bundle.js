@@ -95,17 +95,17 @@
 	  'closeButton': false,
 	  'debug': false,
 	  'newestOnTop': true,
-	  'progressBar': true,
-	  'positionClass': 'toast-top-center',
+	  'progressBar': false,
+	  'positionClass': 'toast-bottom-center',
 	  'preventDuplicates': false,
 	  'onclick': null,
 	  'showDuration': '300',
 	  'hideDuration': '1000',
-	  'timeOut': '1500',
+	  'timeOut': '2000',
 	  'extendedTimeOut': '1000',
 	  'showEasing': 'swing',
 	  'hideEasing': 'linear',
-	  'showMethod': 'fadeIn',
+	  'showMethod': 'slideDown',
 	  'hideMethod': 'fadeOut'
 	};
 

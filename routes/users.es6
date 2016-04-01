@@ -7,7 +7,7 @@ import check from './../controller/getAccess';
 let R = router();
 
 R.get('/', check.login(), function*(next) {
-  yield render('index', {
+  yield render('userCenters', {
     title: '用户中心',
     desc: '',
   }, this);
