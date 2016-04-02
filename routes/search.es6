@@ -8,6 +8,8 @@ import articlesModel from './../models/Articles';
 let R = router();
 
 R.get('/', function *(next) {
+  let query = this.request.query;
+  let search = query.keyword ? {$or:[{nickName:{$regex:regex}},{email:{$regex:regex}},{phone:{$regex:regex}}]} : {};
   let hot = yield tagModel.ranking(6);
   let goodFetch = yield goodsModel.fetch({'state.display':true});
   let articleFetch = yield articlesModel.fetch({'state.display':true});
