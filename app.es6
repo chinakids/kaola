@@ -18,6 +18,7 @@ import users from './routes/users';
 import admin from './routes/admin';
 import content from './routes/content';
 import list from './routes/list';
+import search from './routes/search';
 import api from './routes/api';
 //导入控制部分
 import userInfo from './controller/getUserInfo';
@@ -115,6 +116,7 @@ R.use('/', index.routes(), index.allowedMethods());
 R.use('/api', api.routes(), api.allowedMethods());
 R.use('/content', content.routes(), content.allowedMethods());
 R.use('/list', list.routes(), list.allowedMethods());
+R.use('/search', search.routes(), search.allowedMethods());
 R.use('/users', users.routes(), users.allowedMethods());
 R.use('/'+S.ADMIN_DOMAIN, admin.routes(), admin.allowedMethods());
 
