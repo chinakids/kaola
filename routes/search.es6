@@ -9,6 +9,7 @@ let R = router();
 
 R.get('/', function *(next) {
   let query = this.request.query;
+  let regex = new RegExp(query.search,'i');
   let search = query.keyword ? {$or:[{nickName:{$regex:regex}},{email:{$regex:regex}},{phone:{$regex:regex}}]} : {};
   let hot = yield tagModel.ranking(6);
   let goodFetch = yield goodsModel.fetch({...{'state.display':true},...search});
