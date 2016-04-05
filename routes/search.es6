@@ -10,7 +10,7 @@ let R = router();
 R.get('/', function *(next) {
   let query = this.request.query;
   let regex = new RegExp(query.search,'i');
-  let search = query.keyword ? {$or:[{title:{$regex:regex}},{'info.callWay':{$regex:regex}},{content:{$regex:regex}},{tag:{$regex:regex}}]} : {};
+  let search = query.keyword ? {$or:[{title:{$regex:regex}},{'info.callWay':{$regex:regex}},{tag:{$regex:regex}}]} : {};
   let goodFetch = yield goodsModel.fetch({...{'state.display':true},...search});
   let articleFetch = yield articlesModel.fetch({...{'state.display':true},...search});
   let list = mixList(goodFetch,articleFetch);
