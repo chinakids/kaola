@@ -14,12 +14,11 @@ R.get('/', function *(next) {
   let goodFetch = yield goodsModel.fetch({...{'state.display':true},...search});
   let articleFetch = yield articlesModel.fetch({...{'state.display':true},...search});
   let list = mixList(goodFetch,articleFetch);
-  this.body = list
-  // yield render('search',{
-  //   title: '搜索结果',
-  //   desc:'',
-  //   list:list
-  // },this);
+  yield render('search',{
+    title: '搜索结果',
+    desc:'',
+    list:list
+  },this);
 });
 
 

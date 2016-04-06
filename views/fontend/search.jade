@@ -1,0 +1,45 @@
+extends ./layout/layout
+
+block content
+  .content-wrapper(ng-controller='IndexCtrl')
+    //- .banner(style='background-image:url(fontend/img/eq/banner2.jpg)')
+    //-   .search-box
+    //-     h3(style='background-image:url(fontend/img/logo/title.png)')
+    //-     .search
+    //-       input(type='text',placeholder='搜索您所需要的...')
+    //-       button.btn.btn-xs(type='button')
+    //-         span.fa.fa-seach
+    //-     .hot 热门：
+    //-       each item in hot
+    //-         a(href='/search/?kw=#{item.name}') #{item.name}
+    .container
+      ul.masonry-wrap.clefafix.js-masonry(style='padding-top:120px;')
+        each item in list
+          li.grid-item
+            div.img-box
+              a.img(href='/content/#{item.category.alias}/#{item.title}?type=#{item.type}&id=#{item._id}')
+                - var arr = JSON.parse(item.imgList)
+                - var index = 0
+                if item.imgList == '{}'
+                  img(src='/fontend/img/bg/nopicture.jpg',onload='RM()',onerror='this.src="/fontend/img/bg/nopicture.jpg"')
+                else
+                  each key in arr
+                    if index === 0
+                      img(src='#{key.url}',onload='RM()',onerror='this.src="/fontend/img/bg/nopicture.jpg"')
+                    - index ++
+              p.num
+                a.watch-num(href='javascript:;')
+                  i.fa.fa-eye
+                  |  #{item.statistics.view}
+                a.like-num(href='javascript:;')
+                  i.fa.fa-heart
+                  |  #{item.statistics.like}
+            div.clearfix
+              a.img-name(href='/content/#{item.category.alias}/#{item.title}?type=#{item.type}&id=#{item._id}') #{item.title}
+              if item.type === 'good'
+                p.sort
+                  i.fa.fa-location-arrow
+                    |  #{item.info.location}
+              a.method.clefafix(href='/users/#{item.author._id}')
+                span(style='background-image:url(#{item.author.avatar});')
+                b #{item.author.nickName}
