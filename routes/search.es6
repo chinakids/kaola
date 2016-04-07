@@ -1,7 +1,6 @@
 import router from 'koa-router';
 import render from './../utils/render';
 import mixList from './../controller/mixList';
-// import tagModel from './../models/Tags';
 import goodsModel from './../models/Goods';
 import articlesModel from './../models/Articles';
 
